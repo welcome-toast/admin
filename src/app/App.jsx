@@ -6,8 +6,8 @@ import PageError from "../pages/PageError";
 import PageHome from "../pages/PageHome";
 import PageProject from "../pages/PageProject";
 import PageProjectList from "../pages/PageProjectList";
+import Footer from "../widgets/Footer";
 import Header from "../widgets/Header";
-import Footer from "../widgets/Header";
 import "../index.css";
 
 function App() {
