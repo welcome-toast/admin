@@ -16,11 +16,11 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" exact element={<PageHome />} />
-        <Route path="/project">
+        <Route path="project">
           <Route index element={<PageProjectList />} />
           <Route path=":projectId" exact element={<PageProject />}>
-            <Route path="/setting" exact element={<ProjectSetting />} />
-            <Route path="/install" exact element={<ProjectInstall />} />
+            <Route path="setting" exact element={<ProjectSetting />} />
+            <Route path="install" exact element={<ProjectInstall />} />
           </Route>
         </Route>
         <Route path="*" element={<PageError />} />
