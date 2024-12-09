@@ -1,16 +1,11 @@
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "../shared/supabase";
 
 import Button from "../shared/Button";
 import { CTA_SIGNIN, TITLE_HOME } from "../shared/constant";
 
 function PageHome() {
-  const supabase = createClient(
-    import.meta.env.VITE_SUPABASE_URL,
-    import.meta.env.VITE_SUPABASE_API_KEY,
-  );
-
   const signInWithGoogle = async () => {
-    await supabase.auth.signInWithOAuth({
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo: import.meta.env.VITE_SUPABASE_GOOGLE_REDIRECT_URL,
