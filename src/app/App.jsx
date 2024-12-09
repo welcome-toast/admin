@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 import ProjectSetting from "../features/ProjectSetting";
 import ProjectInstall from "../features/ProjectSetting";
@@ -6,11 +6,34 @@ import PageError from "../pages/PageError";
 import PageHome from "../pages/PageHome";
 import PageProject from "../pages/PageProject";
 import PageProjectList from "../pages/PageProjectList";
+import { supabase } from "../shared/supabase";
 import Footer from "../widgets/Footer";
 import Header from "../widgets/Header";
 import "../index.css";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [session, setSession] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+
+      if (session !== null) {
+        navigate("/project");
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate]);
+
   return (
     <>
       <Header />
