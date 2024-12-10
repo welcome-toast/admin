@@ -4,8 +4,21 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../shared/supabase";
 
+const initialProject = [
+  {
+    id: "",
+    name: "",
+    owner_id: "",
+    link: "",
+    api_key: "",
+    is_installed: false,
+    created_at: "",
+    updated_at: "",
+  },
+];
+
 function PageProjectList({ user }) {
-  const [project, setProject] = useState([]);
+  const [project, setProject] = useState(initialProject);
   const navigate = useNavigate();
   function handleProjectClick(projectId) {
     navigate(`/project/${projectId}`);
