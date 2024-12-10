@@ -21,7 +21,14 @@ function PageProjectList({ user }) {
   const [project, setProject] = useState(initialProject);
   const navigate = useNavigate();
   function handleProjectClick(projectId) {
-    navigate(`/project/${projectId}`);
+    const projectClicked = project.filter((el) => el.id === projectId);
+
+    navigate(`/project/${projectId}`, {
+      state: {
+        user,
+        project: projectClicked[0],
+      },
+    });
   }
 
   useEffect(() => {
