@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
-
 import { useEffect, useState } from "react";
+import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 import ActionCardEditor from "./ActionCardEditor";
 import ActionCardHeader from "./ActionCardHeader";
@@ -21,6 +21,9 @@ const initialAction = {
 
 function ActionCard({ user, project }) {
   const [action, setAction] = useState(initialAction);
+  function handleSaveActionButtonClick() {
+    return;
+  }
 
   useEffect(() => {
     async function getAction() {
@@ -46,6 +49,9 @@ function ActionCard({ user, project }) {
     <div className="flex flex-col gap-5 px-5 mx-10 border-2 border-black rounded">
       <ActionCardHeader action={action} />
       <ActionCardEditor action={action} setAction={setAction} />
+      <div className="mb-5">
+        <Button text={"저장"} onClick={handleSaveActionButtonClick} />
+      </div>
     </div>
   );
 }
