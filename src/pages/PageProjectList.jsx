@@ -1,10 +1,15 @@
 import PropTypes from "prop-types";
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "../shared/supabase";
 
 function PageProjectList({ user }) {
   const [project, setProject] = useState([]);
+  const navigate = useNavigate();
+  function handleProjectClick(projectId) {
+    navigate(`/project/${projectId}`);
+  }
 
   useEffect(() => {
     async function getProject() {
@@ -13,6 +18,10 @@ function PageProjectList({ user }) {
         .select("*")
         .eq("owner_id", user.id);
       setProject(project);
+
+      if (!project) {
+        throw new Error(error.message);
+      }
       return;
     }
     getProject();
@@ -23,14 +32,19 @@ function PageProjectList({ user }) {
       <div>프로젝트 리스트</div>
       <div className="flex gap-5">
         {project?.map((proejct) => (
-          <div key={proejct.id} className="border-solid border-2 rounded bg-black text-white p-10">
+          <button
+            key={proejct.id}
+            type="button"
+            onClick={() => handleProjectClick(proejct.id)}
+            className="border-solid border-2 rounded bg-black text-white p-10"
+          >
             <ul className="flex flex-col gap-3">
               <li>{proejct.name}</li>
               <li>{proejct.created_at}</li>
               <li>{proejct.link}</li>
               <li>{proejct.is_installed ? "true" : "false"}</li>
             </ul>
-          </div>
+          </button>
         ))}
       </div>
     </section>
