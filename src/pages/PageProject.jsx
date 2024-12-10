@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
-import PageProjectInstall from "../features/ProjectInstall";
-import PageProjectSetting from "../features/ProjectSetting";
+import ProjectInstall from "../features/ProjectInstall";
+import ProjectSetting from "../features/ProjectSetting";
 
 function PageProject() {
   const { user, project } = useLocation().state;
@@ -13,10 +13,10 @@ function PageProject() {
         <button type="button">연동</button>
       </div>
       <div>
-        <PageProjectSetting user={user} project={project} />
+        <ProjectSetting user={user} project={project} />
       </div>
       <div>
-        <PageProjectInstall />
+        <ProjectInstall />
       </div>
     </section>
   );

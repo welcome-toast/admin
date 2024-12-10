@@ -1,8 +1,10 @@
+import PropTypes from "prop-types";
+
 import Button from "../shared/Button";
 import ActionCardList from "./ActionCardList";
 import ProjectPreview from "./ProjectPreview";
 
-function ProjectSetting() {
+function ProjectSetting({ user, project }) {
   function handleSaveActionButtonClick() {
     return;
   }
@@ -14,7 +16,7 @@ function ProjectSetting() {
           <h3 className="mb-4 text-xl font-bold text-gray-900">액션 에디터</h3>
           <Button text={"저장"} onClick={handleSaveActionButtonClick} />
         </div>
-        <ActionCardList />
+        <ActionCardList user={user} project={project} />
       </section>
       <section className="flex flex-col gap-5 border-2 border-solid w-[40vw] h-[90vh]">
         <div className="flex justify-between">
@@ -29,3 +31,8 @@ function ProjectSetting() {
 }
 
 export default ProjectSetting;
+
+ProjectSetting.propTypes = {
+  user: PropTypes.object,
+  project: PropTypes.object,
+};

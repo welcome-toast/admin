@@ -74,5 +74,5 @@ function PageProjectList({ user }) {
 export default PageProjectList;
 
 PageProjectList.propTypes = {
-  user: PropTypes.object,
+  user: PropTypes.object.isRequired,
 };
