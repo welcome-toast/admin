@@ -1,49 +1,28 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 import ActionCardEditor from "./ActionCardEditor";
 import ActionCardHeader from "./ActionCardHeader";
 
-const initialAction = {
-  id: "",
-  name: "",
-  type: "",
-  target_element_id: "",
-  message_title: "",
-  message_body: "",
-  message_button_color_code: "2766DE",
-  background_opacity: 20,
-  project_id: "",
-  created_at: "",
-  updated_at: "",
-};
-
-function ActionCard({ user, project }) {
-  const [action, setAction] = useState(initialAction);
-  function handleSaveActionButtonClick() {
+function ActionCard({ action, setAction }) {
+  async function handleSaveActionButtonClick() {
+    const { data, error } = await supabase
+      .from("action")
+      .upsert({
+        id: action.id,
+        target_element_id: action.target_element_id,
+        message_title: action.message_title,
+        message_body: action.message_body,
+        message_button_color_code: action.message_button_color_code,
+        background_opacity: action.background_opacity,
+      })
+      .select();
+    if (!data) {
+      throw new Error(error.message);
+    }
     return;
   }
-
-  useEffect(() => {
-    async function getAction() {
-      const { data: action, error } = await supabase
-        .from("action")
-        .select("*")
-        .eq("project_id", project.id);
-
-      if (project.owner_id === user.id) {
-        setAction(action[0]);
-      }
-
-      if (!project) {
-        throw new Error(error.message);
-      }
-    }
-    getAction();
-
-    return;
-  }, [user.id, project]);
 
   return (
     <div className="flex flex-col gap-5 px-5 mx-10 border-2 border-black rounded">
@@ -61,4 +40,6 @@ export default ActionCard;
 ActionCard.propTypes = {
   user: PropTypes.object.isRequired,
   project: PropTypes.object.isRequired,
+  action: PropTypes.array.isRequired,
+  setAction: PropTypes.func.isRequired,
 };

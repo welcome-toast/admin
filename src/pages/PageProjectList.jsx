@@ -8,7 +8,7 @@ const initialProject = [
   {
     id: "",
     name: "",
-    owner_id: "",
+    user_id: "",
     link: "",
     api_key: "",
     is_installed: false,
@@ -36,7 +36,7 @@ function PageProjectList({ user }) {
       const { data: project, error } = await supabase
         .from("project")
         .select("*")
-        .eq("owner_id", user.id);
+        .eq("user_id", user.id);
       setProject(project);
 
       if (!project) {
