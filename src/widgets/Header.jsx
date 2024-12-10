@@ -4,7 +4,7 @@ import { CTA_SIGNIN } from "../shared/constant";
 import { supabase } from "../shared/supabase";
 
 function Header() {
-  async function handleButtonClick() {
+  async function handleSignInButtonClick() {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
@@ -18,13 +18,13 @@ function Header() {
   }
 
   return (
-    <header className="mx-auto fixed h-max w-full inset-0">
+    <header className="mx-auto fixed z-100 h-max w-full inset-0 backdrop-blur-xl">
       <nav className="flex justify-between border-solid border-2 boreder-b-gray-100">
-        <div className="my-5 ml-10">
+        <div className="my-4 ml-10">
           <img alt="logo-white-home" src="/src/assets/logo-header.png" width="100" />
         </div>
-        <div className="my-5 mr-10">
-          <Button text={CTA_SIGNIN} onClick={handleButtonClick} />
+        <div className="my-4 mr-10">
+          <Button text={CTA_SIGNIN} onClick={handleSignInButtonClick} />
         </div>
       </nav>
     </header>

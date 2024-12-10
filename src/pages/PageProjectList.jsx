@@ -29,7 +29,7 @@ function PageProjectList({ user }) {
 
   return (
     <section className="flex flex-col items-center justify-center gap-10 mt-20 w-full h-screen">
-      <div>프로젝트 리스트</div>
+      <h3>프로젝트 리스트</h3>
       <div className="flex gap-5">
         {project?.map((proejct) => (
           <button
