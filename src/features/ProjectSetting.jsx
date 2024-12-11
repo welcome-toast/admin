@@ -17,7 +17,7 @@ function ProjectSetting({ user, project }) {
           <h3 className="mb-4 text-xl font-bold text-gray-900">미리 보기</h3>
         </div>
         <div className="w-full h-full">
-          <ProjectPreview />
+          <ProjectPreview project={project} />
         </div>
       </section>
     </div>

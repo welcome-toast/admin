@@ -20,6 +20,7 @@ const initialProject = [
 function PageProjectList({ user }) {
   const [project, setProject] = useState(initialProject);
   const navigate = useNavigate();
+
   function handleProjectClick(projectId) {
     const projectClicked = project.filter((el) => el.id === projectId);
 
