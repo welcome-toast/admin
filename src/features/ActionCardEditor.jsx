@@ -28,48 +28,56 @@ function ActionCardEditor({ action, setAction }) {
           스타일
         </button>
       </div>
-      <div className="flex flex-col gap-5 my-5">
+      <div className="flex flex-col my-3">
         <span>메시지</span>
-        <input
-          type="text"
-          id="settingMessageTitle"
-          name="settingMessageTitle"
-          value={action.message_title}
-          placeholder="제목을 입력하세요"
-          className="border-2 border-solid"
-          onChange={(e) => handleMessageTitleChange(e.target.value)}
-        />
-        <input
-          type="text"
-          id="settingMessageBody"
-          name="settingMessageBody"
-          value={action.message_body}
-          placeholder="본문을 입력하세요"
-          className="border-2 border-solid"
-          onChange={(e) => handleMessageBodyChange(e.target.value)}
-        />
+        <label className="flex flex-col gap-5 my-5">
+          <input
+            type="text"
+            id="settingMessageTitle"
+            name="settingMessageTitle"
+            value={action.message_title}
+            placeholder="제목을 입력하세요"
+            className="border-2 border-solid"
+            onChange={(e) => handleMessageTitleChange(e.target.value)}
+          />
+        </label>
+        <label className="flex flex-col gap-5 my-5">
+          <input
+            type="text"
+            id="settingMessageBody"
+            name="settingMessageBody"
+            value={action.message_body}
+            placeholder="본문을 입력하세요"
+            className="border-2 border-solid"
+            onChange={(e) => handleMessageBodyChange(e.target.value)}
+          />
+        </label>
       </div>
-      <div className="flex flex-col gap-5 my-5">
+      <div className="flex flex-col my-3">
         <span>배경 투명도</span>
-        <input
-          type="range"
-          id="settingBackgroundOpacity"
-          name="settingBackgroundOpacity"
-          value={action.background_opacity}
-          className="border-2 border-solid"
-          onChange={(e) => handleBackgroundOpacityChange(e.target.value)}
-        />
+        <label className="flex flex-col gap-5 my-5">
+          <input
+            type="range"
+            id="settingBackgroundOpacity"
+            name="settingBackgroundOpacity"
+            value={action.background_opacity}
+            className="border-2 border-solid"
+            onChange={(e) => handleBackgroundOpacityChange(e.target.value)}
+          />
+        </label>
       </div>
-      <div className="flex flex-col gap-5 my-5">
+      <div className="flex flex-col my-3">
         <span>메시지 버튼 색상</span>
-        <input
-          type="color"
-          id="settingMessageButtonColor"
-          name="settingMessageButtonColor"
-          value={action.message_button_color_code}
-          className="border-2 border-solid"
-          onChange={(e) => handleMessageButtonColorChange(e.target.value)}
-        />
+        <label className="flex flex-col gap-5 my-5">
+          <input
+            type="color"
+            id="settingMessageButtonColor"
+            name="settingMessageButtonColor"
+            value={action.message_button_color_code}
+            className="border-2 border-solid"
+            onChange={(e) => handleMessageButtonColorChange(e.target.value)}
+          />
+        </label>
       </div>
     </div>
   );
