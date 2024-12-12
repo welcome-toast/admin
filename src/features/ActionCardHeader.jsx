@@ -22,7 +22,7 @@ ActionCardHeader.propTypes = {
     message_title: PropTypes.string,
     message_body: PropTypes.string,
     message_button_color_code: PropTypes.string,
-    background_opacity: PropTypes.number,
+    background_opacity: PropTypes.string,
     project_id: PropTypes.string,
     created_at: PropTypes.string,
     updated_at: PropTypes.string,
