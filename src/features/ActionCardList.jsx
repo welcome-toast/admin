@@ -41,6 +41,26 @@ function ActionCardList({ user, project }) {
     return;
   }, [user.id, project]);
 
+  useEffect(() => {
+    function setTargetElementId(e) {
+      const targetElementId = e.data.target;
+
+      if (targetElementId === "") {
+        return;
+      }
+
+      if (e.origin === project.link) {
+        setAction((state) => ({ ...state, target_element_id: targetElementId }));
+      }
+
+      return;
+    }
+
+    window.addEventListener("message", (e) => setTargetElementId(e));
+
+    return window.removeEventListener("message", (e) => setTargetElementId(e));
+  }, [project.link]);
+
   return (
     <>
       {action === undefined ? (
