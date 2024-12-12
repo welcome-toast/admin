@@ -18,8 +18,32 @@ const initialAction = {
   updated_at: "",
 };
 
-function ActionCardList({ user, project }) {
+function ActionCardList({ user, project, previewRef }) {
   const [action, setAction] = useState(initialAction);
+
+  function sendActionInfo() {
+    const {
+      name,
+      type,
+      target_element_id,
+      message_title,
+      message_body,
+      message_button_color_code,
+      background_opacity,
+    } = action;
+    previewRef.current.contentWindow.postMessage(
+      {
+        name,
+        type,
+        target_element_id,
+        message_title,
+        message_body,
+        message_button_color_code,
+        background_opacity,
+      },
+      project.link,
+    );
+  }
 
   useEffect(() => {
     async function getAction() {
@@ -67,7 +91,7 @@ function ActionCardList({ user, project }) {
         <div className="flex flex-col w-full border-2 border-solid">액션 없음</div>
       ) : (
         <div className="flex flex-col w-full border-2 border-solid">
-          <ActionCard action={action} setAction={setAction} />
+          <ActionCard action={action} setAction={setAction} sendActionInfo={sendActionInfo} />
         </div>
       )}
     </>
@@ -79,4 +103,5 @@ export default ActionCardList;
 ActionCardList.propTypes = {
   user: PropTypes.object.isRequired,
   project: PropTypes.object.isRequired,
+  previewRef: PropTypes.object,
 };
