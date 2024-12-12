@@ -1,18 +1,8 @@
 import PropTypes from "prop-types";
 
 function ActionCardEditor({ action, setAction }) {
-  function handleMessageTitleChange(input) {
-    setAction((state) => ({ ...state, message_title: input }));
-  }
-
-  function handleMessageBodyChange(input) {
-    setAction((state) => ({ ...state, message_body: input }));
-  }
-  function handleBackgroundOpacityChange(input) {
-    setAction((state) => ({ ...state, background_opacity: input }));
-  }
-  function handleMessageButtonColorChange(input) {
-    setAction((state) => ({ ...state, message_button_color_code: input }));
+  function handleActionChange(action, input) {
+    setAction((state) => ({ ...state, [action]: input }));
   }
 
   return (
@@ -38,7 +28,7 @@ function ActionCardEditor({ action, setAction }) {
             value={action.message_title}
             placeholder="제목을 입력하세요"
             className="border-2 border-solid"
-            onChange={(e) => handleMessageTitleChange(e.target.value)}
+            onChange={(e) => handleActionChange("message_title", e.target.value)}
           />
         </label>
         <label className="flex flex-col gap-5 my-5">
@@ -49,7 +39,7 @@ function ActionCardEditor({ action, setAction }) {
             value={action.message_body}
             placeholder="본문을 입력하세요"
             className="border-2 border-solid"
-            onChange={(e) => handleMessageBodyChange(e.target.value)}
+            onChange={(e) => handleActionChange("message_body", e.target.value)}
           />
         </label>
       </div>
@@ -62,7 +52,7 @@ function ActionCardEditor({ action, setAction }) {
             name="settingBackgroundOpacity"
             value={action.background_opacity}
             className="border-2 border-solid"
-            onChange={(e) => handleBackgroundOpacityChange(e.target.value)}
+            onChange={(e) => handleActionChange("background_opacity", e.target.value)}
           />
         </label>
       </div>
@@ -75,7 +65,7 @@ function ActionCardEditor({ action, setAction }) {
             name="settingMessageButtonColor"
             value={action.message_button_color_code}
             className="border-2 border-solid"
-            onChange={(e) => handleMessageButtonColorChange(e.target.value)}
+            onChange={(e) => handleActionChange("message_button_color_code", e.target.value)}
           />
         </label>
       </div>
@@ -94,7 +84,7 @@ ActionCardEditor.propTypes = {
     message_title: PropTypes.string,
     message_body: PropTypes.string,
     message_button_color_code: PropTypes.string,
-    background_opacity: PropTypes.number,
+    background_opacity: PropTypes.string,
     project_id: PropTypes.string,
     created_at: PropTypes.string,
     updated_at: PropTypes.string,
