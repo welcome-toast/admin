@@ -21,7 +21,7 @@ const initialAction = {
 function ActionCardList({ user, project, previewRef }) {
   const [action, setAction] = useState(initialAction);
 
-  function sendActionInfo() {
+  function sendActionInfo(actionInput) {
     const {
       name,
       type,
@@ -30,7 +30,7 @@ function ActionCardList({ user, project, previewRef }) {
       message_body,
       message_button_color_code,
       background_opacity,
-    } = action;
+    } = actionInput;
     previewRef.current.contentWindow.postMessage(
       {
         name,

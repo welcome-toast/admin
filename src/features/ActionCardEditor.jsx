@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 
 function ActionCardEditor({ action, setAction, sendActionInfo }) {
-  function handleActionChange(action, input) {
-    setAction((state) => ({ ...state, [action]: input }));
-    sendActionInfo();
+  function handleActionChange(actionType, input) {
+    setAction((state) => ({ ...state, [actionType]: input }));
+    sendActionInfo({ ...action, [actionType]: input });
   }
 
   return (
