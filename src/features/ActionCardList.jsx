@@ -80,9 +80,9 @@ function ActionCardList({ user, project, previewRef }) {
       return;
     }
 
-    window.addEventListener("message", (e) => setTargetElementId(e));
+    window.addEventListener("message", setTargetElementId);
 
-    return window.removeEventListener("message", (e) => setTargetElementId(e));
+    return window.removeEventListener("message", setTargetElementId);
   }, [project.link]);
 
   return (
