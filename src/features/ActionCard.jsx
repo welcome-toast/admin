@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-// import { useEffect, useState } from "react";
+
 import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 import ActionCardEditor from "./ActionCardEditor";
@@ -18,15 +18,20 @@ function ActionCard({ action, setAction }) {
         background_opacity: action.background_opacity,
       })
       .select();
+
     if (!data) {
       throw new Error(error.message);
     }
+
     return;
   }
 
   return (
     <div className="flex flex-col gap-5 px-5 mx-10 border-2 border-black rounded">
       <ActionCardHeader action={action} />
+      <div>
+        <span>{action.target_element_id === null ? "null" : action.target_element_id}</span>
+      </div>
       <ActionCardEditor action={action} setAction={setAction} />
       <div className="mb-5">
         <Button text={"저장"} onClick={handleSaveActionButtonClick} />
@@ -38,8 +43,6 @@ function ActionCard({ action, setAction }) {
 export default ActionCard;
 
 ActionCard.propTypes = {
-  user: PropTypes.object.isRequired,
-  project: PropTypes.object.isRequired,
-  action: PropTypes.array.isRequired,
+  action: PropTypes.object.isRequired,
   setAction: PropTypes.func.isRequired,
 };
