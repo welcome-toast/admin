@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
 
-function ActionCardEditor({ action, setAction }) {
+function ActionCardEditor({ action, setAction, sendActionInfo }) {
   function handleActionChange(action, input) {
     setAction((state) => ({ ...state, [action]: input }));
+    sendActionInfo();
   }
 
   return (
@@ -90,4 +91,5 @@ ActionCardEditor.propTypes = {
     updated_at: PropTypes.string,
   }).isRequired,
   setAction: PropTypes.func.isRequired,
+  sendActionInfo: PropTypes.func.isRequired,
 };

@@ -5,7 +5,7 @@ import { supabase } from "../shared/supabase";
 import ActionCardEditor from "./ActionCardEditor";
 import ActionCardHeader from "./ActionCardHeader";
 
-function ActionCard({ action, setAction }) {
+function ActionCard({ action, setAction, sendActionInfo }) {
   async function handleSaveActionButtonClick() {
     const { data, error } = await supabase
       .from("action")
@@ -32,7 +32,7 @@ function ActionCard({ action, setAction }) {
       <div>
         <span>{action.target_element_id === null ? "null" : action.target_element_id}</span>
       </div>
-      <ActionCardEditor action={action} setAction={setAction} />
+      <ActionCardEditor action={action} setAction={setAction} sendActionInfo={sendActionInfo} />
       <div className="mb-5">
         <Button text={"저장"} onClick={handleSaveActionButtonClick} />
       </div>
@@ -45,4 +45,5 @@ export default ActionCard;
 ActionCard.propTypes = {
   action: PropTypes.object.isRequired,
   setAction: PropTypes.func.isRequired,
+  sendActionInfo: PropTypes.func.isRequired,
 };
