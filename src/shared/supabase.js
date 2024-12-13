@@ -16,6 +16,14 @@ async function signIn() {
       },
     },
   });
+
+  return;
 }
 
-export { supabase, signIn };
+async function signOut() {
+  const { error } = await supabase.auth.signOut();
+
+  return error;
+}
+
+export { supabase, signIn, signOut };

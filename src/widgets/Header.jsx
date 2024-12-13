@@ -1,11 +1,34 @@
+import PropTypes from "prop-types";
+
 import Button from "../shared/Button";
-import { CTA_SIGNIN } from "../shared/constant";
+import { CTA_SIGNIN, CTA_SIGNOUT } from "../shared/constant";
 
-import { signIn } from "../shared/supabase";
+import { useNavigate } from "react-router-dom";
+import { signIn, signOut } from "../shared/supabase";
 
-function Header() {
+function Header({ user, setUser }) {
+  const navigate = useNavigate();
   function handleSignInButtonClick() {
     signIn();
+    return;
+  }
+
+  async function handleSignOutButtonClick() {
+    const signOutError = await signOut();
+
+    if (signOutError === null) {
+      setUser({
+        id: "",
+        email: "",
+        displayName: "",
+        photoUrl: "",
+        lastSignInAt: "",
+      });
+    }
+
+    navigate("/");
+
+    return;
   }
 
   return (
@@ -15,7 +38,11 @@ function Header() {
           <img alt="logo-white-home" src="/src/assets/logo-header.png" width="100" />
         </div>
         <div className="my-4 mr-10">
-          <Button text={CTA_SIGNIN} onClick={handleSignInButtonClick} />
+          {user.id === "" ? (
+            <Button text={CTA_SIGNIN} onClick={handleSignInButtonClick} />
+          ) : (
+            <Button text={CTA_SIGNOUT} onClick={handleSignOutButtonClick} />
+          )}
         </div>
       </nav>
     </header>
@@ -23,3 +50,8 @@ function Header() {
 }
 
 export default Header;
+
+Header.propTypes = {
+  user: PropTypes.object.isRequired,
+  setUser: PropTypes.func.isRequired,
+};

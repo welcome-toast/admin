@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header user={user} setUser={setUser} />
       <Routes>
         <Route path="/" exact element={<PageHome user={user} setUser={setUser} />} />
         <Route path="project">
