@@ -33,20 +33,24 @@ function PageProjectList({ user }) {
   }
 
   useEffect(() => {
-    async function getProject() {
-      const { data: project, error } = await supabase
-        .from("project")
-        .select("*")
-        .eq("user_id", user.id);
-      setProject(project);
+    if (user.id !== "" && user.id !== undefined && user.id !== null) {
+      async function getProject() {
+        const { data: project, error } = await supabase
+          .from("project")
+          .select("*")
+          .eq("user_id", user.id);
 
-      if (!project) {
-        throw new Error(error.message);
+        setProject(project);
+
+        if (!project) {
+          throw new Error(error.message);
+        }
+        return;
       }
-      return;
+
+      getProject();
     }
-    getProject();
-  }, [user.id]);
+  }, [user.id, user]);
 
   return (
     <section className="flex flex-col items-center justify-center gap-10 mt-20 w-full h-screen">

@@ -9,31 +9,22 @@ import { signIn, supabase } from "../shared/supabase";
 function PageHome({ user, setUser }) {
   const navigate = useNavigate();
 
+  function handleSignInButtonClick() {
+    signIn();
+    return;
+  }
+
   useEffect(() => {
-    function setUserInfo(response) {
-      if (response) {
-        const { id, last_sign_in_at: lastSignInAt } = response.user;
-        const { email, full_name: displayName, avatar_url: photoUrl } = response.user.user_metadata;
-        setUser((state) => ({ ...state, id, email, displayName, photoUrl, lastSignInAt }));
-      }
-      return;
-    }
-
-    async function getAuthSession() {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setUserInfo(session);
-      if (user.id !== "" && user.id !== undefined && user.id !== null) {
-        navigate("/project");
-      }
-    }
-    getAuthSession();
-
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUserInfo(session);
+      if (session) {
+        const { id, last_sign_in_at: lastSignInAt } = session.user;
+        const { email, full_name: displayName, avatar_url: photoUrl } = session.user.user_metadata;
+
+        setUser((state) => ({ ...state, id, email, displayName, photoUrl, lastSignInAt }));
+      }
+
       if (user.id !== "" && user.id !== undefined && user.id !== null) {
         navigate("/project");
       }
@@ -42,16 +33,12 @@ function PageHome({ user, setUser }) {
     return () => subscription.unsubscribe();
   }, [user.id, setUser, navigate]);
 
-  function handleButtonClick() {
-    signIn();
-  }
-
   return (
     <main className="flex flex-col items-center justify-center gap-10 mt-20 w-full h-screen">
       <div>
         <span className="text-5xl	font-bold">{TITLE_HOME}</span>
       </div>
-      <Button text={CTA_SIGNIN} onClick={handleButtonClick} />
+      <Button text={CTA_SIGNIN} onClick={handleSignInButtonClick} />
       <div className="flex gap-10">
         <div>image #1</div>
         <div>image #2</div>
