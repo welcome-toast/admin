@@ -4,7 +4,7 @@ import Button from "../shared/Button";
 import { CTA_SIGNIN, TITLE_HOME } from "../shared/constant";
 
 import { useEffect } from "react";
-import { supabase } from "../shared/supabase";
+import { signIn, supabase } from "../shared/supabase";
 
 function PageHome({ user, setUser }) {
   const navigate = useNavigate();
@@ -42,17 +42,8 @@ function PageHome({ user, setUser }) {
     return () => subscription.unsubscribe();
   }, [user.id, setUser, navigate]);
 
-  async function handleButtonClick() {
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: import.meta.env.VITE_SUPABASE_GOOGLE_REDIRECT_URL,
-        queryParams: {
-          access_type: "offline",
-          prompt: "consent",
-        },
-      },
-    });
+  function handleButtonClick() {
+    signIn();
   }
 
   return (

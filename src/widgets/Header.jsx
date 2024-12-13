@@ -1,20 +1,11 @@
 import Button from "../shared/Button";
 import { CTA_SIGNIN } from "../shared/constant";
 
-import { supabase } from "../shared/supabase";
+import { signIn } from "../shared/supabase";
 
 function Header() {
-  async function handleSignInButtonClick() {
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: import.meta.env.VITE_SUPABASE_GOOGLE_REDIRECT_URL,
-        queryParams: {
-          access_type: "offline",
-          prompt: "consent",
-        },
-      },
-    });
+  function handleSignInButtonClick() {
+    signIn();
   }
 
   return (
