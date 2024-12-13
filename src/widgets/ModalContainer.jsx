@@ -1,7 +1,18 @@
+import { useState } from "react";
 import Button from "../shared/Button";
 
 function ModalContainer() {
-  function handleProjectCreateButtonClick() {
+  const [input, setInput] = useState({
+    name: "",
+    link: "",
+  });
+
+  function handleInputChange(type, input) {
+    setInput((state) => ({ ...state, [type]: input }));
+    return;
+  }
+
+  function handleCreateButtonClick() {
     return;
   }
 
@@ -16,9 +27,10 @@ function ModalContainer() {
           type="text"
           id="projectTitle"
           name="projectTitle"
-          value=""
+          value={input.name}
           placeholder="(예시) 웰컴토스트 12월 런칭 하이라이트"
           className="border-2 border-solid rounded font-normal w-full h-11 p-5"
+          onChange={(e) => handleInputChange("name", e.target.value)}
         />
       </label>
       <label className="flex flex-col gap-2 w-96 font-bold text-gray-900 mt-5">
@@ -30,12 +42,13 @@ function ModalContainer() {
           type="text"
           id="projectLink"
           name="projectLink"
-          value=""
+          value={input.link}
           placeholder="(예시) https://welcome-toast.io/"
           className="border-2 border-solid rounded font-normal w-full h-11 p-5"
+          onChange={(e) => handleInputChange("link", e.target.value)}
         />
       </label>
-      <Button text="생성" onClick={handleProjectCreateButtonClick} />
+      <Button text="생성" onClick={handleCreateButtonClick} />
     </div>
   );
 }
