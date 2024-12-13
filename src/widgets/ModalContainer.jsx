@@ -1,4 +1,10 @@
+import Button from "../shared/Button";
+
 function ModalContainer() {
+  function handleProjectCreateButtonClick() {
+    return;
+  }
+
   return (
     <div className="flex flex-col gap-5 border-2 border-solid border-black w-full h-full p-20">
       <div>
@@ -29,6 +35,7 @@ function ModalContainer() {
           className="border-2 border-solid rounded font-normal w-full h-11 p-5"
         />
       </label>
+      <Button text="생성" onClick={handleProjectCreateButtonClick} />
     </div>
   );
 }
