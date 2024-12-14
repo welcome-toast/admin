@@ -4,7 +4,7 @@ import { useState } from "react";
 import ActionCardList from "./ActionCardList";
 import ProjectPreview from "./ProjectPreview";
 
-function ProjectSetting({ user, project }) {
+function ProjectSetting({ project }) {
   const [previewRef, setPreviewRef] = useState(null);
 
   return (
@@ -13,7 +13,7 @@ function ProjectSetting({ user, project }) {
         <div className="flex justify-between">
           <h3 className="mb-4 font-bold text-gray-900 text-xl">액션 에디터</h3>
         </div>
-        <ActionCardList user={user} project={project} previewRef={previewRef} />
+        <ActionCardList project={project} previewRef={previewRef} />
       </section>
       <section className="flex h-[90vh] w-[70vw] flex-col gap-5 border-2 border-solid">
         <div className="flex justify-between">
@@ -30,6 +30,5 @@ function ProjectSetting({ user, project }) {
 export default ProjectSetting;
 
 ProjectSetting.propTypes = {
-  user: PropTypes.object,
   project: PropTypes.object,
 };
