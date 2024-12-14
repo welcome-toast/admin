@@ -8,18 +8,30 @@ function ModalContainer() {
     link: "",
   });
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   function handleInputChange(type, input) {
     setInput((state) => ({ ...state, [type]: input }));
     return;
   }
 
   async function handleCreateButtonClick() {
+    if (input.name === "" || input.link === "") {
+      setErrorMessage("생성할 프로젝트 이름과 도메인을 모두 입력해 주세요.");
+      return;
+    }
+
     const { projectResult, error } = await createProject(input);
 
     if (projectResult === null) {
-      throw new Error(error);
+      if (error.message.includes("duplicate key")) {
+        setErrorMessage("이미 등록된 도메인이에요. 다른 URL을 등록해주세요.");
+        return;
+      }
     }
 
+    setInput({ name: "", link: "" });
+    setErrorMessage("");
     return;
   }
 
@@ -55,6 +67,9 @@ function ModalContainer() {
           onChange={(e) => handleInputChange("link", e.target.value)}
         />
       </label>
+      <div className="my-1">
+        <span className="text-red-400">{errorMessage}</span>
+      </div>
       <Button text="생성" onClick={handleCreateButtonClick} />
     </div>
   );
