@@ -25,7 +25,7 @@ function PageProjectList({ user }) {
   function handleProjectClick(projectId) {
     const projectClicked = project.filter((el) => el.id === projectId);
 
-    navigate(`/project/${projectId}`, {
+    navigate(`/project/${projectId}/setting`, {
       state: {
         user,
         project: projectClicked[0],
@@ -43,11 +43,12 @@ function PageProjectList({ user }) {
         .select("*")
         .eq("user_id", user.id);
 
-      setProject(project);
-
       if (!project) {
         throw new Error(error.message);
       }
+
+      setProject(project);
+
       return;
     }
 
@@ -70,18 +71,18 @@ function PageProjectList({ user }) {
       <div className="flex flex-col">
         <h3 className="mb-4 font-bold text-gray-900 text-xl">프로젝트 리스트</h3>
         <div className="flex flex-col gap-5 rounded border-2 border-solid p-5">
-          {project?.map((proejct) => (
+          {project?.map((project) => (
             <button
-              key={proejct.id}
+              key={project.id}
               type="button"
-              onClick={() => handleProjectClick(proejct.id)}
+              onClick={() => handleProjectClick(project.id)}
               className="rounded border-2 border-solid bg-black p-10 text-white"
             >
               <ul className="flex gap-3">
-                <li>{proejct.name}</li>
-                <li>{proejct.created_at}</li>
-                <li>{proejct.link}</li>
-                <li>{proejct.is_installed ? "true" : "false"}</li>
+                <li>{project.name}</li>
+                <li>{project.created_at}</li>
+                <li>{project.link}</li>
+                <li>{project.is_installed ? "true" : "false"}</li>
               </ul>
             </button>
           ))}
