@@ -30,6 +30,9 @@
       },
       "correctness": {
         "noUnusedImports": "error"
+      },
+      "nursery": {
+        "useSortedClasses": "error"
       }
     }
   },
