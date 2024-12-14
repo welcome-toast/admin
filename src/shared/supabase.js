@@ -26,4 +26,10 @@ async function signOut() {
   return error;
 }
 
-export { supabase, signIn, signOut };
+async function createProject(input) {
+  const { data: projectResult, error } = await supabase.from("project").insert([input]).select();
+
+  return { projectResult, error };
+}
+
+export { supabase, signIn, signOut, createProject };

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "../shared/Button";
+import { createProject } from "../shared/supabase";
 
 function ModalContainer() {
   const [input, setInput] = useState({
@@ -12,7 +13,13 @@ function ModalContainer() {
     return;
   }
 
-  function handleCreateButtonClick() {
+  async function handleCreateButtonClick() {
+    const { projectResult, error } = await createProject(input);
+
+    if (projectResult === null) {
+      throw new Error(error);
+    }
+
     return;
   }
 
