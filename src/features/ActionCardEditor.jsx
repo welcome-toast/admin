@@ -64,9 +64,7 @@ function ActionCardEditor({ action, setAction, sendActionInfo }) {
             type="color"
             id="settingMessageButtonColor"
             name="settingMessageButtonColor"
-            value={
-              action.message_button_color_code === "" ? "#ffffff" : action.message_button_color_code
-            }
+            value={action.message_button_color_code}
             className="border-2 border-solid"
             onChange={(e) => handleActionChange("message_button_color_code", e.target.value)}
           />
