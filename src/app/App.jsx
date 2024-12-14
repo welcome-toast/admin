@@ -9,7 +9,8 @@ import PageProjectList from "../pages/PageProjectList";
 import Footer from "../widgets/Footer";
 import Header from "../widgets/Header";
 import "../index.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getSessionSignIn } from "../shared/supabase";
 
 function App() {
   const [user, setUser] = useState({
@@ -19,6 +20,19 @@ function App() {
     photoUrl: "",
     lastSignInAt: "",
   });
+
+  useEffect(() => {
+    async function getSession() {
+      const session = await getSessionSignIn();
+      if (session) {
+        const { id, last_sign_in_at: lastSignInAt } = session.user;
+        const { email, full_name: displayName, avatar_url: photoUrl } = session.user.user_metadata;
+
+        setUser((state) => ({ ...state, id, email, displayName, photoUrl, lastSignInAt }));
+      }
+    }
+    getSession();
+  }, []);
 
   return (
     <>

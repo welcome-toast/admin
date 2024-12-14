@@ -20,6 +20,13 @@ async function signIn() {
   return;
 }
 
+async function getSessionSignIn() {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  return session;
+}
+
 async function signOut() {
   const { error } = await supabase.auth.signOut();
 
@@ -32,4 +39,4 @@ async function createProject(input) {
   return { projectResult, error };
 }
 
-export { supabase, signIn, signOut, createProject };
+export { supabase, signIn, getSessionSignIn, signOut, createProject };
