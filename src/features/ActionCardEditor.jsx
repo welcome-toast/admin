@@ -8,20 +8,20 @@ function ActionCardEditor({ action, setAction, sendActionInfo }) {
 
   return (
     <div>
-      <div className="flex justify-center border-2 border-solid rounded h-10">
+      <div className="flex h-10 justify-center rounded border-2 border-solid">
         <button
           type="button"
-          className="border-2 border-gray rounded bg-black text-white w-full h-full"
+          className="h-full w-full rounded border-2 border-gray bg-black text-white"
         >
           콘텐츠
         </button>
-        <button type="button" className="border-2 border-gray rounded w-full h-full">
+        <button type="button" className="h-full w-full rounded border-2 border-gray">
           스타일
         </button>
       </div>
-      <div className="flex flex-col my-3">
+      <div className="my-3 flex flex-col">
         <span>메시지</span>
-        <label className="flex flex-col gap-5 my-5">
+        <label className="my-5 flex flex-col gap-5">
           <input
             type="text"
             id="settingMessageTitle"
@@ -32,7 +32,7 @@ function ActionCardEditor({ action, setAction, sendActionInfo }) {
             onChange={(e) => handleActionChange("message_title", e.target.value)}
           />
         </label>
-        <label className="flex flex-col gap-5 my-5">
+        <label className="my-5 flex flex-col gap-5">
           <input
             type="text"
             id="settingMessageBody"
@@ -44,9 +44,9 @@ function ActionCardEditor({ action, setAction, sendActionInfo }) {
           />
         </label>
       </div>
-      <div className="flex flex-col my-3">
+      <div className="my-3 flex flex-col">
         <span>배경 투명도</span>
-        <label className="flex flex-col gap-5 my-5">
+        <label className="my-5 flex flex-col gap-5">
           <input
             type="range"
             id="settingBackgroundOpacity"
@@ -57,9 +57,9 @@ function ActionCardEditor({ action, setAction, sendActionInfo }) {
           />
         </label>
       </div>
-      <div className="flex flex-col my-3">
+      <div className="my-3 flex flex-col">
         <span>메시지 버튼 색상</span>
-        <label className="flex flex-col gap-5 my-5">
+        <label className="my-5 flex flex-col gap-5">
           <input
             type="color"
             id="settingMessageButtonColor"

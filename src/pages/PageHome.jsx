@@ -34,9 +34,9 @@ function PageHome({ user, setUser }) {
   }, [user.id, setUser, navigate]);
 
   return (
-    <main className="flex flex-col items-center justify-center gap-10 mt-20 w-full h-screen">
+    <main className="mt-20 flex h-screen w-full flex-col items-center justify-center gap-10">
       <div>
-        <span className="text-5xl	font-bold">{TITLE_HOME}</span>
+        <span className="font-bold text-5xl">{TITLE_HOME}</span>
       </div>
       <Button text={CTA_SIGNIN} onClick={handleSignInButtonClick} />
       <div className="flex gap-10">

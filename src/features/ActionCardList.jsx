@@ -88,9 +88,9 @@ function ActionCardList({ user, project, previewRef }) {
   return (
     <>
       {action === undefined ? (
-        <div className="flex flex-col w-full border-2 border-solid">액션 없음</div>
+        <div className="flex w-full flex-col border-2 border-solid">액션 없음</div>
       ) : (
-        <div className="flex flex-col w-full border-2 border-solid">
+        <div className="flex w-full flex-col border-2 border-solid">
           <ActionCard action={action} setAction={setAction} sendActionInfo={sendActionInfo} />
         </div>
       )}

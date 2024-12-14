@@ -27,7 +27,7 @@ function ActionCard({ action, setAction, sendActionInfo }) {
   }
 
   return (
-    <div className="flex flex-col gap-5 px-5 mx-10 border-2 border-black rounded">
+    <div className="mx-10 flex flex-col gap-5 rounded border-2 border-black px-5">
       <ActionCardHeader action={action} />
       <div>
         <span>{action.target_element_id === null ? "null" : action.target_element_id}</span>

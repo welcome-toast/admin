@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer className="py-5 text-center w-full">
+    <footer className="w-full py-5 text-center">
       <div>Footer</div>
     </footer>
   );

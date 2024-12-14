@@ -66,16 +66,16 @@ function PageProjectList({ user }) {
   }, [user.id, user]);
 
   return (
-    <section className="flex items-center justify-center gap-10 mt-20 w-full h-screen">
+    <section className="mt-20 flex h-screen w-full items-center justify-center gap-10">
       <div className="flex flex-col">
-        <h3 className="mb-4 text-xl font-bold text-gray-900">프로젝트 리스트</h3>
-        <div className="flex flex-col gap-5 border-2 border-solid rounded p-5">
+        <h3 className="mb-4 font-bold text-gray-900 text-xl">프로젝트 리스트</h3>
+        <div className="flex flex-col gap-5 rounded border-2 border-solid p-5">
           {project?.map((proejct) => (
             <button
               key={proejct.id}
               type="button"
               onClick={() => handleProjectClick(proejct.id)}
-              className="border-solid border-2 rounded bg-black text-white p-10"
+              className="rounded border-2 border-solid bg-black p-10 text-white"
             >
               <ul className="flex gap-3">
                 <li>{proejct.name}</li>

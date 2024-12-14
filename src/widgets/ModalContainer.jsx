@@ -47,11 +47,11 @@ function ModalContainer() {
   }
 
   return (
-    <div className="flex flex-col gap-5 border-2 border-solid border-black w-full h-full p-20">
+    <div className="flex h-full w-full flex-col gap-5 border-2 border-black border-solid p-20">
       <div>
-        <h3 className="text-xl font-bold text-gray-900">프로젝트 생성</h3>
+        <h3 className="font-bold text-gray-900 text-xl">프로젝트 생성</h3>
       </div>
-      <label className="flex flex-col gap-2 w-96 font-bold text-gray-900 mt-5">
+      <label className="mt-5 flex w-96 flex-col gap-2 font-bold text-gray-900">
         프로젝트 이름
         <input
           type="text"
@@ -59,13 +59,13 @@ function ModalContainer() {
           name="projectTitle"
           value={input.name}
           placeholder="(예시) 웰컴토스트 12월 런칭 하이라이트"
-          className={`${errorMessage.includes("이름") ? "border-red-400" : "border-gray-500"} border-2 border-solid rounded font-normal w-full h-11 p-5`}
+          className={`${errorMessage.includes("이름") ? "border-red-400" : "border-gray-500"} h-11 w-full rounded border-2 border-solid p-5 font-normal`}
           onChange={(e) => handleInputChange("name", e.target.value)}
         />
       </label>
-      <label className="flex flex-col gap-2 w-96 font-bold text-gray-900 mt-5">
+      <label className="mt-5 flex w-96 flex-col gap-2 font-bold text-gray-900">
         프로젝트 도메인
-        <span className="text-gray-400 italic font-normal">
+        <span className="font-normal text-gray-400 italic">
           액션이 적용될 웹페이지 URL 앞 부분을 입력해주세요
         </span>
         <input
@@ -74,7 +74,7 @@ function ModalContainer() {
           name="projectLink"
           value={input.link}
           placeholder="(예시) https://welcome-toast.io/"
-          className={`${errorMessage.includes("도메인") ? "border-red-400" : "border-gray-500"} border-2 border-solid rounded font-normal w-full h-11 p-5`}
+          className={`${errorMessage.includes("도메인") ? "border-red-400" : "border-gray-500"} h-11 w-full rounded border-2 border-solid p-5 font-normal`}
           onChange={(e) => handleInputChange("link", e.target.value)}
         />
       </label>
