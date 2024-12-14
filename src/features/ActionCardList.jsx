@@ -11,14 +11,14 @@ const initialAction = {
   target_element_id: "",
   message_title: "",
   message_body: "",
-  message_button_color_code: "",
+  message_button_color_code: "#000000",
   background_opacity: "20",
   project_id: "",
   created_at: "",
   updated_at: "",
 };
 
-function ActionCardList({ user, project, previewRef }) {
+function ActionCardList({ project, previewRef }) {
   const [action, setAction] = useState(initialAction);
 
   function sendActionInfo(actionInput) {
@@ -52,18 +52,19 @@ function ActionCardList({ user, project, previewRef }) {
         .select("*")
         .eq("project_id", project.id);
 
-      if (project.user_id === user.id) {
-        setAction(action[0]);
+      if (error !== null) {
+        throw new Error(error);
       }
 
-      if (action === undefined) {
-        throw new Error(error);
+      if (action.length === 0) {
+        setAction(initialAction);
+      } else {
+        setAction(action[0]);
       }
     }
     getAction();
-
     return;
-  }, [user.id, project]);
+  }, [project.id]);
 
   useEffect(() => {
     function setTargetElementId(e) {
@@ -76,7 +77,6 @@ function ActionCardList({ user, project, previewRef }) {
       if (e.origin === project.link) {
         setAction((state) => ({ ...state, target_element_id: targetElementId }));
       }
-
       return;
     }
 
@@ -87,13 +87,9 @@ function ActionCardList({ user, project, previewRef }) {
 
   return (
     <>
-      {action === undefined ? (
-        <div className="flex w-full flex-col border-2 border-solid">액션 없음</div>
-      ) : (
-        <div className="flex w-full flex-col border-2 border-solid">
-          <ActionCard action={action} setAction={setAction} sendActionInfo={sendActionInfo} />
-        </div>
-      )}
+      <div className="flex w-full flex-col border-2 border-solid">
+        <ActionCard action={action} setAction={setAction} sendActionInfo={sendActionInfo} />
+      </div>
     </>
   );
 }
@@ -101,7 +97,6 @@ function ActionCardList({ user, project, previewRef }) {
 export default ActionCardList;
 
 ActionCardList.propTypes = {
-  user: PropTypes.object.isRequired,
   project: PropTypes.object.isRequired,
   previewRef: PropTypes.object,
 };
