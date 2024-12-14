@@ -16,8 +16,19 @@ function ModalContainer() {
   }
 
   async function handleCreateButtonClick() {
-    if (input.name === "" || input.link === "") {
-      setErrorMessage("생성할 프로젝트 이름과 도메인을 모두 입력해 주세요.");
+    const name = input.name.trim();
+    const link = input.link.trim();
+
+    if (name === "" || link === "") {
+      if (name === "" && link === "") {
+        setErrorMessage("생성할 프로젝트 이름과 도메인을 모두 입력해주세요.");
+        return;
+      }
+      setErrorMessage(
+        name === ""
+          ? "생성할 프로젝트 이름을 입력해주세요"
+          : "생성할 프로젝트 도메인을 입력해주세요",
+      );
       return;
     }
 
@@ -48,7 +59,7 @@ function ModalContainer() {
           name="projectTitle"
           value={input.name}
           placeholder="(예시) 웰컴토스트 12월 런칭 하이라이트"
-          className="border-2 border-solid rounded font-normal w-full h-11 p-5"
+          className={`${errorMessage.includes("이름") ? "border-red-400" : "border-gray-500"} border-2 border-solid rounded font-normal w-full h-11 p-5`}
           onChange={(e) => handleInputChange("name", e.target.value)}
         />
       </label>
@@ -58,12 +69,12 @@ function ModalContainer() {
           액션이 적용될 웹페이지 URL 앞 부분을 입력해주세요
         </span>
         <input
-          type="text"
+          type="url"
           id="projectLink"
           name="projectLink"
           value={input.link}
           placeholder="(예시) https://welcome-toast.io/"
-          className="border-2 border-solid rounded font-normal w-full h-11 p-5"
+          className={`${errorMessage.includes("도메인") ? "border-red-400" : "border-gray-500"} border-2 border-solid rounded font-normal w-full h-11 p-5`}
           onChange={(e) => handleInputChange("link", e.target.value)}
         />
       </label>
