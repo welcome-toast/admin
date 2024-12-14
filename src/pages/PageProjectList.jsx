@@ -34,23 +34,35 @@ function PageProjectList({ user }) {
   }
 
   useEffect(() => {
-    if (user.id !== "" && user.id !== undefined && user.id !== null) {
-      async function getProject() {
-        const { data: project, error } = await supabase
-          .from("project")
-          .select("*")
-          .eq("user_id", user.id);
-
-        setProject(project);
-
-        if (!project) {
-          throw new Error(error.message);
-        }
-        return;
-      }
-
-      getProject();
+    if (user.id === "" || user.id === undefined || user.id === null) {
+      return;
     }
+    async function getProject() {
+      const { data: project, error } = await supabase
+        .from("project")
+        .select("*")
+        .eq("user_id", user.id);
+
+      setProject(project);
+
+      if (!project) {
+        throw new Error(error.message);
+      }
+      return;
+    }
+
+    getProject();
+
+    const channels = supabase
+      .channel("custom-all-channel")
+      .on("postgres_changes", { event: "*", schema: "public", table: "project" }, (payload) => {
+        if (payload.eventType !== null) {
+          getProject();
+        }
+      })
+      .subscribe();
+
+    return () => channels.unsubscribe();
   }, [user.id, user]);
 
   return (
