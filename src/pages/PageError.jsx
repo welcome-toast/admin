@@ -1,5 +1,5 @@
 function PageError() {
-  return <></>;
+  return <div>PageError</div>;
 }
 
 export default PageError;

@@ -1,5 +1,5 @@
 function ProjectInstall() {
-  return <></>;
+  return <div>Project Install</div>;
 }
 
 export default ProjectInstall;
