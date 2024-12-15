@@ -35,7 +35,7 @@ function Header({ user, setUser }) {
     <header className="fixed inset-0 z-100 mx-auto h-max w-full backdrop-blur-xl">
       <nav className="flex justify-between border-2 border-b-gray-100 border-solid">
         <div className="my-4 ml-10">
-          <img alt="logo-white-home" src="/src/assets/logo-header.png" width="100" />
+          <img alt="logo-white-home" src="/assets/logo-header.png" width="100" />
         </div>
         <div className="my-4 mr-10">
           {user.id === "" ? (
