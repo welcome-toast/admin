@@ -30,7 +30,7 @@ function ActionCard({ action, setAction, sendActionInfo }) {
     <div className="mx-10 flex flex-col gap-5 rounded border-2 border-black px-5">
       <ActionCardHeader action={action} />
       <div>
-        <span>{action.target_element_id === null ? "null" : action.target_element_id}</span>
+        <span>{action.target_element_id}</span>
       </div>
       <ActionCardEditor action={action} setAction={setAction} sendActionInfo={sendActionInfo} />
       <div className="mb-5">

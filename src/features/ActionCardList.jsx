@@ -74,7 +74,7 @@ function ActionCardList({ project, previewRef }) {
         return;
       }
 
-      if (e.origin === project.link) {
+      if (project.link.includes(e.origin)) {
         setAction((state) => ({ ...state, target_element_id: targetElementId }));
       }
       return;
@@ -82,7 +82,7 @@ function ActionCardList({ project, previewRef }) {
 
     window.addEventListener("message", setTargetElementId);
 
-    return window.removeEventListener("message", setTargetElementId);
+    return () => window.removeEventListener("message", setTargetElementId);
   }, [project.link]);
 
   return (
