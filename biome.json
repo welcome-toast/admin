@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "ignore": ["**/.git", "**/node_modules"]
+    "ignore": ["**/.git", "**/node_modules", "**/dist", "**/.netlify"]
   },
   "formatter": {
     "enabled": true,
