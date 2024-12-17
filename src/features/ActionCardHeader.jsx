@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 function ActionCardHeader({ action }) {
   return (
     <div className="flex">
-      <div className="my-5 flex w-full justify-between">
+      <div className="mt-5 flex w-full justify-between">
         <span>{action.name}</span>
         <span>{action.type}</span>
       </div>
