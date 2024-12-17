@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { supabase } from "../shared/supabase";
 import ActionCard from "./ActionCard";
 
@@ -18,9 +18,7 @@ const initialAction = {
   updated_at: "",
 };
 
-function ActionCardList({ project, previewRef }) {
-  const [action, setAction] = useState(initialAction);
-
+function ActionCardList({ project, action, setAction, previewRef }) {
   function sendActionInfo(actionInput) {
     const {
       name,
@@ -47,7 +45,7 @@ function ActionCardList({ project, previewRef }) {
 
   useEffect(() => {
     async function getAction() {
-      const { data: action, error } = await supabase
+      const { data: resultAction, error } = await supabase
         .from("action")
         .select("*")
         .eq("project_id", project.id);
@@ -56,15 +54,15 @@ function ActionCardList({ project, previewRef }) {
         throw new Error(error);
       }
 
-      if (action.length === 0) {
+      if (resultAction.length === 0) {
         setAction(initialAction);
       } else {
-        setAction(action[0]);
+        setAction(resultAction[0]);
       }
     }
     getAction();
     return;
-  }, [project.id]);
+  }, [project.id, setAction]);
 
   useEffect(() => {
     function setTargetElementId(e) {
@@ -83,7 +81,7 @@ function ActionCardList({ project, previewRef }) {
     window.addEventListener("message", setTargetElementId);
 
     return () => window.removeEventListener("message", setTargetElementId);
-  }, [project.link]);
+  }, [project.link, setAction]);
 
   return (
     <>
@@ -98,5 +96,19 @@ export default ActionCardList;
 
 ActionCardList.propTypes = {
   project: PropTypes.object.isRequired,
+  action: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    target_element_id: PropTypes.string,
+    message_title: PropTypes.string,
+    message_body: PropTypes.string,
+    message_button_color_code: PropTypes.string,
+    background_opacity: PropTypes.string,
+    project_id: PropTypes.string,
+    created_at: PropTypes.string,
+    updated_at: PropTypes.string,
+  }).isRequired,
+  setAction: PropTypes.func.isRequired,
   previewRef: PropTypes.object,
 };
