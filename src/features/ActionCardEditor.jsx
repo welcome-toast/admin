@@ -12,13 +12,13 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
 
   return (
     <div>
-      <div className="my-3 flex flex-col">
+      <div className="mb-3 flex flex-col">
         <span className="font-bold text-gray-900 text-l">액션 이름</span>
         <label className="my-5 flex flex-col gap-5">
           <input
             type="text"
-            id="settingActionName"
-            name="settingActionName"
+            id="actionName"
+            name="actionName"
             value={action.name}
             placeholder="액션 이름을 입력하세요"
             className="h-10 border-2 border-solid"
@@ -42,8 +42,8 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
         <label className="my-5 flex flex-col gap-5">
           <input
             type="text"
-            id="settingMessageTitle"
-            name="settingMessageTitle"
+            id="actionMessageTitle"
+            name="actionMessageTitle"
             value={action.message_title}
             placeholder="제목을 입력하세요"
             className="h-10 border-2 border-solid"
@@ -53,8 +53,8 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
         <label className="my-5 flex flex-col gap-5">
           <input
             type="text"
-            id="settingMessageBody"
-            name="settingMessageBody"
+            id="actionMessageBody"
+            name="actionMessageBody"
             value={action.message_body}
             placeholder="본문을 입력하세요"
             className="h-10 border-2 border-solid"
@@ -67,8 +67,8 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
         <label className="my-5 flex flex-col gap-5">
           <input
             type="range"
-            id="settingBackgroundOpacity"
-            name="settingBackgroundOpacity"
+            id="actionBackgroundOpacity"
+            name="actionBackgroundOpacity"
             value={action.background_opacity}
             className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
             onChange={(e) => handleActionChange("background_opacity", e.target.value)}
@@ -80,8 +80,8 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
         <label className="my-5 flex flex-col gap-5">
           <input
             type="color"
-            id="settingMessageButtonColor"
-            name="settingMessageButtonColor"
+            id="actionMessageButtonColor"
+            name="actionMessageButtonColor"
             value={action.message_button_color}
             className="border-2 border-solid"
             onChange={(e) => handleActionChange("message_button_color", e.target.value)}
