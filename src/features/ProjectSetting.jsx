@@ -46,12 +46,7 @@ function ProjectSetting({ project }) {
             <h3 className="mb-4 font-bold text-gray-900 text-xl">미리 보기</h3>
           </div>
           <div className="h-full w-full">
-            <ProjectPreview
-              project={project}
-              action={action}
-              initialAction={initialAction}
-              setPreviewRef={setPreviewRef}
-            />
+            <ProjectPreview project={project} action={action} setPreviewRef={setPreviewRef} />
           </div>
         </section>
       )}
