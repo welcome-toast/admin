@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ActionCardList from "./ActionCardList";
 import ProjectPreview from "./ProjectPreview";
 
@@ -11,7 +11,7 @@ const initialAction = {
   target_element_id: "",
   message_title: "",
   message_body: "",
-  message_button_color_code: "#000000",
+  message_button_color: "#000000",
   background_opacity: "20",
   project_id: "",
   created_at: "",
@@ -21,6 +21,7 @@ const initialAction = {
 function ProjectSetting({ project }) {
   const [action, setAction] = useState(initialAction);
   const [previewRef, setPreviewRef] = useState(null);
+  const isActionSavedRef = useRef(false);
 
   return (
     <div className="flex gap-10">
@@ -36,6 +37,7 @@ function ProjectSetting({ project }) {
           action={action}
           setAction={setAction}
           previewRef={previewRef}
+          isActionSavedRef={isActionSavedRef}
         />
       </section>
       {action.id === "" ? null : (
