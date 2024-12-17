@@ -31,6 +31,7 @@ function ActionCard({ projectId, action, setAction, isActionSavedRef, sendAction
       const { data, error } = await supabase
         .from("action")
         .update({
+          name: action.name,
           target_element_id: action.target_element_id,
           message_title: action.message_title,
           message_body: action.message_body,
