@@ -11,14 +11,14 @@ const initialAction = {
   target_element_id: "",
   message_title: "",
   message_body: "",
-  message_button_color_code: "#000000",
+  message_button_color: "#000000",
   background_opacity: "20",
   project_id: "",
   created_at: "",
   updated_at: "",
 };
 
-function ActionCardList({ project, action, setAction, previewRef }) {
+function ActionCardList({ project, action, setAction, isActionSavedRef, previewRef }) {
   function sendActionInfo(actionInput) {
     const {
       name,
@@ -26,7 +26,7 @@ function ActionCardList({ project, action, setAction, previewRef }) {
       target_element_id,
       message_title,
       message_body,
-      message_button_color_code,
+      message_button_color,
       background_opacity,
     } = actionInput;
     previewRef.current.contentWindow.postMessage(
@@ -36,7 +36,7 @@ function ActionCardList({ project, action, setAction, previewRef }) {
         target_element_id,
         message_title,
         message_body,
-        message_button_color_code,
+        message_button_color,
         background_opacity,
       },
       project.link,
@@ -57,12 +57,13 @@ function ActionCardList({ project, action, setAction, previewRef }) {
       if (resultAction.length === 0) {
         setAction(initialAction);
       } else {
+        isActionSavedRef.current = true;
         setAction(resultAction[0]);
       }
     }
     getAction();
     return;
-  }, [project.id, setAction]);
+  }, [project.id, setAction, isActionSavedRef]);
 
   useEffect(() => {
     function setTargetElementId(e) {
@@ -86,7 +87,13 @@ function ActionCardList({ project, action, setAction, previewRef }) {
   return (
     <>
       <div className="flex w-full flex-col border-2 border-solid">
-        <ActionCard action={action} setAction={setAction} sendActionInfo={sendActionInfo} />
+        <ActionCard
+          projectId={project.id}
+          action={action}
+          setAction={setAction}
+          isActionSavedRef={isActionSavedRef}
+          sendActionInfo={sendActionInfo}
+        />
       </div>
     </>
   );
@@ -103,12 +110,13 @@ ActionCardList.propTypes = {
     target_element_id: PropTypes.string,
     message_title: PropTypes.string,
     message_body: PropTypes.string,
-    message_button_color_code: PropTypes.string,
+    message_button_color: PropTypes.string,
     background_opacity: PropTypes.string,
     project_id: PropTypes.string,
     created_at: PropTypes.string,
     updated_at: PropTypes.string,
   }).isRequired,
   setAction: PropTypes.func.isRequired,
+  isActionSavedRef: PropTypes.object.isRequired,
   previewRef: PropTypes.object,
 };
