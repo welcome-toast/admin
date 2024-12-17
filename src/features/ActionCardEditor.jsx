@@ -21,7 +21,7 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
             name="settingActionName"
             value={action.name}
             placeholder="액션 이름을 입력하세요"
-            className="border-2 border-solid"
+            className="h-10 border-2 border-solid"
             onChange={(e) => handleActionChange("name", e.target.value)}
           />
         </label>
@@ -46,7 +46,7 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
             name="settingMessageTitle"
             value={action.message_title}
             placeholder="제목을 입력하세요"
-            className="border-2 border-solid"
+            className="h-10 border-2 border-solid"
             onChange={(e) => handleActionChange("message_title", e.target.value)}
           />
         </label>
@@ -57,7 +57,7 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
             name="settingMessageBody"
             value={action.message_body}
             placeholder="본문을 입력하세요"
-            className="border-2 border-solid"
+            className="h-10 border-2 border-solid"
             onChange={(e) => handleActionChange("message_body", e.target.value)}
           />
         </label>
@@ -70,7 +70,7 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
             id="settingBackgroundOpacity"
             name="settingBackgroundOpacity"
             value={action.background_opacity}
-            className="border-2 border-solid"
+            className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
             onChange={(e) => handleActionChange("background_opacity", e.target.value)}
           />
         </label>
