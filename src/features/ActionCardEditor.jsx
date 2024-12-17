@@ -12,6 +12,20 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
 
   return (
     <div>
+      <div className="my-3 flex flex-col">
+        <span className="font-bold text-gray-900 text-l">액션 이름</span>
+        <label className="my-5 flex flex-col gap-5">
+          <input
+            type="text"
+            id="settingActionName"
+            name="settingActionName"
+            value={action.name}
+            placeholder="액션 이름을 입력하세요"
+            className="border-2 border-solid"
+            onChange={(e) => handleActionChange("name", e.target.value)}
+          />
+        </label>
+      </div>
       <div className="flex h-10 justify-center rounded border-2 border-solid">
         <button
           type="button"
