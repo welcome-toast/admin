@@ -12,6 +12,7 @@ function ActionCard({ projectId, action, setAction, isActionSavedRef, sendAction
         .from("action")
         .insert([
           {
+            name: action.name,
             target_element_id: action.target_element_id,
             message_title: action.message_title,
             message_body: action.message_body,
