@@ -26,6 +26,23 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
           />
         </label>
       </div>
+      <div className="mb-5 flex flex-col">
+        <span className="font-bold text-gray-900 text-l">적용할 요소 ID</span>
+        <label className="my-2 flex flex-col gap-2">
+          <span className="font-normal text-gray-400 italic">
+            액션을 적용할 요소의 id를 입력하세요
+          </span>
+          <input
+            type="text"
+            id="actionTargetElementId"
+            name="actionTargetElementId"
+            value={action.target_element_id}
+            placeholder="(예시) welcomeToast"
+            className="h-10 border-2 border-solid"
+            onChange={(e) => handleActionChange("target_element_id", e.target.value)}
+          />
+        </label>
+      </div>
       <div className="flex h-10 justify-center rounded border-2 border-solid">
         <button
           type="button"
