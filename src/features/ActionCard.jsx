@@ -5,22 +5,46 @@ import { supabase } from "../shared/supabase";
 import ActionCardEditor from "./ActionCardEditor";
 import ActionCardHeader from "./ActionCardHeader";
 
-function ActionCard({ action, setAction, sendActionInfo }) {
+function ActionCard({ projectId, action, setAction, isActionSavedRef, sendActionInfo }) {
   async function handleSaveActionButtonClick() {
-    const { data, error } = await supabase
-      .from("action")
-      .upsert({
-        id: action.id,
-        target_element_id: action.target_element_id,
-        message_title: action.message_title,
-        message_body: action.message_body,
-        message_button_color_code: action.message_button_color_code,
-        background_opacity: action.background_opacity,
-      })
-      .select();
+    if (!isActionSavedRef.current) {
+      const { data, error } = await supabase
+        .from("action")
+        .insert([
+          {
+            target_element_id: action.target_element_id,
+            message_title: action.message_title,
+            message_body: action.message_body,
+            message_button_color: action.message_button_color,
+            background_opacity: action.background_opacity,
+            project_id: projectId,
+          },
+        ])
+        .select();
 
-    if (!data) {
-      throw new Error(error.message);
+      if (!data) {
+        throw new Error(error.message);
+      }
+      setAction(data[0]);
+      isActionSavedRef.current = true;
+    } else {
+      const { data, error } = await supabase
+        .from("action")
+        .update({
+          target_element_id: action.target_element_id,
+          message_title: action.message_title,
+          message_body: action.message_body,
+          message_button_color: action.message_button_color,
+          background_opacity: action.background_opacity,
+        })
+        .eq("id", action.id)
+        .select();
+
+      if (!data) {
+        throw new Error(error.message);
+      }
+      setAction(data[0]);
+      isActionSavedRef.current = true;
     }
 
     return;
@@ -32,7 +56,12 @@ function ActionCard({ action, setAction, sendActionInfo }) {
       <div>
         <span>{action.target_element_id}</span>
       </div>
-      <ActionCardEditor action={action} setAction={setAction} sendActionInfo={sendActionInfo} />
+      <ActionCardEditor
+        action={action}
+        setAction={setAction}
+        isActionSavedRef={isActionSavedRef}
+        sendActionInfo={sendActionInfo}
+      />
       <div className="mb-5">
         <Button text={"저장"} onClick={handleSaveActionButtonClick} />
       </div>
@@ -43,7 +72,9 @@ function ActionCard({ action, setAction, sendActionInfo }) {
 export default ActionCard;
 
 ActionCard.propTypes = {
+  projectId: PropTypes.string.isRequired,
   action: PropTypes.object.isRequired,
   setAction: PropTypes.func.isRequired,
+  isActionSavedRef: PropTypes.object.isRequired,
   sendActionInfo: PropTypes.func.isRequired,
 };

@@ -1,9 +1,13 @@
 import PropTypes from "prop-types";
 
-function ActionCardEditor({ action, setAction, sendActionInfo }) {
+function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo }) {
   function handleActionChange(actionType, input) {
     setAction((state) => ({ ...state, [actionType]: input }));
-    sendActionInfo({ ...action, [actionType]: input });
+
+    if (isActionSavedRef.current) {
+      sendActionInfo({ ...action, [actionType]: input });
+    }
+    return;
   }
 
   return (
@@ -64,9 +68,9 @@ function ActionCardEditor({ action, setAction, sendActionInfo }) {
             type="color"
             id="settingMessageButtonColor"
             name="settingMessageButtonColor"
-            value={action.message_button_color_code}
+            value={action.message_button_color}
             className="border-2 border-solid"
-            onChange={(e) => handleActionChange("message_button_color_code", e.target.value)}
+            onChange={(e) => handleActionChange("message_button_color", e.target.value)}
           />
         </label>
       </div>
@@ -84,12 +88,13 @@ ActionCardEditor.propTypes = {
     target_element_id: PropTypes.string,
     message_title: PropTypes.string,
     message_body: PropTypes.string,
-    message_button_color_code: PropTypes.string,
+    message_button_color: PropTypes.string,
     background_opacity: PropTypes.string,
     project_id: PropTypes.string,
     created_at: PropTypes.string,
     updated_at: PropTypes.string,
   }).isRequired,
   setAction: PropTypes.func.isRequired,
+  isActionSavedRef: PropTypes.object.isRequired,
   sendActionInfo: PropTypes.func.isRequired,
 };
