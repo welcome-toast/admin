@@ -11,6 +11,7 @@ const initialAction = {
   target_element_id: "",
   message_title: "",
   message_body: "",
+  image_url: "",
   message_button_color: "#000000",
   background_opacity: "20",
   project_id: "",

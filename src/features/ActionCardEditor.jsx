@@ -1,13 +1,7 @@
 import PropTypes from "prop-types";
 import { supabase } from "../shared/supabase";
-// import { useRef } from "react";
 
 function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo }) {
-  // const actionImageRef = useRef(null);
-  // const file = document.getElementById("actionImage")?.files[0];
-  // console.dir("#file", file);
-  // console.log("#file", file);
-
   function handleActionChange(actionType, input) {
     setAction((state) => ({ ...state, [actionType]: input }));
 
@@ -33,6 +27,9 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
     }
 
     const imageUrl = supabase.storage.from("action_image").getPublicUrl(data.path).data.publicUrl;
+    setAction((state) => ({ ...state, image_url: imageUrl }));
+
+    return;
   }
 
   return (
