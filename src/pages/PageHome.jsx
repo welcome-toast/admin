@@ -40,8 +40,7 @@ function PageHome({ user, setUser }) {
       </div>
       <Button text={CTA_SIGNIN} onClick={handleSignInButtonClick} />
       <div className="flex gap-10">
-        <div>image #1</div>
-        <div>image #2</div>
+        <img alt="intro-home" src="/assets/intro-home.png" width="1600" />
       </div>
     </main>
   );
