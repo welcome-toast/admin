@@ -29,6 +29,10 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
     const imageUrl = supabase.storage.from("action_image").getPublicUrl(data.path).data.publicUrl;
     setAction((state) => ({ ...state, image_url: imageUrl }));
 
+    if (isActionSavedRef.current) {
+      sendActionInfo({ ...action, image_url: imageUrl });
+    }
+
     return;
   }
 
