@@ -31,6 +31,8 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
       console.log("파일이 업로드 되지 않았습니다", error);
       return;
     }
+
+    const imageUrl = supabase.storage.from("action_image").getPublicUrl(data.path).data.publicUrl;
   }
 
   return (
