@@ -80,6 +80,12 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
         </label>
       </div>
       <div className="my-3 flex flex-col">
+        <span>이미지</span>
+        <label className="my-5 flex flex-col gap-5">
+          <input type="file" id="actionImage" name="actionImage" accept="image/png, image/jpeg" />
+        </label>
+      </div>
+      <div className="my-3 flex flex-col">
         <span>배경 투명도</span>
         <label className="my-5 flex flex-col gap-5">
           <input
