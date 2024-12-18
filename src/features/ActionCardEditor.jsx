@@ -58,6 +58,10 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
           <span className="font-normal text-gray-400 italic">
             액션을 적용할 요소의 id를 입력하세요
           </span>
+          <div className="flex justify-between">
+            <span className="font-bold text-l">현재 선택된 타겟 ID</span>
+            {action.target_element_id === null ? "null" : action.target_element_id}
+          </div>
           <input
             type="text"
             id="actionTargetElementId"
