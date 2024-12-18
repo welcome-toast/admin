@@ -27,6 +27,7 @@ function ActionCardList({ project, action, setAction, isActionSavedRef, previewR
       target_element_id,
       message_title,
       message_body,
+      image_url,
       message_button_color,
       background_opacity,
     } = actionInput;
@@ -37,6 +38,7 @@ function ActionCardList({ project, action, setAction, isActionSavedRef, previewR
         target_element_id,
         message_title,
         message_body,
+        image_url,
         message_button_color,
         background_opacity,
       },
