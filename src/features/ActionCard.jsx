@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 import ActionCardEditor from "./ActionCardEditor";
-import ActionCardHeader from "./ActionCardHeader";
 
 function ActionCard({ projectId, action, setAction, isActionSavedRef, sendActionInfo }) {
   async function handleSaveActionButtonClick() {
@@ -56,10 +55,6 @@ function ActionCard({ projectId, action, setAction, isActionSavedRef, sendAction
 
   return (
     <div className="flex flex-col gap-5 rounded border-2 border-black px-5">
-      <ActionCardHeader action={action} />
-      <div>
-        <span>{action.target_element_id}</span>
-      </div>
       <ActionCardEditor
         action={action}
         setAction={setAction}

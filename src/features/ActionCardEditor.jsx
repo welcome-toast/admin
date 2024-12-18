@@ -11,7 +11,7 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
   }
 
   return (
-    <div>
+    <div className="mt-5">
       <div className="mb-3 flex flex-col">
         <span className="font-bold text-gray-900 text-l">액션 이름</span>
         <label className="my-5 flex flex-col gap-5">
@@ -43,7 +43,7 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
           />
         </label>
       </div>
-      <div className="flex h-10 justify-center rounded border-2 border-solid">
+      <div className="flex h-10 justify-center rounded border-1 border-solid">
         <button
           type="button"
           className="h-full w-full rounded border-2 border-gray bg-black text-white"
