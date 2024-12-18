@@ -28,6 +28,7 @@ function ActionCard({ projectId, action, setAction, isActionSavedRef, sendAction
       }
       setAction(data[0]);
       isActionSavedRef.current = true;
+      alert("액션이 저장 되었어요.");
     } else {
       const { data, error } = await supabase
         .from("action")
@@ -47,6 +48,7 @@ function ActionCard({ projectId, action, setAction, isActionSavedRef, sendAction
       }
       setAction(data[0]);
       isActionSavedRef.current = true;
+      alert("액션이 저장 되었어요.");
     }
 
     return;
