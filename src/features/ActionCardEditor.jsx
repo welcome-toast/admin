@@ -92,15 +92,15 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
           />
         </label>
       </div>
-      <div className="my-3 flex flex-col">
+      <div className="my-3 flex justify-between">
         <span>메시지 버튼 색상</span>
-        <label className="my-5 flex flex-col gap-5">
+        <label>
           <input
             type="color"
             id="actionMessageButtonColor"
             name="actionMessageButtonColor"
             value={action.message_button_color}
-            className="border-2 border-solid"
+            className="w-24"
             onChange={(e) => handleActionChange("message_button_color", e.target.value)}
           />
         </label>
