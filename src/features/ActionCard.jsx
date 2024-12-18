@@ -15,6 +15,7 @@ function ActionCard({ projectId, action, setAction, isActionSavedRef, sendAction
             target_element_id: action.target_element_id,
             message_title: action.message_title,
             message_body: action.message_body,
+            image_url: action.image_url,
             message_button_color: action.message_button_color,
             background_opacity: action.background_opacity,
             project_id: projectId,
@@ -36,6 +37,7 @@ function ActionCard({ projectId, action, setAction, isActionSavedRef, sendAction
           target_element_id: action.target_element_id,
           message_title: action.message_title,
           message_body: action.message_body,
+          image_url: action.image_url,
           message_button_color: action.message_button_color,
           background_opacity: action.background_opacity,
         })
