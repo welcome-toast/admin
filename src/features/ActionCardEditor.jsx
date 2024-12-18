@@ -1,6 +1,13 @@
 import PropTypes from "prop-types";
+import { supabase } from "../shared/supabase";
+// import { useRef } from "react";
 
 function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo }) {
+  // const actionImageRef = useRef(null);
+  // const file = document.getElementById("actionImage")?.files[0];
+  // console.dir("#file", file);
+  // console.log("#file", file);
+
   function handleActionChange(actionType, input) {
     setAction((state) => ({ ...state, [actionType]: input }));
 
@@ -8,6 +15,22 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
       sendActionInfo({ ...action, [actionType]: input });
     }
     return;
+  }
+
+  async function handleImage(files) {
+    const uploadFile = files[0];
+
+    const { data, error } = await supabase.storage
+      .from("action_image")
+      .upload(uploadFile.name, uploadFile, {
+        cacheControl: "3600",
+        upsert: false,
+      });
+
+    if (error) {
+      console.log("파일이 업로드 되지 않았습니다", error);
+      return;
+    }
   }
 
   return (
@@ -82,9 +105,16 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
       <div className="my-3 flex flex-col">
         <span>이미지</span>
         <label className="my-5 flex flex-col gap-5">
-          <input type="file" id="actionImage" name="actionImage" accept="image/png, image/jpeg" />
+          <input
+            type="file"
+            id="actionImage"
+            name="actionImage"
+            accept="image/png, image/jpeg"
+            onChange={(e) => handleImage(e.target.files)}
+          />
         </label>
       </div>
+      {/* {actionImageRef.files[0]} */}
       <div className="my-3 flex flex-col">
         <span>배경 투명도</span>
         <label className="my-5 flex flex-col gap-5">
