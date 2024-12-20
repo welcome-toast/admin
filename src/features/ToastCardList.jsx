@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { supabase } from "../shared/supabase";
 import ToastCard from "./ToastCard";
 
-const initialAction = {
+const initialToast = {
   id: "",
   name: "",
   type: "",
@@ -19,8 +19,8 @@ const initialAction = {
   updated_at: "",
 };
 
-function ToastCardList({ project, action, setAction, isActionSavedRef, previewRef }) {
-  function sendActionInfo(actionInput) {
+function ToastCardList({ project, toast, setToast, isToastSavedRef, previewRef }) {
+  function sendToastInfo(toastInput) {
     const {
       name,
       type,
@@ -30,7 +30,7 @@ function ToastCardList({ project, action, setAction, isActionSavedRef, previewRe
       image_url,
       message_button_color,
       background_opacity,
-    } = actionInput;
+    } = toastInput;
     previewRef.current.contentWindow.postMessage(
       {
         name,
@@ -47,9 +47,9 @@ function ToastCardList({ project, action, setAction, isActionSavedRef, previewRe
   }
 
   useEffect(() => {
-    async function getAction() {
-      const { data: resultAction, error } = await supabase
-        .from("action")
+    async function getToastList() {
+      const { data: resultToastList, error } = await supabase
+        .from("toast")
         .select("*")
         .eq("project_id", project.id);
 
@@ -57,16 +57,16 @@ function ToastCardList({ project, action, setAction, isActionSavedRef, previewRe
         throw new Error(error);
       }
 
-      if (resultAction.length === 0) {
-        setAction(initialAction);
+      if (resultToastList.length === 0) {
+        setToast(initialToast);
       } else {
-        isActionSavedRef.current = true;
-        setAction(resultAction[0]);
+        isToastSavedRef.current = true;
+        setToast(resultToastList[0]);
       }
     }
-    getAction();
+    getToastList();
     return;
-  }, [project.id, setAction, isActionSavedRef]);
+  }, [project.id, setToast, isToastSavedRef]);
 
   useEffect(() => {
     function setTargetElementId(e) {
@@ -77,7 +77,7 @@ function ToastCardList({ project, action, setAction, isActionSavedRef, previewRe
       }
 
       if (project.link.includes(e.origin)) {
-        setAction((state) => ({ ...state, target_element_id: targetElementId }));
+        setToast((state) => ({ ...state, target_element_id: targetElementId }));
       }
       return;
     }
@@ -85,17 +85,17 @@ function ToastCardList({ project, action, setAction, isActionSavedRef, previewRe
     window.addEventListener("message", setTargetElementId);
 
     return () => window.removeEventListener("message", setTargetElementId);
-  }, [project.link, setAction]);
+  }, [project.link, setToast]);
 
   return (
     <>
       <div className="flex w-full flex-col border-2 border-solid">
         <ToastCard
           projectId={project.id}
-          action={action}
-          setAction={setAction}
-          isActionSavedRef={isActionSavedRef}
-          sendActionInfo={sendActionInfo}
+          toast={toast}
+          setToast={setToast}
+          isToastSavedRef={isToastSavedRef}
+          sendToastInfo={sendToastInfo}
         />
       </div>
     </>
@@ -106,7 +106,7 @@ export default ToastCardList;
 
 ToastCardList.propTypes = {
   project: PropTypes.object.isRequired,
-  action: PropTypes.shape({
+  toast: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
     type: PropTypes.string,
@@ -119,7 +119,7 @@ ToastCardList.propTypes = {
     created_at: PropTypes.string,
     updated_at: PropTypes.string,
   }).isRequired,
-  setAction: PropTypes.func.isRequired,
-  isActionSavedRef: PropTypes.object.isRequired,
+  setToast: PropTypes.func.isRequired,
+  isToastSavedRef: PropTypes.object.isRequired,
   previewRef: PropTypes.object,
 };

@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 
-function ToastCardHeader({ action }) {
+function ToastCardHeader({ toast }) {
   return (
     <div className="flex">
       <div className="mt-5 flex w-full justify-between">
-        <span>{action.name}</span>
-        <span>{action.type}</span>
+        <span>{toast.name}</span>
+        <span>{toast.type}</span>
       </div>
     </div>
   );
@@ -14,7 +14,7 @@ function ToastCardHeader({ action }) {
 export default ToastCardHeader;
 
 ToastCardHeader.propTypes = {
-  action: PropTypes.shape({
+  toast: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
     type: PropTypes.string,

@@ -66,7 +66,7 @@ function ModalContainer() {
       <label className="mt-5 flex w-96 flex-col gap-2 font-bold text-gray-900">
         프로젝트 도메인
         <span className="font-normal text-gray-400 italic">
-          액션이 적용될 웹페이지 URL 앞 부분을 입력해주세요
+          토스트를 적용할 웹페이지 URL 주소를 입력해주세요
         </span>
         <input
           type="url"

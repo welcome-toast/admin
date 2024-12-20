@@ -1,14 +1,14 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
 
-function ProjectPreview({ project, action, setPreviewRef }) {
+function ProjectPreview({ project, toast, setPreviewRef }) {
   const iframeRef = useRef(null);
 
   useEffect(() => {
     setPreviewRef(iframeRef);
   }, [setPreviewRef]);
 
-  if (action.id === "") {
+  if (toast.id === "") {
     return null;
   }
 
@@ -32,7 +32,7 @@ export default ProjectPreview;
 
 ProjectPreview.propTypes = {
   project: PropTypes.object.isRequired,
-  action: PropTypes.shape({
+  toast: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
     type: PropTypes.string,
