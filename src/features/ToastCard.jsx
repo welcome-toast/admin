@@ -2,9 +2,9 @@ import PropTypes from "prop-types";
 
 import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
-import ActionCardEditor from "./ActionCardEditor";
+import ToastCardEditor from "./ToastCardEditor";
 
-function ActionCard({ projectId, action, setAction, isActionSavedRef, sendActionInfo }) {
+function ToastCard({ projectId, action, setAction, isActionSavedRef, sendActionInfo }) {
   async function handleSaveActionButtonClick() {
     if (!isActionSavedRef.current) {
       const { data, error } = await supabase
@@ -57,7 +57,7 @@ function ActionCard({ projectId, action, setAction, isActionSavedRef, sendAction
 
   return (
     <div className="flex flex-col gap-5 rounded border-2 border-black px-5">
-      <ActionCardEditor
+      <ToastCardEditor
         action={action}
         setAction={setAction}
         isActionSavedRef={isActionSavedRef}
@@ -70,9 +70,9 @@ function ActionCard({ projectId, action, setAction, isActionSavedRef, sendAction
   );
 }
 
-export default ActionCard;
+export default ToastCard;
 
-ActionCard.propTypes = {
+ToastCard.propTypes = {
   projectId: PropTypes.string.isRequired,
   action: PropTypes.object.isRequired,
   setAction: PropTypes.func.isRequired,

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 import { useEffect } from "react";
 import { supabase } from "../shared/supabase";
-import ActionCard from "./ActionCard";
+import ToastCard from "./ToastCard";
 
 const initialAction = {
   id: "",
@@ -19,7 +19,7 @@ const initialAction = {
   updated_at: "",
 };
 
-function ActionCardList({ project, action, setAction, isActionSavedRef, previewRef }) {
+function ToastCardList({ project, action, setAction, isActionSavedRef, previewRef }) {
   function sendActionInfo(actionInput) {
     const {
       name,
@@ -90,7 +90,7 @@ function ActionCardList({ project, action, setAction, isActionSavedRef, previewR
   return (
     <>
       <div className="flex w-full flex-col border-2 border-solid">
-        <ActionCard
+        <ToastCard
           projectId={project.id}
           action={action}
           setAction={setAction}
@@ -102,9 +102,9 @@ function ActionCardList({ project, action, setAction, isActionSavedRef, previewR
   );
 }
 
-export default ActionCardList;
+export default ToastCardList;
 
-ActionCardList.propTypes = {
+ToastCardList.propTypes = {
   project: PropTypes.object.isRequired,
   action: PropTypes.shape({
     id: PropTypes.string,
