@@ -1,22 +1,22 @@
 import PropTypes from "prop-types";
 import { supabase } from "../shared/supabase";
 
-function ToastCardEditor({ action, setAction, isActionSavedRef, sendActionInfo }) {
-  function handleActionChange(actionType, input) {
-    setAction((state) => ({ ...state, [actionType]: input }));
+function ToastCardEditor({ toast, setToast, isToastSavedRef, sendToastInfo }) {
+  function handleToastInputChange(toastType, input) {
+    setToast((state) => ({ ...state, [toastType]: input }));
 
-    if (isActionSavedRef.current) {
-      sendActionInfo({ ...action, [actionType]: input });
+    if (isToastSavedRef.current) {
+      sendToastInfo({ ...toast, [toastType]: input });
     }
     return;
   }
 
-  async function handleImage(files) {
-    const uploadFile = files[0];
+  async function handleToastImageUpload(files) {
+    const uploadImage = files[0];
 
     const { data, error } = await supabase.storage
-      .from("action_image")
-      .upload(uploadFile.name, uploadFile, {
+      .from("toast_image_storage")
+      .upload(uploadImage.name, uploadImage, {
         cacheControl: "3600",
         upsert: false,
       });
@@ -26,11 +26,12 @@ function ToastCardEditor({ action, setAction, isActionSavedRef, sendActionInfo }
       return;
     }
 
-    const imageUrl = supabase.storage.from("action_image").getPublicUrl(data.path).data.publicUrl;
-    setAction((state) => ({ ...state, image_url: imageUrl }));
+    const imageUrl = supabase.storage.from("toast_image_storage").getPublicUrl(data.path)
+      .data.publicUrl;
+    setToast((state) => ({ ...state, image_url: imageUrl }));
 
-    if (isActionSavedRef.current) {
-      sendActionInfo({ ...action, image_url: imageUrl });
+    if (isToastSavedRef.current) {
+      sendToastInfo({ ...toast, image_url: imageUrl });
     }
 
     return;
@@ -39,16 +40,16 @@ function ToastCardEditor({ action, setAction, isActionSavedRef, sendActionInfo }
   return (
     <div className="mt-5">
       <div className="mb-3 flex flex-col">
-        <span className="font-bold text-gray-900 text-l">액션 이름</span>
+        <span className="font-bold text-gray-900 text-l">토스트 이름</span>
         <label className="my-5 flex flex-col gap-5">
           <input
             type="text"
-            id="actionName"
-            name="actionName"
-            value={action.name}
-            placeholder="액션 이름을 입력하세요"
+            id="toastName"
+            name="toastName"
+            value={toast.name}
+            placeholder="토스트 이름을 입력하세요"
             className="h-10 border-2 border-solid"
-            onChange={(e) => handleActionChange("name", e.target.value)}
+            onChange={(e) => handleToastInputChange("name", e.target.value)}
           />
         </label>
       </div>
@@ -56,20 +57,20 @@ function ToastCardEditor({ action, setAction, isActionSavedRef, sendActionInfo }
         <span className="font-bold text-gray-900 text-l">적용할 요소 ID</span>
         <label className="my-2 flex flex-col gap-2">
           <span className="font-normal text-gray-400 italic">
-            액션을 적용할 요소의 id를 입력하세요
+            토스트로 강조할 요소의 id를 입력하세요
           </span>
           <div className="flex justify-between">
             <span className="font-bold text-l">현재 선택된 타겟 ID</span>
-            {action.target_element_id === null ? "null" : action.target_element_id}
+            {toast.target_element_id === null ? "null" : toast.target_element_id}
           </div>
           <input
             type="text"
-            id="actionTargetElementId"
-            name="actionTargetElementId"
-            value={action.target_element_id}
+            id="toastTargetElementId"
+            name="toastTargetElementId"
+            value={toast.target_element_id}
             placeholder="(예시) welcomeToast"
             className="h-10 border-2 border-solid"
-            onChange={(e) => handleActionChange("target_element_id", e.target.value)}
+            onChange={(e) => handleToastInputChange("target_element_id", e.target.value)}
           />
         </label>
       </div>
@@ -89,23 +90,23 @@ function ToastCardEditor({ action, setAction, isActionSavedRef, sendActionInfo }
         <label className="my-5 flex flex-col gap-5">
           <input
             type="text"
-            id="actionMessageTitle"
-            name="actionMessageTitle"
-            value={action.message_title}
+            id="toastMessageTitle"
+            name="toastMessageTitle"
+            value={toast.message_title}
             placeholder="제목을 입력하세요"
             className="h-10 border-2 border-solid"
-            onChange={(e) => handleActionChange("message_title", e.target.value)}
+            onChange={(e) => handleToastInputChange("message_title", e.target.value)}
           />
         </label>
         <label className="my-5 flex flex-col gap-5">
           <input
             type="text"
-            id="actionMessageBody"
-            name="actionMessageBody"
-            value={action.message_body}
+            id="toastMessageBody"
+            name="toastMessageBody"
+            value={toast.message_body}
             placeholder="본문을 입력하세요"
             className="h-10 border-2 border-solid"
-            onChange={(e) => handleActionChange("message_body", e.target.value)}
+            onChange={(e) => handleToastInputChange("message_body", e.target.value)}
           />
         </label>
       </div>
@@ -114,24 +115,23 @@ function ToastCardEditor({ action, setAction, isActionSavedRef, sendActionInfo }
         <label className="my-5 flex flex-col gap-5">
           <input
             type="file"
-            id="actionImage"
-            name="actionImage"
+            id="toastMessageImage"
+            name="toastMessageImage"
             accept="image/png, image/jpeg"
-            onChange={(e) => handleImage(e.target.files)}
+            onChange={(e) => handleToastImageUpload(e.target.files)}
           />
         </label>
       </div>
-      {/* {actionImageRef.files[0]} */}
       <div className="my-3 flex flex-col">
         <span>배경 투명도</span>
         <label className="my-5 flex flex-col gap-5">
           <input
             type="range"
-            id="actionBackgroundOpacity"
-            name="actionBackgroundOpacity"
-            value={action.background_opacity}
+            id="toastBackgroundOpacity"
+            name="toastBackgroundOpacity"
+            value={toast.background_opacity}
             className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
-            onChange={(e) => handleActionChange("background_opacity", e.target.value)}
+            onChange={(e) => handleToastInputChange("background_opacity", e.target.value)}
           />
         </label>
       </div>
@@ -140,11 +140,11 @@ function ToastCardEditor({ action, setAction, isActionSavedRef, sendActionInfo }
         <label>
           <input
             type="color"
-            id="actionMessageButtonColor"
-            name="actionMessageButtonColor"
-            value={action.message_button_color}
+            id="toastMessageButtonColor"
+            name="toastMessageButtonColor"
+            value={toast.message_button_color}
             className="w-24"
-            onChange={(e) => handleActionChange("message_button_color", e.target.value)}
+            onChange={(e) => handleToastInputChange("message_button_color", e.target.value)}
           />
         </label>
       </div>
@@ -155,7 +155,7 @@ function ToastCardEditor({ action, setAction, isActionSavedRef, sendActionInfo }
 export default ToastCardEditor;
 
 ToastCardEditor.propTypes = {
-  action: PropTypes.shape({
+  toast: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
     type: PropTypes.string,
@@ -168,7 +168,7 @@ ToastCardEditor.propTypes = {
     created_at: PropTypes.string,
     updated_at: PropTypes.string,
   }).isRequired,
-  setAction: PropTypes.func.isRequired,
-  isActionSavedRef: PropTypes.object.isRequired,
-  sendActionInfo: PropTypes.func.isRequired,
+  setToast: PropTypes.func.isRequired,
+  isToastSavedRef: PropTypes.object.isRequired,
+  sendToastInfo: PropTypes.func.isRequired,
 };

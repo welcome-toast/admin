@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import ProjectPreview from "./ProjectPreview";
 import ToastCardList from "./ToastCardList";
 
-const initialAction = {
+const initialToast = {
   id: "",
   name: "",
   type: "",
@@ -20,34 +20,34 @@ const initialAction = {
 };
 
 function ProjectSetting({ project }) {
-  const [action, setAction] = useState(initialAction);
+  const [toast, setToast] = useState(initialToast);
   const [previewRef, setPreviewRef] = useState(null);
-  const isActionSavedRef = useRef(false);
+  const isToastSavedRef = useRef(false);
 
   return (
     <div className="flex gap-10">
       <section
-        className={`flex h-[90vh] ${action.id === "" ? "w-[40vw]" : "w-[20vw]"} flex-col gap-5 border-2 border-solid`}
+        className={`flex h-[90vh] ${toast.id === "" ? "w-[40vw]" : "w-[20vw]"} flex-col gap-5 border-2 border-solid`}
       >
         <div className="flex flex-col">
-          <h3 className="mb-4 font-bold text-gray-900 text-xl">액션 에디터</h3>
-          <span className="">{action.id === "" ? "새로운 액션을 생성해주세요" : null}</span>
+          <h3 className="mb-4 font-bold text-gray-900 text-xl">토스트 에디터</h3>
+          <span className="">{toast.id === "" ? "새로운 토스트를 생성해주세요" : null}</span>
         </div>
         <ToastCardList
           project={project}
-          action={action}
-          setAction={setAction}
+          toast={toast}
+          setToast={setToast}
           previewRef={previewRef}
-          isActionSavedRef={isActionSavedRef}
+          isToastSavedRef={isToastSavedRef}
         />
       </section>
-      {action.id === "" ? null : (
+      {toast.id === "" ? null : (
         <section className="flex h-[90vh] w-[70vw] flex-col gap-5 border-2 border-solid">
           <div className="flex justify-between">
             <h3 className="mb-4 font-bold text-gray-900 text-xl">미리 보기</h3>
           </div>
           <div className="h-full w-full">
-            <ProjectPreview project={project} action={action} setPreviewRef={setPreviewRef} />
+            <ProjectPreview project={project} toast={toast} setPreviewRef={setPreviewRef} />
           </div>
         </section>
       )}
