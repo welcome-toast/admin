@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { supabase } from "../shared/supabase";
 
-function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo }) {
+function ToastCardEditor({ action, setAction, isActionSavedRef, sendActionInfo }) {
   function handleActionChange(actionType, input) {
     setAction((state) => ({ ...state, [actionType]: input }));
 
@@ -152,9 +152,9 @@ function ActionCardEditor({ action, setAction, isActionSavedRef, sendActionInfo 
   );
 }
 
-export default ActionCardEditor;
+export default ToastCardEditor;
 
-ActionCardEditor.propTypes = {
+ToastCardEditor.propTypes = {
   action: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,

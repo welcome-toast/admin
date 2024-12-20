@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
 import { useRef, useState } from "react";
-import ActionCardList from "./ActionCardList";
 import ProjectPreview from "./ProjectPreview";
+import ToastCardList from "./ToastCardList";
 
 const initialAction = {
   id: "",
@@ -33,7 +33,7 @@ function ProjectSetting({ project }) {
           <h3 className="mb-4 font-bold text-gray-900 text-xl">액션 에디터</h3>
           <span className="">{action.id === "" ? "새로운 액션을 생성해주세요" : null}</span>
         </div>
-        <ActionCardList
+        <ToastCardList
           project={project}
           action={action}
           setAction={setAction}
