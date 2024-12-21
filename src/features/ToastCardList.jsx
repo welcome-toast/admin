@@ -103,7 +103,7 @@ function ToastCardList({ project, isToastSavedRef, previewRef }) {
           return (
             <ToastCard
               key={toastSaved.id}
-              toastSaved={toastSaved}
+              initialToast={toastSaved}
               isToastSavedRef={isToastSavedRef}
               sendToastInput={sendToastInput}
               projectId={project.id}
@@ -111,6 +111,14 @@ function ToastCardList({ project, isToastSavedRef, previewRef }) {
           );
         })}
       </div>
+      {isCreatingToast && (
+        <ToastCard
+          initialToast={initialToastList[0]}
+          isToastSavedRef={isToastSavedRef}
+          sendToastInput={sendToastInput}
+          projectId={project.id}
+        />
+      )}
       <div className="mb-5">
         <button
           type="button"

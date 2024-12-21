@@ -5,8 +5,8 @@ import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 import ToastCardEditor from "./ToastCardEditor";
 
-function ToastCard({ toastSaved, isToastSavedRef, sendToastInput, projectId }) {
-  const [toast, setToast] = useState(toastSaved);
+function ToastCard({ initialToast, isToastSavedRef, sendToastInput, projectId }) {
+  const [toast, setToast] = useState(initialToast);
 
   async function handleSaveToastButtonClick() {
     if (!isToastSavedRef.current) {
@@ -80,7 +80,7 @@ function ToastCard({ toastSaved, isToastSavedRef, sendToastInput, projectId }) {
 export default ToastCard;
 
 ToastCard.propTypes = {
-  toastSaved: PropTypes.shape({
+  initialToast: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
     type: PropTypes.string,
