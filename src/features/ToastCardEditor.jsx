@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
 import { supabase } from "../shared/supabase";
 
-function ToastCardEditor({ toast, setToast, isToastSavedRef, sendToastInfo }) {
+function ToastCardEditor({ toast, setToast, isToastSavedRef, sendToastInput }) {
   function handleToastInputChange(toastType, input) {
     setToast((state) => ({ ...state, [toastType]: input }));
 
     if (isToastSavedRef.current) {
-      sendToastInfo({ ...toast, [toastType]: input });
+      sendToastInput({ ...toast, [toastType]: input });
     }
     return;
   }
@@ -31,7 +31,7 @@ function ToastCardEditor({ toast, setToast, isToastSavedRef, sendToastInfo }) {
     setToast((state) => ({ ...state, image_url: imageUrl }));
 
     if (isToastSavedRef.current) {
-      sendToastInfo({ ...toast, image_url: imageUrl });
+      sendToastInput({ ...toast, image_url: imageUrl });
     }
 
     return;
@@ -163,6 +163,7 @@ ToastCardEditor.propTypes = {
     message_title: PropTypes.string,
     message_body: PropTypes.string,
     message_button_color: PropTypes.string,
+    image_url: PropTypes.string,
     background_opacity: PropTypes.string,
     project_id: PropTypes.string,
     created_at: PropTypes.string,
@@ -170,5 +171,5 @@ ToastCardEditor.propTypes = {
   }).isRequired,
   setToast: PropTypes.func.isRequired,
   isToastSavedRef: PropTypes.object.isRequired,
-  sendToastInfo: PropTypes.func.isRequired,
+  sendToastInput: PropTypes.func.isRequired,
 };

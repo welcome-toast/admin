@@ -1,13 +1,16 @@
 import PropTypes from "prop-types";
 
+import { useState } from "react";
 import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 import ToastCardEditor from "./ToastCardEditor";
 
-function ToastCard({ projectId, toast, setToast, isToastSavedRef, sendToastInfo }) {
+function ToastCard({ toastSaved, isToastSavedRef, sendToastInput, projectId }) {
+  const [toast, setToast] = useState(toastSaved);
+
   async function handleSaveToastButtonClick() {
     if (!isToastSavedRef.current) {
-      const { data, error } = await supabase
+      const { data: resultToastList, error } = await supabase
         .from("toast")
         .insert([
           {
@@ -23,14 +26,16 @@ function ToastCard({ projectId, toast, setToast, isToastSavedRef, sendToastInfo 
         ])
         .select();
 
-      if (!data) {
+      if (resultToastList.length === 0) {
         throw new Error(error.message);
       }
-      setToast(data[0]);
+
+      setToast(resultToastList[0]);
       isToastSavedRef.current = true;
+
       alert("토스트가 저장 되었어요.");
     } else {
-      const { data, error } = await supabase
+      const { data: resultToastList, error } = await supabase
         .from("toast")
         .update({
           name: toast.name,
@@ -44,11 +49,13 @@ function ToastCard({ projectId, toast, setToast, isToastSavedRef, sendToastInfo 
         .eq("id", toast.id)
         .select();
 
-      if (!data) {
+      if (resultToastList.length === 0) {
         throw new Error(error.message);
       }
-      setToast(data[0]);
+
+      setToast(resultToastList[0]);
       isToastSavedRef.current = true;
+
       alert("토스트가 저장 되었어요.");
     }
 
@@ -61,7 +68,7 @@ function ToastCard({ projectId, toast, setToast, isToastSavedRef, sendToastInfo 
         toast={toast}
         setToast={setToast}
         isToastSavedRef={isToastSavedRef}
-        sendToastInfo={sendToastInfo}
+        sendToastInput={sendToastInput}
       />
       <div className="mb-5">
         <Button text={"저장"} onClick={handleSaveToastButtonClick} />
@@ -73,9 +80,21 @@ function ToastCard({ projectId, toast, setToast, isToastSavedRef, sendToastInfo 
 export default ToastCard;
 
 ToastCard.propTypes = {
-  projectId: PropTypes.string.isRequired,
-  toast: PropTypes.object.isRequired,
-  setToast: PropTypes.func.isRequired,
+  toastSaved: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    target_element_id: PropTypes.string,
+    message_title: PropTypes.string,
+    message_body: PropTypes.string,
+    message_button_color: PropTypes.string,
+    image_url: PropTypes.string,
+    background_opacity: PropTypes.string,
+    project_id: PropTypes.string,
+    created_at: PropTypes.string,
+    updated_at: PropTypes.string,
+  }).isRequired,
   isToastSavedRef: PropTypes.object.isRequired,
-  sendToastInfo: PropTypes.func.isRequired,
+  sendToastInput: PropTypes.func.isRequired,
+  projectId: PropTypes.string.isRequired,
 };
