@@ -1,13 +1,10 @@
 import PropTypes from "prop-types";
 import { supabase } from "../shared/supabase";
 
-function ToastCardEditor({ toast, setToast, isToastSavedRef, sendToastInput }) {
+function ToastCardEditor({ toast, setToast, sendToastInput }) {
   function handleToastInputChange(toastType, input) {
     setToast((state) => ({ ...state, [toastType]: input }));
-
-    if (isToastSavedRef.current) {
-      sendToastInput({ ...toast, [toastType]: input });
-    }
+    sendToastInput({ ...toast, [toastType]: input });
     return;
   }
 
@@ -29,10 +26,7 @@ function ToastCardEditor({ toast, setToast, isToastSavedRef, sendToastInput }) {
     const imageUrl = supabase.storage.from("toast_image_storage").getPublicUrl(data.path)
       .data.publicUrl;
     setToast((state) => ({ ...state, image_url: imageUrl }));
-
-    if (isToastSavedRef.current) {
-      sendToastInput({ ...toast, image_url: imageUrl });
-    }
+    sendToastInput({ ...toast, image_url: imageUrl });
 
     return;
   }
@@ -170,6 +164,5 @@ ToastCardEditor.propTypes = {
     updated_at: PropTypes.string,
   }).isRequired,
   setToast: PropTypes.func.isRequired,
-  isToastSavedRef: PropTypes.object.isRequired,
   sendToastInput: PropTypes.func.isRequired,
 };

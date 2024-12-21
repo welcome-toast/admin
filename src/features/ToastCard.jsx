@@ -5,11 +5,11 @@ import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 import ToastCardEditor from "./ToastCardEditor";
 
-function ToastCard({ initialToast, isToastSavedRef, sendToastInput, projectId }) {
+function ToastCard({ initialToast, sendToastInput, projectId }) {
   const [toast, setToast] = useState(initialToast);
 
   async function handleSaveToastButtonClick() {
-    if (!isToastSavedRef.current) {
+    if (initialToast.id === "") {
       const { data: resultToastList, error } = await supabase
         .from("toast")
         .insert([
@@ -31,7 +31,6 @@ function ToastCard({ initialToast, isToastSavedRef, sendToastInput, projectId })
       }
 
       setToast(resultToastList[0]);
-      isToastSavedRef.current = true;
 
       alert("토스트가 저장 되었어요.");
     } else {
@@ -54,7 +53,6 @@ function ToastCard({ initialToast, isToastSavedRef, sendToastInput, projectId })
       }
 
       setToast(resultToastList[0]);
-      isToastSavedRef.current = true;
 
       alert("토스트가 저장 되었어요.");
     }
@@ -64,12 +62,7 @@ function ToastCard({ initialToast, isToastSavedRef, sendToastInput, projectId })
 
   return (
     <div className="flex flex-col gap-5 rounded border-2 border-black px-5">
-      <ToastCardEditor
-        toast={toast}
-        setToast={setToast}
-        isToastSavedRef={isToastSavedRef}
-        sendToastInput={sendToastInput}
-      />
+      <ToastCardEditor toast={toast} setToast={setToast} sendToastInput={sendToastInput} />
       <div className="mb-5">
         <Button text={"저장"} onClick={handleSaveToastButtonClick} />
       </div>
@@ -94,7 +87,6 @@ ToastCard.propTypes = {
     created_at: PropTypes.string,
     updated_at: PropTypes.string,
   }).isRequired,
-  isToastSavedRef: PropTypes.object.isRequired,
   sendToastInput: PropTypes.func.isRequired,
   projectId: PropTypes.string.isRequired,
 };

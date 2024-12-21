@@ -21,7 +21,7 @@ const initialToastList = [
   },
 ];
 
-function ToastCardList({ project, isToastSavedRef, previewRef }) {
+function ToastCardList({ project, previewRef }) {
   const [toastList, setToastList] = useState(initialToastList);
   const [isCreatingToast, setIsCreatingToast] = useState(false);
 
@@ -69,13 +69,12 @@ function ToastCardList({ project, isToastSavedRef, previewRef }) {
       }
 
       if (resultToastList.length > 0) {
-        isToastSavedRef.current = true;
         setToastList(resultToastList);
       }
     }
     getToastList();
     return;
-  }, [project.id, isToastSavedRef]);
+  }, [project.id]);
 
   useEffect(() => {
     function setTargetElementId(e) {
@@ -104,7 +103,6 @@ function ToastCardList({ project, isToastSavedRef, previewRef }) {
             <ToastCard
               key={toastSaved.id}
               initialToast={toastSaved}
-              isToastSavedRef={isToastSavedRef}
               sendToastInput={sendToastInput}
               projectId={project.id}
             />
@@ -114,7 +112,6 @@ function ToastCardList({ project, isToastSavedRef, previewRef }) {
       {isCreatingToast && (
         <ToastCard
           initialToast={initialToastList[0]}
-          isToastSavedRef={isToastSavedRef}
           sendToastInput={sendToastInput}
           projectId={project.id}
         />
@@ -136,6 +133,5 @@ export default ToastCardList;
 
 ToastCardList.propTypes = {
   project: PropTypes.object.isRequired,
-  isToastSavedRef: PropTypes.object.isRequired,
   previewRef: PropTypes.object,
 };
