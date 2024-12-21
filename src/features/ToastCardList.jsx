@@ -105,6 +105,11 @@ function ToastCardList({ project, isToastSavedRef, previewRef }) {
           );
         })}
       </div>
+      <div className="mb-5">
+        <button type="button" className="h-14 w-full border-2 border-black text-2xl">
+          +
+        </button>
+      </div>
     </>
   );
 }
