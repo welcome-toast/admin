@@ -23,6 +23,7 @@ const initialToastList = [
 
 function ToastCardList({ project, isToastSavedRef, previewRef }) {
   const [toastList, setToastList] = useState(initialToastList);
+  const [isCreatingToast, setIsCreatingToast] = useState(false);
 
   function sendToastInput(toastInput) {
     const {
@@ -49,6 +50,11 @@ function ToastCardList({ project, isToastSavedRef, previewRef }) {
       },
       project.link,
     );
+  }
+
+  function handleNewToastButtonClick() {
+    setIsCreatingToast(!isCreatingToast);
+    return;
   }
 
   useEffect(() => {
@@ -106,7 +112,11 @@ function ToastCardList({ project, isToastSavedRef, previewRef }) {
         })}
       </div>
       <div className="mb-5">
-        <button type="button" className="h-14 w-full border-2 border-black text-2xl">
+        <button
+          type="button"
+          onClick={handleNewToastButtonClick}
+          className="h-14 w-full border-2 border-black text-2xl"
+        >
           +
         </button>
       </div>
