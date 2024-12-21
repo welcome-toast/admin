@@ -128,6 +128,7 @@ function ToastCardList({ project, previewRef }) {
             initialToast={initialToast}
             sendToastInput={sendToastInput}
             projectId={project.id}
+            setIsCreatingToast={setIsCreatingToast}
           />
         </div>
       )}

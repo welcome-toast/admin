@@ -5,7 +5,7 @@ import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 import ToastCardEditor from "./ToastCardEditor";
 
-function ToastCard({ initialToast, sendToastInput, projectId }) {
+function ToastCard({ initialToast, sendToastInput, projectId, setIsCreatingToast }) {
   const [toast, setToast] = useState(initialToast);
 
   async function handleSaveToastButtonClick() {
@@ -31,6 +31,7 @@ function ToastCard({ initialToast, sendToastInput, projectId }) {
       }
 
       setToast(resultToastList[0]);
+      setIsCreatingToast(false);
 
       alert("토스트가 저장 되었어요.");
     } else {
@@ -53,6 +54,7 @@ function ToastCard({ initialToast, sendToastInput, projectId }) {
       }
 
       setToast(resultToastList[0]);
+      setIsCreatingToast(false);
 
       alert("토스트가 저장 되었어요.");
     }
@@ -89,4 +91,5 @@ ToastCard.propTypes = {
   }).isRequired,
   sendToastInput: PropTypes.func.isRequired,
   projectId: PropTypes.string.isRequired,
+  setIsCreatingToast: PropTypes.func,
 };
