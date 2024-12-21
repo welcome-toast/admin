@@ -1,26 +1,30 @@
 import PropTypes from "prop-types";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "../shared/supabase";
 import ToastCard from "./ToastCard";
 
-const initialToast = {
-  id: "",
-  name: "",
-  type: "",
-  target_element_id: "",
-  message_title: "",
-  message_body: "",
-  image_url: "",
-  message_button_color: "#000000",
-  background_opacity: "20",
-  project_id: "",
-  created_at: "",
-  updated_at: "",
-};
+const initialToastList = [
+  {
+    id: "",
+    name: "",
+    type: "",
+    target_element_id: "",
+    message_title: "",
+    message_body: "",
+    image_url: "",
+    message_button_color: "#000000",
+    background_opacity: "20",
+    project_id: "",
+    created_at: "",
+    updated_at: "",
+  },
+];
 
-function ToastCardList({ project, toast, setToast, isToastSavedRef, previewRef }) {
-  function sendToastInfo(toastInput) {
+function ToastCardList({ project, isToastSavedRef, previewRef }) {
+  const [toastList, setToastList] = useState(initialToastList);
+
+  function sendToastInput(toastInput) {
     const {
       name,
       type,
@@ -31,6 +35,7 @@ function ToastCardList({ project, toast, setToast, isToastSavedRef, previewRef }
       message_button_color,
       background_opacity,
     } = toastInput;
+
     previewRef.current.contentWindow.postMessage(
       {
         name,
@@ -57,16 +62,14 @@ function ToastCardList({ project, toast, setToast, isToastSavedRef, previewRef }
         throw new Error(error);
       }
 
-      if (resultToastList.length === 0) {
-        setToast(initialToast);
-      } else {
+      if (resultToastList.length > 0) {
         isToastSavedRef.current = true;
-        setToast(resultToastList[0]);
+        setToastList(resultToastList);
       }
     }
     getToastList();
     return;
-  }, [project.id, setToast, isToastSavedRef]);
+  }, [project.id, isToastSavedRef]);
 
   useEffect(() => {
     function setTargetElementId(e) {
@@ -77,7 +80,7 @@ function ToastCardList({ project, toast, setToast, isToastSavedRef, previewRef }
       }
 
       if (project.link.includes(e.origin)) {
-        setToast((state) => ({ ...state, target_element_id: targetElementId }));
+        setToastList((state) => ({ ...state, target_element_id: targetElementId }));
       }
       return;
     }
@@ -85,18 +88,22 @@ function ToastCardList({ project, toast, setToast, isToastSavedRef, previewRef }
     window.addEventListener("message", setTargetElementId);
 
     return () => window.removeEventListener("message", setTargetElementId);
-  }, [project.link, setToast]);
+  }, [project.link]);
 
   return (
     <>
       <div className="flex w-full flex-col border-2 border-solid">
-        <ToastCard
-          projectId={project.id}
-          toast={toast}
-          setToast={setToast}
-          isToastSavedRef={isToastSavedRef}
-          sendToastInfo={sendToastInfo}
-        />
+        {toastList.map((toastSaved) => {
+          return (
+            <ToastCard
+              key={toastSaved.id}
+              toastSaved={toastSaved}
+              isToastSavedRef={isToastSavedRef}
+              sendToastInput={sendToastInput}
+              projectId={project.id}
+            />
+          );
+        })}
       </div>
     </>
   );
@@ -106,20 +113,6 @@ export default ToastCardList;
 
 ToastCardList.propTypes = {
   project: PropTypes.object.isRequired,
-  toast: PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    target_element_id: PropTypes.string,
-    message_title: PropTypes.string,
-    message_body: PropTypes.string,
-    message_button_color: PropTypes.string,
-    background_opacity: PropTypes.string,
-    project_id: PropTypes.string,
-    created_at: PropTypes.string,
-    updated_at: PropTypes.string,
-  }).isRequired,
-  setToast: PropTypes.func.isRequired,
   isToastSavedRef: PropTypes.object.isRequired,
   previewRef: PropTypes.object,
 };
