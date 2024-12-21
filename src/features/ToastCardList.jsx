@@ -71,7 +71,17 @@ function ToastCardList({ project, previewRef }) {
       }
     }
     getToastList();
-    return;
+
+    const channels = supabase
+      .channel("custom-all-channel")
+      .on("postgres_changes", { event: "*", schema: "public", table: "toast" }, (payload) => {
+        if (payload.eventType !== null) {
+          getToastList();
+        }
+      })
+      .subscribe();
+
+    return () => channels.unsubscribe();
   }, [project.id]);
 
   useEffect(() => {
