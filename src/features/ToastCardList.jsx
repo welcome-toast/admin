@@ -4,25 +4,23 @@ import { useEffect, useState } from "react";
 import { supabase } from "../shared/supabase";
 import ToastCard from "./ToastCard";
 
-const initialToastList = [
-  {
-    id: "",
-    name: "",
-    type: "",
-    target_element_id: "",
-    message_title: "",
-    message_body: "",
-    image_url: "",
-    message_button_color: "#000000",
-    background_opacity: "20",
-    project_id: "",
-    created_at: "",
-    updated_at: "",
-  },
-];
+const initialToast = {
+  id: "",
+  name: "",
+  type: "",
+  target_element_id: "",
+  message_title: "",
+  message_body: "",
+  image_url: "",
+  message_button_color: "#000000",
+  background_opacity: "20",
+  project_id: "",
+  created_at: "",
+  updated_at: "",
+};
 
 function ToastCardList({ project, previewRef }) {
-  const [toastList, setToastList] = useState(initialToastList);
+  const [toastList, setToastList] = useState([]);
   const [isCreatingToast, setIsCreatingToast] = useState(false);
 
   function sendToastInput(toastInput) {
@@ -85,7 +83,11 @@ function ToastCardList({ project, previewRef }) {
       }
 
       if (project.link.includes(e.origin)) {
-        setToastList((state) => ({ ...state, target_element_id: targetElementId }));
+        setToastList(
+          toastList.map((el) => {
+            return { ...el, target_element_id: targetElementId };
+          }),
+        );
       }
       return;
     }
@@ -93,7 +95,7 @@ function ToastCardList({ project, previewRef }) {
     window.addEventListener("message", setTargetElementId);
 
     return () => window.removeEventListener("message", setTargetElementId);
-  }, [project.link]);
+  }, [project.link, toastList]);
 
   return (
     <>
@@ -110,20 +112,33 @@ function ToastCardList({ project, previewRef }) {
         })}
       </div>
       {isCreatingToast && (
-        <ToastCard
-          initialToast={initialToastList[0]}
-          sendToastInput={sendToastInput}
-          projectId={project.id}
-        />
+        <div className="flex flex-col gap-3">
+          <span className="font-bold text-gray-400 text-l">새로운 토스트</span>
+          <ToastCard
+            initialToast={initialToast}
+            sendToastInput={sendToastInput}
+            projectId={project.id}
+          />
+        </div>
       )}
       <div className="mb-5">
-        <button
-          type="button"
-          onClick={handleNewToastButtonClick}
-          className="h-14 w-full border-2 border-black text-2xl"
-        >
-          +
-        </button>
+        {isCreatingToast ? (
+          <button
+            type="button"
+            onClick={handleNewToastButtonClick}
+            className="h-14 w-full border-2 border-black text-xl"
+          >
+            X
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={handleNewToastButtonClick}
+            className="h-14 w-full border-2 border-black text-2xl"
+          >
+            +
+          </button>
+        )}
       </div>
     </>
   );
