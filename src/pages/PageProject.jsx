@@ -10,6 +10,12 @@ function PageProject() {
   const project = location.state?.project;
   const [previewRef, setPreviewRef] = useState(null);
   const [toastList, setToastList] = useState([]);
+  const [indexToastForEdit, setIndexToastForEdit] = useState(0);
+
+  function handleToastCardClick(index) {
+    setIndexToastForEdit(index);
+    return;
+  }
 
   useEffect(() => {
     async function getToastList() {
@@ -68,8 +74,13 @@ function PageProject() {
       <section className="flex h-[90vh] w-[10vw] flex-col gap-5 border-2 border-solid">
         <div className="flex flex-col gap-5">
           <h3 className="mb-4 font-bold text-gray-900 text-xl">토스트 리스트</h3>
-          {toastList.map((toastSaved) => (
-            <button type="button" key={toastSaved.id} className="flex flex-col gap-1 border-2">
+          {toastList.map((toastSaved, index) => (
+            <button
+              type="button"
+              key={toastSaved.id}
+              onClick={() => handleToastCardClick(index)}
+              className="flex flex-col gap-1 border-2"
+            >
               <span className="mb-1 font-bold text-gray-900 text-xl">{toastSaved.name}</span>
               <span className="mb-1 text-gray-900 text-l">{toastSaved.message_title}</span>
               <span className="mb-1 text-gray-500">업데이트 {toastSaved.updated_at}</span>
@@ -96,7 +107,7 @@ function PageProject() {
         </div>
         {toastList.length > 0 ? (
           <ToastCardEditor
-            toast={toastList[0]}
+            toast={toastList[indexToastForEdit]}
             setToast={setToastList}
             previewRef={previewRef}
             project={project}
