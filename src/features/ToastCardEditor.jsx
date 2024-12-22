@@ -1,7 +1,14 @@
 import PropTypes from "prop-types";
+import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 
-function ToastCardEditor({ toast, setToast, handleToastInputChange, sendToastInput }) {
+function ToastCardEditor({ toast, setToast, previewRef, project }) {
+  function handleToastInputChange(toastType, input) {
+    setToast((state) => ({ ...state, [toastType]: input }));
+    sendToastInput({ ...toast, [toastType]: input });
+    return;
+  }
+
   async function handleToastImageUpload(files) {
     const uploadImage = files[0];
 
@@ -23,6 +30,87 @@ function ToastCardEditor({ toast, setToast, handleToastInputChange, sendToastInp
     sendToastInput({ ...toast, image_url: imageUrl });
 
     return;
+  }
+
+  async function handleSaveToastButtonClick() {
+    if (toast.id === "") {
+      const { data: resultToastList, error } = await supabase
+        .from("toast")
+        .insert([
+          {
+            name: toast.name,
+            target_element_id: toast.target_element_id,
+            message_title: toast.message_title,
+            message_body: toast.message_body,
+            image_url: toast.image_url,
+            message_button_color: toast.message_button_color,
+            background_opacity: toast.background_opacity,
+            project_id: project.id,
+          },
+        ])
+        .select();
+
+      if (resultToastList.length === 0) {
+        throw new Error(error.message);
+      }
+
+      setToast(resultToastList[0]);
+      // setIsCreatingToast(false);
+
+      alert("토스트가 저장 되었어요.");
+    } else {
+      const { data: resultToastList, error } = await supabase
+        .from("toast")
+        .update({
+          name: toast.name,
+          target_element_id: toast.target_element_id,
+          message_title: toast.message_title,
+          message_body: toast.message_body,
+          image_url: toast.image_url,
+          message_button_color: toast.message_button_color,
+          background_opacity: toast.background_opacity,
+        })
+        .eq("id", toast.id)
+        .select();
+
+      if (resultToastList.length === 0) {
+        throw new Error(error.message);
+      }
+
+      setToast(resultToastList[0]);
+      // setIsCreatingToast(false);
+
+      alert("토스트가 저장 되었어요.");
+    }
+
+    return;
+  }
+
+  function sendToastInput(toastInput) {
+    const {
+      name,
+      type,
+      target_element_id,
+      message_title,
+      message_body,
+      image_url,
+      message_button_color,
+      background_opacity,
+    } = toastInput;
+
+    previewRef.current.contentWindow.postMessage(
+      {
+        name,
+        type,
+        target_element_id,
+        message_title,
+        message_body,
+        image_url,
+        message_button_color,
+        background_opacity,
+      },
+      project.link,
+    );
   }
 
   return (
@@ -122,6 +210,9 @@ function ToastCardEditor({ toast, setToast, handleToastInputChange, sendToastInp
           />
         </label>
       </div>
+      <div className="mb-5">
+        <Button text={"저장"} onClick={handleSaveToastButtonClick} />
+      </div>
     </div>
   );
 }
@@ -145,5 +236,7 @@ ToastCardEditor.propTypes = {
   }).isRequired,
   setToast: PropTypes.func.isRequired,
   handleToastInputChange: PropTypes.func.isRequired,
-  sendToastInput: PropTypes.func.isRequired,
+  previewRef: PropTypes.object.isRequired,
+  project: PropTypes.object.isRequired,
+  // sendToastInput: PropTypes.func.isRequired,
 };
