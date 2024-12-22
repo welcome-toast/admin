@@ -4,6 +4,7 @@ import { useState } from "react";
 import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 import ToastCardEditor from "./ToastCardEditor";
+import ToastCardHeader from "./ToastCardHeader";
 
 function ToastCard({ initialToast, sendToastInput, projectId, setIsCreatingToast }) {
   const [toast, setToast] = useState(initialToast);
@@ -64,6 +65,7 @@ function ToastCard({ initialToast, sendToastInput, projectId, setIsCreatingToast
 
   return (
     <div className="flex flex-col gap-5 rounded border-2 border-black px-5">
+      <ToastCardHeader toast={toast} />
       <ToastCardEditor toast={toast} setToast={setToast} sendToastInput={sendToastInput} />
       <div className="mb-5">
         <Button text={"저장"} onClick={handleSaveToastButtonClick} />

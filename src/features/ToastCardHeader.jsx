@@ -1,12 +1,14 @@
 import PropTypes from "prop-types";
+import ArrowIcon from "../shared/Icon/ArrowIcon";
 
 function ToastCardHeader({ toast }) {
   return (
-    <div className="flex">
-      <div className="mt-5 flex w-full justify-between">
-        <span>{toast.name}</span>
-        <span>{toast.type}</span>
-      </div>
+    <div className="mt-5 flex w-full justify-between">
+      <span>{toast.name}</span>
+      <span>{toast.type}</span>
+      <button type="button">
+        <ArrowIcon />
+      </button>
     </div>
   );
 }
