@@ -9,6 +9,12 @@ import ToastCardHeader from "./ToastCardHeader";
 function ToastCard({ initialToast, sendToastInput, projectId, setIsCreatingToast }) {
   const [toast, setToast] = useState(initialToast);
 
+  function handleToastInputChange(toastType, input) {
+    setToast((state) => ({ ...state, [toastType]: input }));
+    sendToastInput({ ...toast, [toastType]: input });
+    return;
+  }
+
   async function handleSaveToastButtonClick() {
     if (initialToast.id === "") {
       const { data: resultToastList, error } = await supabase
@@ -65,8 +71,13 @@ function ToastCard({ initialToast, sendToastInput, projectId, setIsCreatingToast
 
   return (
     <div className="flex flex-col gap-5 rounded border-2 border-black px-5">
-      <ToastCardHeader toast={toast} />
-      <ToastCardEditor toast={toast} setToast={setToast} sendToastInput={sendToastInput} />
+      <ToastCardHeader toast={toast} handleToastInputChange={handleToastInputChange} />
+      <ToastCardEditor
+        toast={toast}
+        setToast={setToast}
+        handleToastInputChange={handleToastInputChange}
+        sendToastInput={sendToastInput}
+      />
       <div className="mb-5">
         <Button text={"저장"} onClick={handleSaveToastButtonClick} />
       </div>
