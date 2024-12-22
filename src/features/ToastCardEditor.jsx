@@ -1,13 +1,7 @@
 import PropTypes from "prop-types";
 import { supabase } from "../shared/supabase";
 
-function ToastCardEditor({ toast, setToast, sendToastInput }) {
-  function handleToastInputChange(toastType, input) {
-    setToast((state) => ({ ...state, [toastType]: input }));
-    sendToastInput({ ...toast, [toastType]: input });
-    return;
-  }
-
+function ToastCardEditor({ toast, setToast, handleToastInputChange, sendToastInput }) {
   async function handleToastImageUpload(files) {
     const uploadImage = files[0];
 
@@ -33,20 +27,6 @@ function ToastCardEditor({ toast, setToast, sendToastInput }) {
 
   return (
     <div className="mt-5">
-      <div className="mb-3 flex flex-col">
-        <span className="font-bold text-gray-900 text-l">토스트 이름</span>
-        <label className="my-5 flex flex-col gap-5">
-          <input
-            type="text"
-            id="toastName"
-            name="toastName"
-            value={toast.name}
-            placeholder="토스트 이름을 입력하세요"
-            className="h-10 border-2 border-solid"
-            onChange={(e) => handleToastInputChange("name", e.target.value)}
-          />
-        </label>
-      </div>
       <div className="mb-5 flex flex-col">
         <span className="font-bold text-gray-900 text-l">적용할 요소 ID</span>
         <label className="my-2 flex flex-col gap-2">
@@ -164,5 +144,6 @@ ToastCardEditor.propTypes = {
     updated_at: PropTypes.string,
   }).isRequired,
   setToast: PropTypes.func.isRequired,
+  handleToastInputChange: PropTypes.func.isRequired,
   sendToastInput: PropTypes.func.isRequired,
 };
