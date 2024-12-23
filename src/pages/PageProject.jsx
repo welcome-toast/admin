@@ -70,7 +70,7 @@ function PageProject() {
     function setTargetElementId(e) {
       const targetElementId = e.data.target;
 
-      if (targetElementId === "") {
+      if (targetElementId === "" || targetElementId === null || targetElementId === undefined) {
         return;
       }
 
