@@ -5,6 +5,21 @@ import ProjectPreview from "../features/ProjectPreview";
 import ToastCardEditor from "../features/ToastCardEditor";
 import { supabase } from "../shared/supabase";
 
+const initialToast = {
+  id: "",
+  name: "",
+  type: "",
+  target_element_id: "",
+  message_title: "",
+  message_body: "",
+  image_url: "",
+  message_button_color: "#000000",
+  background_opacity: "20",
+  project_id: "",
+  created_at: "",
+  updated_at: "",
+};
+
 function PageProject() {
   const location = useLocation();
   const project = location.state?.project;
@@ -14,6 +29,11 @@ function PageProject() {
 
   function handleToastCardClick(index) {
     setIndexToastForEdit(index);
+    return;
+  }
+
+  function handleNewToastButtonClick() {
+    setIndexToastForEdit(-1);
     return;
   }
 
@@ -87,7 +107,11 @@ function PageProject() {
             </button>
           ))}
           <div className="mb-5">
-            <button type="button" className="h-14 w-full border-2 border-black text-2xl">
+            <button
+              type="button"
+              onClick={handleNewToastButtonClick}
+              className="h-14 w-full border-2 border-black text-2xl"
+            >
               +
             </button>
           </div>
@@ -103,17 +127,32 @@ function PageProject() {
       </section>
       <section className="flex h-[90vh] w-[20vw] flex-col gap-5 border-2 border-solid">
         <div className="flex flex-col">
-          <h3 className="mb-4 font-bold text-gray-900 text-xl">토스트 에디터</h3>
+          <h3 className="font-bold text-gray-900 text-xl">토스트 에디터</h3>
         </div>
-        {toastList.length > 0 ? (
-          <ToastCardEditor
-            toast={toastList[indexToastForEdit]}
-            setToast={setToastList}
-            previewRef={previewRef}
-            project={project}
-          />
+        {indexToastForEdit >= 0 && toastList.length > 0 ? (
+          <>
+            <div className="w-full bg-slate-200 p-3">
+              <span>{toastList[indexToastForEdit].name}</span>
+            </div>
+            <ToastCardEditor
+              toast={toastList[indexToastForEdit]}
+              setToastList={setToastList}
+              previewRef={previewRef}
+              project={project}
+            />
+          </>
         ) : (
-          <button type="button">button</button>
+          <>
+            <div className="w-full bg-slate-200 p-3">
+              <span>새로운 토스트를 만들어보세요</span>
+            </div>
+            <ToastCardEditor
+              toast={initialToast}
+              setToastList={setToastList}
+              previewRef={previewRef}
+              project={project}
+            />
+          </>
         )}
       </section>
     </div>
