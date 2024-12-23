@@ -1,11 +1,14 @@
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 
-function ToastCardEditor({ toast, setToast, previewRef, project }) {
+function ToastCardEditor({ toast, setToastList, previewRef, project }) {
+  const [toastInput, setToastInput] = useState(() => toast);
+
   function handleToastInputChange(toastType, input) {
-    setToast((state) => ({ ...state, [toastType]: input }));
-    sendToastInput({ ...toast, [toastType]: input });
+    setToastInput((prev) => ({ ...prev, [toastType]: input }));
+    sendToastInput({ ...toastInput, [toastType]: input });
     return;
   }
 
@@ -26,25 +29,25 @@ function ToastCardEditor({ toast, setToast, previewRef, project }) {
 
     const imageUrl = supabase.storage.from("toast_image_storage").getPublicUrl(data.path)
       .data.publicUrl;
-    setToast((state) => ({ ...state, image_url: imageUrl }));
-    sendToastInput({ ...toast, image_url: imageUrl });
+    setToastInput((prev) => ({ ...prev, image_url: imageUrl }));
+    sendToastInput({ ...toastInput, image_url: imageUrl });
 
     return;
   }
 
   async function handleSaveToastButtonClick() {
-    if (toast.id === "") {
+    if (toastInput.id === "") {
       const { data: resultToastList, error } = await supabase
         .from("toast")
         .insert([
           {
-            name: toast.name,
-            target_element_id: toast.target_element_id,
-            message_title: toast.message_title,
-            message_body: toast.message_body,
-            image_url: toast.image_url,
-            message_button_color: toast.message_button_color,
-            background_opacity: toast.background_opacity,
+            name: toastInput.name,
+            target_element_id: toastInput.target_element_id,
+            message_title: toastInput.message_title,
+            message_body: toastInput.message_body,
+            image_url: toastInput.image_url,
+            message_button_color: toastInput.message_button_color,
+            background_opacity: toastInput.background_opacity,
             project_id: project.id,
           },
         ])
@@ -54,31 +57,33 @@ function ToastCardEditor({ toast, setToast, previewRef, project }) {
         throw new Error(error.message);
       }
 
-      setToast(resultToastList[0]);
-      // setIsCreatingToast(false);
+      setToastList((prev) =>
+        prev.map((toast) => (toast.id === toastInput.id ? resultToastList[0] : toast)),
+      );
 
       alert("토스트가 저장 되었어요.");
     } else {
       const { data: resultToastList, error } = await supabase
         .from("toast")
         .update({
-          name: toast.name,
-          target_element_id: toast.target_element_id,
-          message_title: toast.message_title,
-          message_body: toast.message_body,
-          image_url: toast.image_url,
-          message_button_color: toast.message_button_color,
-          background_opacity: toast.background_opacity,
+          name: toastInput.name,
+          target_element_id: toastInput.target_element_id,
+          message_title: toastInput.message_title,
+          message_body: toastInput.message_body,
+          image_url: toastInput.image_url,
+          message_button_color: toastInput.message_button_color,
+          background_opacity: toastInput.background_opacity,
         })
-        .eq("id", toast.id)
+        .eq("id", toastInput.id)
         .select();
 
       if (resultToastList.length === 0) {
         throw new Error(error.message);
       }
 
-      setToast(resultToastList[0]);
-      // setIsCreatingToast(false);
+      setToastList((prev) =>
+        prev.map((toast) => (toast.id === toastInput.id ? resultToastList[0] : toast)),
+      );
 
       alert("토스트가 저장 되었어요.");
     }
@@ -113,28 +118,47 @@ function ToastCardEditor({ toast, setToast, previewRef, project }) {
     );
   }
 
+  useEffect(() => {
+    setToastInput(toast);
+    return;
+  }, [toast]);
+
   return (
-    <div className="mt-5">
+    <div>
+      <div className="mb-3 flex flex-col">
+        <span className="font-bold text-gray-900 text-l">액션 이름</span>
+        <label className="my-5 flex flex-col gap-5">
+          <input
+            type="text"
+            id="actionName"
+            name="actionName"
+            value={toastInput.name}
+            placeholder="토스트 이름을 입력하세요"
+            className="h-10 border-2 border-solid"
+            onChange={(e) => handleToastInputChange("name", e.target.value)}
+          />
+        </label>
+      </div>
       <div className="mb-5 flex flex-col">
         <span className="font-bold text-gray-900 text-l">적용할 요소 ID</span>
         <label className="my-2 flex flex-col gap-2">
           <span className="font-normal text-gray-400 italic">
             토스트로 강조할 요소의 id를 입력하세요
           </span>
-          <div className="flex justify-between">
-            <span className="font-bold text-l">현재 선택된 타겟 ID</span>
-            {toast.target_element_id === null ? "null" : toast.target_element_id}
-          </div>
           <input
             type="text"
             id="toastTargetElementId"
             name="toastTargetElementId"
-            value={toast.target_element_id}
+            value={toastInput.target_element_id}
             placeholder="(예시) welcomeToast"
             className="h-10 border-2 border-solid"
             onChange={(e) => handleToastInputChange("target_element_id", e.target.value)}
           />
         </label>
+        <div className="flex justify-between">
+          <span className="font-bold text-l">현재 선택된 타겟 ID</span>
+          {toastInput.target_element_id}
+        </div>
       </div>
       <div className="flex h-10 justify-center rounded border-1 border-solid">
         <button
@@ -154,7 +178,7 @@ function ToastCardEditor({ toast, setToast, previewRef, project }) {
             type="text"
             id="toastMessageTitle"
             name="toastMessageTitle"
-            value={toast.message_title}
+            value={toastInput.message_title}
             placeholder="제목을 입력하세요"
             className="h-10 border-2 border-solid"
             onChange={(e) => handleToastInputChange("message_title", e.target.value)}
@@ -165,7 +189,7 @@ function ToastCardEditor({ toast, setToast, previewRef, project }) {
             type="text"
             id="toastMessageBody"
             name="toastMessageBody"
-            value={toast.message_body}
+            value={toastInput.message_body}
             placeholder="본문을 입력하세요"
             className="h-10 border-2 border-solid"
             onChange={(e) => handleToastInputChange("message_body", e.target.value)}
@@ -191,7 +215,7 @@ function ToastCardEditor({ toast, setToast, previewRef, project }) {
             type="range"
             id="toastBackgroundOpacity"
             name="toastBackgroundOpacity"
-            value={toast.background_opacity}
+            value={toastInput.background_opacity}
             className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
             onChange={(e) => handleToastInputChange("background_opacity", e.target.value)}
           />
@@ -204,7 +228,7 @@ function ToastCardEditor({ toast, setToast, previewRef, project }) {
             type="color"
             id="toastMessageButtonColor"
             name="toastMessageButtonColor"
-            value={toast.message_button_color}
+            value={toastInput.message_button_color}
             className="w-24"
             onChange={(e) => handleToastInputChange("message_button_color", e.target.value)}
           />
@@ -234,9 +258,7 @@ ToastCardEditor.propTypes = {
     created_at: PropTypes.string,
     updated_at: PropTypes.string,
   }).isRequired,
-  setToast: PropTypes.func.isRequired,
-  handleToastInputChange: PropTypes.func.isRequired,
+  setToastList: PropTypes.func.isRequired,
   previewRef: PropTypes.object.isRequired,
   project: PropTypes.object.isRequired,
-  // sendToastInput: PropTypes.func.isRequired,
 };
