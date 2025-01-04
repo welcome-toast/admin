@@ -10,16 +10,14 @@ function ProjectPreview({ project, setPreviewRef }) {
 
   return (
     <div className="h-full w-full">
-      <div className="flex w-full flex-col border-2 border-solid">미리보기 콘텐츠</div>
-      <div className="h-full w-full">
-        <iframe
-          id="projectPreview"
-          title="projectPreview"
-          ref={iframeRef}
-          src={project.link}
-          className="h-full w-full"
-        />
-      </div>
+      <iframe
+        id="projectPreview"
+        title="projectPreview"
+        ref={iframeRef}
+        src={project.link}
+        loading="lazy"
+        className="h-full w-full"
+      />
     </div>
   );
 }
