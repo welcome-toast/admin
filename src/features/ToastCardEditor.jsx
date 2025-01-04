@@ -259,6 +259,6 @@ ToastCardEditor.propTypes = {
     updated_at: PropTypes.string,
   }).isRequired,
   setToastList: PropTypes.func.isRequired,
-  previewRef: PropTypes.object.isRequired,
+  previewRef: PropTypes.object,
   project: PropTypes.object.isRequired,
 };
