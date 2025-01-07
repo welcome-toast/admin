@@ -78,6 +78,7 @@ function PageProjectList({ user }) {
         <div className="grid grid-cols-3 grid-rows-3 gap-4">
           <button
             type="button"
+            id="createProjectButton"
             className="h-full w-full rounded border-2 border-gray-500 text-2xl hover:bg-gray-300"
             onClick={handleCreateProjectClick}
           >
