@@ -9,6 +9,7 @@ import Header from "../widgets/Header";
 import "../index.css";
 import { useEffect, useState } from "react";
 import { getSessionSignIn } from "../shared/supabase";
+import CreateProjectModal from "../widgets/CreateProjectModal";
 
 function App() {
   const [user, setUser] = useState({
@@ -37,10 +38,10 @@ function App() {
       <Header user={user} setUser={setUser} />
       <Routes>
         <Route path="/" exact element={<PageHome user={user} setUser={setUser} />} />
-        <Route path="project">
-          <Route index element={<PageProjectList user={user} />} />
-          <Route path="setting/:projectId" exact element={<PageProject />} />
+        <Route path="project" exact element={<PageProjectList user={user} />}>
+          <Route path="new" exact element={<CreateProjectModal />} />
         </Route>
+        <Route path="toast/:projectId" exact element={<PageProject />} />
         <Route path="*" element={<PageError />} />
       </Routes>
       <Footer />
