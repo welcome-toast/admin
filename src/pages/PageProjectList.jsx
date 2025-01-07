@@ -71,7 +71,13 @@ function PageProjectList({ user }) {
     <section className="mt-20 flex h-screen w-full items-center justify-center gap-10">
       <div className="flex flex-col">
         <h3 className="mb-4 font-bold text-gray-900 text-xl">프로젝트 리스트</h3>
-        <div className="flex flex-col gap-5 rounded border-2 border-solid p-5">
+        <div className="grid grid-cols-3 grid-rows-3 gap-4">
+          <button
+            type="button"
+            className="h-full w-full rounded border-2 border-gray-500 text-2xl hover:bg-gray-300"
+          >
+            <span className="text-gray-500">+</span>
+          </button>
           {project?.map((project) => (
             <ProjectCard
               key={project.id}
@@ -81,7 +87,7 @@ function PageProjectList({ user }) {
           ))}
         </div>
       </div>
-      <div className="">
+      <div>
         <ModalContainer />
       </div>
     </section>
