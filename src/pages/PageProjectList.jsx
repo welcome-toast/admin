@@ -1,10 +1,9 @@
 import PropTypes from "prop-types";
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import ProjectCard from "../features/ProjectCard";
 import { supabase } from "../shared/supabase";
-import ModalContainer from "../widgets/ModalContainer";
 
 const initialProject = [
   {
@@ -26,12 +25,17 @@ function PageProjectList({ user }) {
   function handleProjectClick(projectId) {
     const projectClicked = project.filter((el) => el.id === projectId);
 
-    navigate(`/project/setting/${projectId}`, {
+    navigate(`/toast/${projectId}`, {
       state: {
         user,
         project: projectClicked[0],
       },
     });
+  }
+
+  function handleCreateProjectClick() {
+    navigate("new");
+    return;
   }
 
   useEffect(() => {
@@ -75,6 +79,7 @@ function PageProjectList({ user }) {
           <button
             type="button"
             className="h-full w-full rounded border-2 border-gray-500 text-2xl hover:bg-gray-300"
+            onClick={handleCreateProjectClick}
           >
             <span className="text-gray-500">+</span>
           </button>
@@ -88,7 +93,7 @@ function PageProjectList({ user }) {
         </div>
       </div>
       <div>
-        <ModalContainer />
+        <Outlet />
       </div>
     </section>
   );
