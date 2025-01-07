@@ -1,13 +1,30 @@
 import PropTypes from "prop-types";
 
 import Button from "../shared/Button";
+import HomeIcon from "../shared/Icon/HomeIcon";
 import { CTA_SIGNIN, CTA_SIGNOUT } from "../shared/constant";
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { signIn, signOut } from "../shared/supabase";
 
 function Header({ user, setUser }) {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  if (location.pathname.includes("toast")) {
+    return (
+      <header className="h-12 w-screen border-2 border-gray-200 p-3">
+        <button type="button" onClick={handleHomeButtonClick}>
+          <HomeIcon />
+        </button>
+      </header>
+    );
+  }
+  function handleHomeButtonClick() {
+    navigate("/project");
+    return;
+  }
+
   function handleSignInButtonClick() {
     signIn();
     return;
