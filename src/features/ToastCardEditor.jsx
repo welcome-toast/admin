@@ -124,9 +124,9 @@ function ToastCardEditor({ toast, setToastList, previewRef, project }) {
   }, [toast]);
 
   return (
-    <div>
+    <div className="px-3">
       <div className="mb-3 flex flex-col">
-        <span className="font-bold text-gray-900 text-l">액션 이름</span>
+        <span className="mt-3 font-bold text-gray-900 text-lg">토스트 편집</span>
         <label className="my-5 flex flex-col gap-5">
           <input
             type="text"
@@ -134,16 +134,19 @@ function ToastCardEditor({ toast, setToastList, previewRef, project }) {
             name="actionName"
             value={toastInput.name}
             placeholder="토스트 이름을 입력하세요"
-            className="h-10 border-2 border-solid"
+            className="h-10 rounded-sm border-2 border-solid px-2 text-sm"
             onChange={(e) => handleToastInputChange("name", e.target.value)}
           />
         </label>
       </div>
       <div className="mb-5 flex flex-col">
-        <span className="font-bold text-gray-900 text-l">적용할 요소 ID</span>
+        <div className="flex justify-between">
+          <span className="font-bold text-base">선택된 타겟 요소 ID</span>
+          {toastInput.target_element_id}
+        </div>
         <label className="my-2 flex flex-col gap-2">
-          <span className="font-normal text-gray-400 italic">
-            토스트로 강조할 요소의 id를 입력하세요
+          <span className="font-normal text-gray-400 text-sm italic">
+            강조할 부분을 클릭하거나 요소의 ID 속성값을 입력하세요
           </span>
           <input
             type="text"
@@ -151,53 +154,38 @@ function ToastCardEditor({ toast, setToastList, previewRef, project }) {
             name="toastTargetElementId"
             value={toastInput.target_element_id}
             placeholder="(예시) welcomeToast"
-            className="h-10 border-2 border-solid"
+            className="h-10 rounded-sm border-2 border-solid px-2 text-sm"
             onChange={(e) => handleToastInputChange("target_element_id", e.target.value)}
           />
         </label>
-        <div className="flex justify-between">
-          <span className="font-bold text-l">현재 선택된 타겟 ID</span>
-          {toastInput.target_element_id}
-        </div>
       </div>
-      <div className="flex h-10 justify-center rounded border-1 border-solid">
-        <button
-          type="button"
-          className="h-full w-full rounded border-2 border-gray bg-black text-white"
-        >
-          콘텐츠
-        </button>
-        <button type="button" className="h-full w-full rounded border-2 border-gray">
-          스타일
-        </button>
-      </div>
-      <div className="my-3 flex flex-col">
-        <span>메시지</span>
-        <label className="my-5 flex flex-col gap-5">
+      <div className="my-3 flex flex-col gap-3">
+        <span className="font-bold text-base">메시지</span>
+        <label className="flex flex-col">
           <input
             type="text"
             id="toastMessageTitle"
             name="toastMessageTitle"
             value={toastInput.message_title}
             placeholder="제목을 입력하세요"
-            className="h-10 border-2 border-solid"
+            className="h-10 rounded-sm border-2 border-solid px-2 text-sm"
             onChange={(e) => handleToastInputChange("message_title", e.target.value)}
           />
         </label>
-        <label className="my-5 flex flex-col gap-5">
+        <label className="flex flex-col">
           <input
             type="text"
             id="toastMessageBody"
             name="toastMessageBody"
             value={toastInput.message_body}
             placeholder="본문을 입력하세요"
-            className="h-10 border-2 border-solid"
+            className="h-32 rounded-sm border-2 border-solid px-2 text-sm"
             onChange={(e) => handleToastInputChange("message_body", e.target.value)}
           />
         </label>
       </div>
-      <div className="my-3 flex flex-col">
-        <span>이미지</span>
+      <div className="my-5 flex flex-col">
+        <span className="font-bold text-base">이미지</span>
         <label className="my-5 flex flex-col gap-5">
           <input
             type="file"
@@ -209,7 +197,7 @@ function ToastCardEditor({ toast, setToastList, previewRef, project }) {
         </label>
       </div>
       <div className="my-3 flex flex-col">
-        <span>배경 투명도</span>
+        <span className="font-bold text-base">배경 투명도</span>
         <label className="my-5 flex flex-col gap-5">
           <input
             type="range"
@@ -222,7 +210,7 @@ function ToastCardEditor({ toast, setToastList, previewRef, project }) {
         </label>
       </div>
       <div className="my-3 flex justify-between">
-        <span>메시지 버튼 색상</span>
+        <span className="font-bold text-base">메시지 버튼 색상</span>
         <label>
           <input
             type="color"
@@ -234,7 +222,7 @@ function ToastCardEditor({ toast, setToastList, previewRef, project }) {
           />
         </label>
       </div>
-      <div className="mb-5">
+      <div className="my-10">
         <Button text={"저장"} onClick={handleSaveToastButtonClick} />
       </div>
     </div>

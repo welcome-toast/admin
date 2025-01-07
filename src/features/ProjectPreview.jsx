@@ -9,14 +9,14 @@ function ProjectPreview({ project, setPreviewRef }) {
   }, [setPreviewRef]);
 
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full px-1">
       <iframe
         id="projectPreview"
         title="projectPreview"
         ref={iframeRef}
         src={project.link}
         loading="lazy"
-        className="h-full w-full"
+        className="h-full w-full rounded-sm p-1"
       />
     </div>
   );
