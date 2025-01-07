@@ -131,7 +131,7 @@ function PageProject() {
           </>
         ) : (
           <>
-            <div className="w-full bg-slate-200 p-3">
+            <div className="w-full bg-gray-200 p-3">
               <span>새로운 토스트를 만들어보세요</span>
             </div>
             <ToastCardEditor

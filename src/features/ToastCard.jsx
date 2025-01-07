@@ -3,7 +3,6 @@ import { getDate } from "../shared/utils/getDate";
 
 function ProjectCard({ toastSaved, index, handleToastCardClick }) {
   const date = getDate(toastSaved.updated_at);
-  console.log("date", date);
 
   return (
     <button
