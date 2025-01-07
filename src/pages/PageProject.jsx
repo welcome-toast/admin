@@ -106,6 +106,7 @@ function PageProject() {
           <div className="mb-5">
             <button
               type="button"
+              id="createToastButton"
               onClick={handleNewToastButtonClick}
               className="h-14 w-full rounded border-2 border-gray-500 text-2xl hover:bg-gray-300"
             >
