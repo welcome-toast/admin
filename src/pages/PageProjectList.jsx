@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ProjectCard from "../features/ProjectCard";
 import { supabase } from "../shared/supabase";
 import ModalContainer from "../widgets/ModalContainer";
 
@@ -72,19 +73,11 @@ function PageProjectList({ user }) {
         <h3 className="mb-4 font-bold text-gray-900 text-xl">프로젝트 리스트</h3>
         <div className="flex flex-col gap-5 rounded border-2 border-solid p-5">
           {project?.map((project) => (
-            <button
+            <ProjectCard
               key={project.id}
-              type="button"
-              onClick={() => handleProjectClick(project.id)}
-              className="rounded border-2 border-solid bg-black p-10 text-white"
-            >
-              <ul className="flex gap-3">
-                <li>{project.name}</li>
-                <li>{project.created_at}</li>
-                <li>{project.link}</li>
-                <li>{project.is_installed ? "true" : "false"}</li>
-              </ul>
-            </button>
+              project={project}
+              handleProjectClick={handleProjectClick}
+            />
           ))}
         </div>
       </div>
