@@ -24,7 +24,7 @@ const initialToast = {
 function PageProject() {
   const location = useLocation();
   const project = location.state?.project;
-  const [previewRef, setPreviewRef] = useState(null);
+  const [previewNode, setPreviewNode] = useState(null);
   const [toastList, setToastList] = useState([]);
   const [indexToastForEdit, setIndexToastForEdit] = useState(0);
 
@@ -117,7 +117,7 @@ function PageProject() {
       </section>
       <section className="flex h-[90vh] w-[70vw] flex-col gap-5 px-1">
         <div className="h-full w-full">
-          <ProjectPreview project={project} setPreviewRef={setPreviewRef} />
+          <ProjectPreview project={project} ref={setPreviewNode} />
         </div>
       </section>
       <section className="flex h-[90vh] w-[20vw] flex-col gap-5">
@@ -126,7 +126,7 @@ function PageProject() {
             <ToastCardEditor
               toast={toastList[indexToastForEdit]}
               setToastList={setToastList}
-              previewRef={previewRef}
+              previewNode={previewNode}
               project={project}
             />
           </>
@@ -138,7 +138,7 @@ function PageProject() {
             <ToastCardEditor
               toast={initialToast}
               setToastList={setToastList}
-              previewRef={previewRef}
+              previewNode={previewNode}
               project={project}
             />
           </>

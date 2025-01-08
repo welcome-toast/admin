@@ -1,30 +1,25 @@
 import PropTypes from "prop-types";
-import { useEffect, useRef } from "react";
+import { forwardRef } from "react";
 
-function ProjectPreview({ project, setPreviewRef }) {
-  const iframeRef = useRef(null);
-
-  useEffect(() => {
-    setPreviewRef(iframeRef);
-  }, [setPreviewRef]);
-
+const ProjectPreview = forwardRef(function ProjectPreview({ project }, ref) {
   return (
     <div className="h-full w-full px-1">
       <iframe
         id="projectPreview"
         title="projectPreview"
-        ref={iframeRef}
+        ref={ref}
         src={project.link}
         loading="lazy"
         className="h-full w-full rounded-sm p-1"
       />
     </div>
   );
-}
+});
+
+ProjectPreview.displayName = "ProjectPreview";
 
 export default ProjectPreview;
 
 ProjectPreview.propTypes = {
   project: PropTypes.object.isRequired,
-  setPreviewRef: PropTypes.func.isRequired,
 };
