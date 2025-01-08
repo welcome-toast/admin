@@ -71,7 +71,8 @@ function PageProject() {
       const { data: resultToastList, error } = await supabase
         .from("toast")
         .select("*")
-        .eq("project_id", project.id);
+        .eq("project_id", project.id)
+        .order("id", { ascending: false });
 
       if (error !== null) {
         throw new Error(error);
