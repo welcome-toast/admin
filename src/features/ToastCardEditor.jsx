@@ -182,19 +182,6 @@ function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
           />
         </label>
       </div>
-      <div className="my-3 flex justify-between">
-        <span className="font-bold text-base">메시지 버튼 색상</span>
-        <label>
-          <input
-            type="color"
-            id="toastMessageButtonColor"
-            name="toastMessageButtonColor"
-            value={toastInput.message_button_color}
-            className="w-24"
-            onChange={(e) => handleToastInputChange("message_button_color", e.target.value)}
-          />
-        </label>
-      </div>
       <div className="my-10">
         <Button text={"저장"} onClick={handleSaveToastButtonClick} />
       </div>
