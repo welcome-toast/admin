@@ -71,7 +71,12 @@ function PageProject() {
     function setTargetElementId(e) {
       const targetElementId = e.data.target;
 
-      if (targetElementId === "" || targetElementId === null || targetElementId === undefined) {
+      if (
+        targetElementId === "" ||
+        targetElementId === null ||
+        targetElementId === undefined ||
+        targetElementId.includes("welcomeToast")
+      ) {
         return;
       }
 
