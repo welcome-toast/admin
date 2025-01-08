@@ -77,8 +77,10 @@ function PageProject() {
 
       if (project.link.includes(e.origin)) {
         setToastList(
-          toastList.map((el) => {
-            return { ...el, target_element_id: targetElementId };
+          toastList.map((toast, index) => {
+            return index === indexToastForEdit
+              ? { ...toast, target_element_id: targetElementId }
+              : { ...toast };
           }),
         );
       }
@@ -88,7 +90,7 @@ function PageProject() {
     window.addEventListener("message", setTargetElementId);
 
     return () => window.removeEventListener("message", setTargetElementId);
-  }, [project.link, toastList]);
+  }, [project.link, toastList, indexToastForEdit]);
 
   return (
     <div className="flex h-fit w-screen overflow-scroll px-3 [&::-webkit-scrollbar]:hidden">
