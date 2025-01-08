@@ -140,7 +140,9 @@ function PageProject() {
     <div className="flex h-fit w-screen overflow-scroll px-3 [&::-webkit-scrollbar]:hidden">
       <section className="flex h-[90vh] w-[12vw] flex-col gap-5">
         <div className="flex w-full flex-col gap-5">
-          <h3 className="mt-3 font-bold text-gray-900 text-lg">토스트 리스트</h3>
+          <h3 id="titleToastList" className="mt-3 font-bold text-gray-900 text-lg">
+            토스트 리스트
+          </h3>
           {toastList.map((toastSaved, index) => (
             <ToastCard
               key={toastSaved.id}
@@ -179,7 +181,7 @@ function PageProject() {
           </>
         ) : (
           <>
-            <div className="w-full bg-gray-200 p-3">
+            <div id="titleNewToast" className="w-full bg-gray-200 p-3">
               <span>새로운 토스트를 만들어보세요</span>
             </div>
             <ToastCardEditor
