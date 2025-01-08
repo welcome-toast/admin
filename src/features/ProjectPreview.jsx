@@ -8,7 +8,7 @@ const ProjectPreview = forwardRef(function ProjectPreview({ project }, ref) {
         id="projectPreview"
         title="projectPreview"
         ref={ref}
-        src={project.link}
+        src={project?.link}
         loading="lazy"
         className="h-full w-full rounded-sm p-1"
       />
@@ -21,5 +21,5 @@ ProjectPreview.displayName = "ProjectPreview";
 export default ProjectPreview;
 
 ProjectPreview.propTypes = {
-  project: PropTypes.object.isRequired,
+  project: PropTypes.object,
 };

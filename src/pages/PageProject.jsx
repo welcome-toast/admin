@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import ProjectPreview from "../features/ProjectPreview";
 import ToastCard from "../features/ToastCard";
@@ -23,6 +23,7 @@ const initialToast = {
 
 function PageProject() {
   const location = useLocation();
+  const navigate = useNavigate();
   const project = location.state?.project;
   const [previewNode, setPreviewNode] = useState(null);
   const [toastList, setToastList] = useState([]);
@@ -67,34 +68,36 @@ function PageProject() {
   }
 
   useEffect(() => {
-    async function getToastList() {
-      const { data: resultToastList, error } = await supabase
-        .from("toast")
-        .select("*")
-        .eq("project_id", project.id)
-        .order("id", { ascending: false });
+    if (project !== undefined) {
+      async function getToastList() {
+        const { data: resultToastList, error } = await supabase
+          .from("toast")
+          .select("*")
+          .eq("project_id", project?.id)
+          .order("id", { ascending: false });
 
-      if (error !== null) {
-        throw new Error(error);
-      }
-
-      if (resultToastList.length > 0) {
-        setToastList(resultToastList);
-      }
-    }
-    getToastList();
-
-    const channels = supabase
-      .channel("custom-all-channel")
-      .on("postgres_changes", { event: "*", schema: "public", table: "toast" }, (payload) => {
-        if (payload.eventType !== null) {
-          getToastList();
+        if (error !== null) {
+          throw new Error(error);
         }
-      })
-      .subscribe();
 
-    return () => channels.unsubscribe();
-  }, [project.id]);
+        if (resultToastList.length > 0) {
+          setToastList(resultToastList);
+        }
+      }
+      getToastList();
+
+      const channels = supabase
+        .channel("custom-all-channel")
+        .on("postgres_changes", { event: "*", schema: "public", table: "toast" }, (payload) => {
+          if (payload.eventType !== null) {
+            getToastList();
+          }
+        })
+        .subscribe();
+
+      return () => channels.unsubscribe();
+    }
+  }, [project]);
 
   useEffect(() => {
     function setTargetElementId(e) {
@@ -124,7 +127,14 @@ function PageProject() {
     window.addEventListener("message", setTargetElementId);
 
     return () => window.removeEventListener("message", setTargetElementId);
-  }, [project.link, toastList, indexToastForEdit]);
+  }, [project?.link, toastList, indexToastForEdit]);
+
+  useEffect(() => {
+    if (project === undefined) {
+      navigate("/project");
+      return;
+    }
+  }, [project, navigate]);
 
   return (
     <div className="flex h-fit w-screen overflow-scroll px-3 [&::-webkit-scrollbar]:hidden">
