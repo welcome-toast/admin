@@ -28,8 +28,36 @@ function PageProject() {
   const [toastList, setToastList] = useState([]);
   const [indexToastForEdit, setIndexToastForEdit] = useState(0);
 
+  function sendToastInput(toastInput) {
+    const {
+      name,
+      type,
+      target_element_id,
+      message_title,
+      message_body,
+      image_url,
+      message_button_color,
+      background_opacity,
+    } = toastInput;
+
+    previewNode.contentWindow.postMessage(
+      {
+        name,
+        type,
+        target_element_id,
+        message_title,
+        message_body,
+        image_url,
+        message_button_color,
+        background_opacity,
+      },
+      project.link,
+    );
+  }
+
   function handleToastCardClick(index) {
     setIndexToastForEdit(index);
+    sendToastInput(toastList[index]);
     return;
   }
 
@@ -135,6 +163,7 @@ function PageProject() {
               setToastList={setToastList}
               previewNode={previewNode}
               project={project}
+              sendToastInput={sendToastInput}
             />
           </>
         ) : (
@@ -147,6 +176,7 @@ function PageProject() {
               setToastList={setToastList}
               previewNode={previewNode}
               project={project}
+              sendToastInput={sendToastInput}
             />
           </>
         )}

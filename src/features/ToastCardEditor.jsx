@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 
-function ToastCardEditor({ toast, setToastList, previewNode, project }) {
+function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
   const [toastInput, setToastInput] = useState(() => toast);
 
   function handleToastInputChange(toastType, input) {
@@ -89,33 +89,6 @@ function ToastCardEditor({ toast, setToastList, previewNode, project }) {
     }
 
     return;
-  }
-
-  function sendToastInput(toastInput) {
-    const {
-      name,
-      type,
-      target_element_id,
-      message_title,
-      message_body,
-      image_url,
-      message_button_color,
-      background_opacity,
-    } = toastInput;
-
-    previewNode.contentWindow.postMessage(
-      {
-        name,
-        type,
-        target_element_id,
-        message_title,
-        message_body,
-        image_url,
-        message_button_color,
-        background_opacity,
-      },
-      project.link,
-    );
   }
 
   useEffect(() => {
@@ -247,6 +220,6 @@ ToastCardEditor.propTypes = {
     updated_at: PropTypes.string,
   }).isRequired,
   setToastList: PropTypes.func.isRequired,
-  previewNode: PropTypes.object,
   project: PropTypes.object.isRequired,
+  sendToastInput: PropTypes.func.isRequired,
 };
