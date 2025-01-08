@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 
-function ToastCardEditor({ toast, setToastList, previewRef, project }) {
+function ToastCardEditor({ toast, setToastList, previewNode, project }) {
   const [toastInput, setToastInput] = useState(() => toast);
 
   function handleToastInputChange(toastType, input) {
@@ -103,7 +103,7 @@ function ToastCardEditor({ toast, setToastList, previewRef, project }) {
       background_opacity,
     } = toastInput;
 
-    previewRef.current.contentWindow.postMessage(
+    previewNode.contentWindow.postMessage(
       {
         name,
         type,
@@ -247,6 +247,6 @@ ToastCardEditor.propTypes = {
     updated_at: PropTypes.string,
   }).isRequired,
   setToastList: PropTypes.func.isRequired,
-  previewRef: PropTypes.object,
+  previewNode: PropTypes.object,
   project: PropTypes.object.isRequired,
 };
