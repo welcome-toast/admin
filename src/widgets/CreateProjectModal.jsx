@@ -46,6 +46,7 @@ function CreateProjectModal() {
 
     setInput({ name: "", link: "" });
     setErrorMessage("");
+    navigate("/project");
     return;
   }
 
@@ -108,7 +109,7 @@ function CreateProjectModal() {
         <div className="my-1">
           <span className="text-red-400">{errorMessage}</span>
         </div>
-        <div className="mt-5">
+        <div className="mt-5 flex justify-center">
           <Button text="생성" onClick={handleCreateButtonClick} />
         </div>
       </div>
