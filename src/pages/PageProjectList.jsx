@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import ProjectCard from "../features/ProjectCard";
+import Loading from "../shared/Loading";
 import { supabase } from "../shared/supabase";
 
 const initialProject = [
@@ -73,26 +74,31 @@ function PageProjectList({ user }) {
 
   return (
     <section className="mt-20 flex h-screen w-full items-center justify-center gap-10">
-      <div className="flex flex-col">
-        <h3 className="mb-4 font-bold text-gray-900 text-xl">프로젝트 리스트</h3>
-        <div className="grid grid-cols-3 grid-rows-3 gap-4">
-          <button
-            type="button"
-            id="createProjectButton"
-            className="h-full w-full rounded border-2 border-gray-500 text-2xl hover:bg-gray-300"
-            onClick={handleCreateProjectClick}
-          >
-            <span className="font-semibold text-2xl text-gray-800">+ 새로운 프로젝트</span>
-          </button>
-          {project?.map((project) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              handleProjectClick={handleProjectClick}
-            />
-          ))}
+      {project[0]?.id === "" ? (
+        <Loading />
+      ) : (
+        <div className="flex flex-col">
+          <h3 className="mb-4 font-bold text-gray-900 text-xl">프로젝트 리스트</h3>
+          <div className="grid grid-cols-3 grid-rows-3 gap-4">
+            <button
+              type="button"
+              id="createProjectButton"
+              className="h-full w-full rounded border-2 border-gray-500 text-2xl hover:bg-gray-300"
+              onClick={handleCreateProjectClick}
+            >
+              <span className="font-semibold text-2xl text-gray-800">+ 새로운 프로젝트</span>
+            </button>
+            {project?.map((project) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                handleProjectClick={handleProjectClick}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+
       <div>
         <Outlet />
       </div>
