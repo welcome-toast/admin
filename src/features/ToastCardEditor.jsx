@@ -5,9 +5,11 @@ import { supabase } from "../shared/supabase";
 
 function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
   const [toastInput, setToastInput] = useState(() => toast);
+  const [isToastSaved, setIsToastSaved] = useState(false);
   let debounceTimerId;
 
   function handleToastInputChange(toastType, input, debounce) {
+    setIsToastSaved(false);
     setToastInput((prev) => ({ ...prev, [toastType]: input }));
 
     if (debounce) {
@@ -24,6 +26,7 @@ function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
   }
 
   async function handleToastImageUpload(files) {
+    setIsToastSaved(false);
     const uploadImage = files[0];
 
     const { data, error } = await supabase.storage
@@ -100,7 +103,7 @@ function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
         prev.map((toast) => (toast.id === toastInput.id ? resultToastList[0] : toast)),
       );
 
-      alert("토스트가 저장 되었어요.");
+      setIsToastSaved(true);
     }
 
     return;
@@ -108,6 +111,7 @@ function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
 
   useEffect(() => {
     setToastInput(toast);
+    setIsToastSaved(false);
     return;
   }, [toast]);
 
@@ -210,8 +214,15 @@ function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
           />
         </label>
       </div>
-      <div className="my-10">
+      <div className="my-5 flex">
         <Button text={"저장"} onClick={handleSaveToastButtonClick} />
+        {isToastSaved && (
+          <div className="my-3 ml-5">
+            <span className="animate-pulse font-semibold text-green-600 text-lg">
+              토스트가 저장되었어요.
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
