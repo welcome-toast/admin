@@ -156,9 +156,9 @@ function PageProject() {
               type="button"
               id="createToastButton"
               onClick={handleNewToastButtonClick}
-              className="h-14 w-full rounded border-2 border-gray-500 text-2xl hover:bg-gray-300"
+              className="h-14 w-full rounded border-2 border-gray-500 text-base hover:bg-gray-300"
             >
-              +
+              + 새로운 토스트
             </button>
           </div>
         </div>
