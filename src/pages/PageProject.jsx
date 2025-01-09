@@ -140,7 +140,7 @@ function PageProject() {
     <div className="flex h-fit w-screen overflow-scroll px-3 [&::-webkit-scrollbar]:hidden">
       <section className="mx-3 flex h-[90vh] w-[13vw] flex-col gap-5">
         <div className="flex w-full flex-col ">
-          <h3 id="titleToastList" className="mt-3 mb-3 font-bold text-gray-900 text-lg">
+          <h3 id="titleToastList" className="mt-3 mb-3 font-bold text-gray-900 text-xl">
             토스트 리스트
           </h3>
           <div className="flex flex-col gap-5">

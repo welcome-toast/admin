@@ -132,26 +132,6 @@ function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
           />
         </label>
       </div>
-      <div className="mb-5 flex flex-col">
-        <div className="flex justify-between">
-          <span className="font-bold text-lg">선택된 타겟 요소 ID</span>
-          <span className="font-semibold text-base">{toastInput.target_element_id}</span>
-        </div>
-        <label className="my-2 flex flex-col gap-2">
-          <span className="font-normal text-gray-400 text-sm italic">
-            강조할 부분을 클릭하거나 요소의 ID 속성값을 입력하세요
-          </span>
-          <input
-            type="text"
-            id="toastTargetElementId"
-            name="toastTargetElementId"
-            value={toastInput.target_element_id}
-            placeholder="(예시) welcomeToast"
-            className="h-10 rounded border-2 border-solid bg-gray-50 px-2 text-sm"
-            onChange={(e) => handleToastInputChange("target_element_id", e.target.value)}
-          />
-        </label>
-      </div>
       <div className="mb-5 flex flex-col gap-3">
         <span className="font-bold text-lg">메시지</span>
         <label className="flex flex-col">
@@ -176,6 +156,26 @@ function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
           />
         </label>
       </div>
+      <div className="my-8 flex flex-col">
+        <div className="flex justify-between">
+          <span className="font-bold text-lg">선택된 타겟 요소 ID</span>
+          <span className="font-semibold text-base">{toastInput.target_element_id}</span>
+        </div>
+        <label className="my-2 flex flex-col gap-2">
+          <span className="font-normal text-gray-400 text-sm italic">
+            강조할 부분을 클릭하거나 요소의 ID 속성값을 입력하세요
+          </span>
+          <input
+            type="text"
+            id="toastTargetElementId"
+            name="toastTargetElementId"
+            value={toastInput.target_element_id}
+            placeholder="(예시) welcomeToast"
+            className="h-10 rounded border-2 border-solid bg-gray-50 px-2 text-sm"
+            onChange={(e) => handleToastInputChange("target_element_id", e.target.value)}
+          />
+        </label>
+      </div>
       <div className="my-8 flex flex-col gap-3">
         <span className="font-bold text-lg">이미지</span>
         <label htmlFor="upload" className="flex flex-col">
@@ -184,7 +184,7 @@ function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
             id="toastMessageImage"
             name="toastMessageImage"
             accept="image/png, image/jpeg"
-            className="block w-full text-base text-slate-500 file:mr-4 file:rounded file:border-1 file:border-gray-500 file:bg-gray-50 file:px-4 file:py-2 file:font-semibold file:text-base file:text-gray-700 hover:file:bg-indigo-100"
+            className="block w-full text-base text-slate-500 file:mr-4 file:rounded file:border-1 file:border-gray-500 file:bg-gray-50 file:px-4 file:py-2 file:font-semibold file:text-base file:text-gray-700 hover:file:bg-gray-200"
             onChange={(e) => handleToastImageUpload(e.target.files)}
           />
         </label>
@@ -192,18 +192,18 @@ function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
       <div className="mt-10 flex flex-col">
         <div className="flex justify-between">
           <span className="font-bold text-lg">배경 투명도</span>
-          <span className="font-semibold text-base">{toastInput.background_opacity}</span>
-        </div>
-        <label className="my-5 flex flex-col gap-5">
           <input
             type="number"
             id="toastBackgroundOpacityNumber"
             name="toastBackgroundOpacityNumber"
             value={toastInput.background_opacity}
+            className="w-16"
             onChange={(e) =>
               handleToastInputChange("background_opacity", e.target.value, "debounce")
             }
           />
+        </div>
+        <label className="my-5 flex flex-col gap-5">
           <input
             type="range"
             id="toastBackgroundOpacityRange"
