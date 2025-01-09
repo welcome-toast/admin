@@ -5,9 +5,20 @@ import { supabase } from "../shared/supabase";
 
 function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
   const [toastInput, setToastInput] = useState(() => toast);
+  let debounceTimerId;
 
-  function handleToastInputChange(toastType, input) {
+  function handleToastInputChange(toastType, input, debounce) {
     setToastInput((prev) => ({ ...prev, [toastType]: input }));
+
+    if (debounce) {
+      clearTimeout(debounceTimerId);
+      debounceTimerId = setTimeout(() => {
+        sendToastInput({ ...toastInput, [toastType]: input });
+      }, 500);
+
+      return;
+    }
+
     sendToastInput({ ...toastInput, [toastType]: input });
     return;
   }
@@ -29,7 +40,11 @@ function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
 
     const imageUrl = supabase.storage.from("toast_image_storage").getPublicUrl(data.path)
       .data.publicUrl;
-    setToastInput((prev) => ({ ...prev, image_url: imageUrl }));
+    setToastList((prev) =>
+      prev.map((toast) =>
+        toast.id === toastInput.id ? { ...toast, image_url: imageUrl } : { ...toast },
+      ),
+    );
     sendToastInput({ ...toastInput, image_url: imageUrl });
 
     return;
@@ -98,9 +113,10 @@ function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
 
   return (
     <div className="px-3">
-      <div className="mb-3 flex flex-col">
+      <div className="mb-3 flex flex-col divide-y-2">
         <span className="mt-3 font-bold text-gray-900 text-xl">토스트 편집</span>
-        <label className="my-5 flex flex-col gap-5">
+        <label className="my-3 flex flex-col gap-5">
+          <span className="mt-5 font-bold text-lg">토스트 이름</span>
           <input
             type="text"
             id="actionName"
@@ -164,6 +180,7 @@ function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
             id="toastMessageImage"
             name="toastMessageImage"
             accept="image/png, image/jpeg"
+            className="block w-full text-base text-slate-500 file:mr-4 file:rounded file:border-1 file:border-gray-500 file:bg-gray-50 file:px-4 file:py-2 file:font-semibold file:text-base file:text-gray-700 hover:file:bg-indigo-100"
             onChange={(e) => handleToastImageUpload(e.target.files)}
           />
         </label>
@@ -175,9 +192,18 @@ function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
         </div>
         <label className="my-5 flex flex-col gap-5">
           <input
+            type="number"
+            id="toastBackgroundOpacityNumber"
+            name="toastBackgroundOpacityNumber"
+            value={toastInput.background_opacity}
+            onChange={(e) =>
+              handleToastInputChange("background_opacity", e.target.value, "debounce")
+            }
+          />
+          <input
             type="range"
-            id="toastBackgroundOpacity"
-            name="toastBackgroundOpacity"
+            id="toastBackgroundOpacityRange"
+            name="toastBackgroundOpacityRange"
             value={toastInput.background_opacity}
             className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
             onChange={(e) => handleToastInputChange("background_opacity", e.target.value)}
