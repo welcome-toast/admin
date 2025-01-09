@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { getDate } from "../shared/utils/getDate";
 
-function ProjectCard({ toastSaved, index, handleToastCardClick }) {
+function ProjectCard({ toastSaved, index, indexToastForEdit, handleToastCardClick }) {
   const date = getDate(toastSaved.updated_at);
 
   return (
@@ -9,7 +9,7 @@ function ProjectCard({ toastSaved, index, handleToastCardClick }) {
       type="button"
       key={toastSaved.id}
       onClick={() => handleToastCardClick(index)}
-      className="flex flex-col gap-3 rounded border-2 p-2"
+      className={`${index === indexToastForEdit ? "border-indigo-800 border-double bg-indigo-50" : "hover:border-gray-400 hover:bg-gray-100"} flex flex-col gap-3 rounded border-2 p-2`}
     >
       <div>
         <span className="mb-1 font-bold text-base text-gray-900">{toastSaved.name}</span>
@@ -33,5 +33,6 @@ export default ProjectCard;
 ProjectCard.propTypes = {
   toastSaved: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
+  indexToastForEdit: PropTypes.number.isRequired,
   handleToastCardClick: PropTypes.func.isRequired,
 };
