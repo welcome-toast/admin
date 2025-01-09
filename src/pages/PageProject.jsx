@@ -138,25 +138,28 @@ function PageProject() {
 
   return (
     <div className="flex h-fit w-screen overflow-scroll px-3 [&::-webkit-scrollbar]:hidden">
-      <section className="flex h-[90vh] w-[12vw] flex-col gap-5">
-        <div className="flex w-full flex-col gap-5">
-          <h3 id="titleToastList" className="mt-3 font-bold text-gray-900 text-lg">
+      <section className="mx-3 flex h-[90vh] w-[13vw] flex-col gap-5">
+        <div className="flex w-full flex-col ">
+          <h3 id="titleToastList" className="mt-3 mb-3 font-bold text-gray-900 text-lg">
             토스트 리스트
           </h3>
-          {toastList.map((toastSaved, index) => (
-            <ToastCard
-              key={toastSaved.id}
-              toastSaved={toastSaved}
-              index={index}
-              handleToastCardClick={() => handleToastCardClick(index)}
-            />
-          ))}
-          <div className="mb-5">
+          <div className="flex flex-col gap-5">
+            {toastList.map((toastSaved, index) => (
+              <ToastCard
+                key={toastSaved.id}
+                toastSaved={toastSaved}
+                index={index}
+                indexToastForEdit={indexToastForEdit}
+                handleToastCardClick={() => handleToastCardClick(index)}
+              />
+            ))}
+          </div>
+          <div className="mt-5">
             <button
               type="button"
               id="createToastButton"
               onClick={handleNewToastButtonClick}
-              className="h-14 w-full rounded border-2 border-gray-500 text-base hover:bg-gray-300"
+              className="h-14 w-full rounded border-2 border-gray-500 text-base hover:bg-indigo-50"
             >
               + 새로운 토스트
             </button>
