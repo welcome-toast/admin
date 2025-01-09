@@ -82,7 +82,7 @@ function PageProjectList({ user }) {
             className="h-full w-full rounded border-2 border-gray-500 text-2xl hover:bg-gray-300"
             onClick={handleCreateProjectClick}
           >
-            <span className="text-gray-500">+</span>
+            <span className="font-semibold text-2xl text-gray-800">+ 새로운 프로젝트</span>
           </button>
           {project?.map((project) => (
             <ProjectCard
