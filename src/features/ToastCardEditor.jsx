@@ -79,7 +79,7 @@ function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
         prev.map((toast) => (toast.id === toastInput.id ? resultToastList[0] : toast)),
       );
 
-      alert("토스트가 저장 되었어요.");
+      setIsToastSaved(true);
     } else {
       const { data: resultToastList, error } = await supabase
         .from("toast")
