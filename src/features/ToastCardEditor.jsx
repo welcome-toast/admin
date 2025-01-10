@@ -3,9 +3,16 @@ import { useEffect, useState } from "react";
 import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 
-function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
+function ToastCardEditor({
+  toast,
+  setToastList,
+  project,
+  sendToastInput,
+  isToastSaved,
+  setIsToastSaved,
+}) {
   const [toastInput, setToastInput] = useState(() => toast);
-  const [isToastSaved, setIsToastSaved] = useState(false);
+
   let debounceTimerId;
 
   function handleToastInputChange(toastType, input, debounce) {
@@ -111,7 +118,6 @@ function ToastCardEditor({ toast, setToastList, project, sendToastInput }) {
 
   useEffect(() => {
     setToastInput(toast);
-    setIsToastSaved(false);
     return;
   }, [toast]);
 
@@ -248,4 +254,6 @@ ToastCardEditor.propTypes = {
   setToastList: PropTypes.func.isRequired,
   project: PropTypes.object.isRequired,
   sendToastInput: PropTypes.func.isRequired,
+  isToastSaved: PropTypes.bool.isRequired,
+  setIsToastSaved: PropTypes.func.isRequired,
 };
