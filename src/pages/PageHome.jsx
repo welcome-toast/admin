@@ -39,9 +39,6 @@ function PageHome({ user, setUser }) {
         <span className="font-bold text-5xl">{TITLE_HOME}</span>
       </div>
       <Button text={CTA_SIGNIN} onClick={handleSignInButtonClick} />
-      <div className="flex gap-10">
-        <img alt="intro-home" src="/assets/intro-home.png" width="1600" />
-      </div>
     </main>
   );
 }
