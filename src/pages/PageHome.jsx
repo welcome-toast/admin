@@ -34,7 +34,7 @@ function PageHome({ user, setUser }) {
   }, [user.id, setUser, navigate]);
 
   return (
-    <main className="mt-20 flex h-screen w-full flex-col items-center justify-center gap-10">
+    <main className="mt-20 flex h-[85vh] w-full flex-col items-center justify-center gap-10">
       <div>
         <span className="font-bold text-5xl">{TITLE_HOME}</span>
       </div>
