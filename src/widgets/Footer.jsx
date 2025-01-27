@@ -1,8 +1,11 @@
 import { useLocation } from "react-router-dom";
 
+const HOME_PATH_NAME = "/";
+
 function Footer() {
   const location = useLocation();
-  if (location.pathname.includes("toast")) {
+
+  if (location.pathname !== HOME_PATH_NAME) {
     return null;
   }
 
