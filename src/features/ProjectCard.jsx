@@ -8,14 +8,14 @@ function ProjectCard({ project, handleProjectClick }) {
     <button
       key={project.id}
       type="button"
-      className="flex w-full max-w-sm flex-col items-center justify-center rounded border bg-gray-900 p-6 text-white shadow-xl hover:bg-gray-700"
+      className="flex w-full max-w-sm flex-col items-center justify-center rounded border border-gray-300 bg-gray-100 p-6 text-black shadow-xl hover:border-2 hover:border-gray-800 hover:bg-gray-300"
       onClick={() => handleProjectClick(project.id)}
     >
       <ul className="p-2">
         <li className="mb-3 font-semibold text-2xl">{project.name}</li>
-        <li className="my-1 font-extralight text-gray-300 text-sm italic">{project.link}</li>
-        <li className="mt-5 text-gray-400 text-sm">
-          생성 일자{" "}
+        <li className="my-1 font-extralight text-gray-800 text-sm italic">{project.link}</li>
+        <li className="mt-5 text-gray-800 text-sm">
+          생성일{" "}
           {`${date.year}. ${date.month}. ${date.currentDate}. ${date.currentHour}:${date.currentMinute}`}
         </li>
       </ul>
