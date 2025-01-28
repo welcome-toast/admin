@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
 
 import { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ProjectCard from "../features/ProjectCard";
 import Loading from "../shared/Loading";
 import { supabase } from "../shared/supabase";
+import CreateProjectModal from "../widgets/CreateProjectModal";
 
-const initialProject = [
+const INITIAL_PROJECT = [
   {
     id: "",
     name: "",
@@ -20,11 +21,12 @@ const initialProject = [
 ];
 
 function PageProjectList({ user }) {
-  const [project, setProject] = useState(initialProject);
+  const [project, setProject] = useState(INITIAL_PROJECT);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const navigate = useNavigate();
 
   function handleProjectClick(projectId) {
-    const projectClicked = project.filter((el) => el.id === projectId);
+    const projectClicked = project.find((el) => el.id === projectId);
 
     navigate(`/toast/${projectId}`, {
       state: {
@@ -35,8 +37,7 @@ function PageProjectList({ user }) {
   }
 
   function handleCreateProjectClick() {
-    navigate("new");
-    return;
+    setIsOpenModal(true);
   }
 
   useEffect(() => {
@@ -54,8 +55,6 @@ function PageProjectList({ user }) {
       }
 
       setProject(project);
-
-      return;
     }
 
     getProject();
@@ -73,13 +72,13 @@ function PageProjectList({ user }) {
   }, [user.id, user]);
 
   return (
-    <section className="mt-20 flex h-screen w-full items-center justify-center gap-10">
+    <section className="mt-28 flex h-[80vh] w-full justify-center gap-10">
       {project[0]?.id === "" ? (
         <Loading />
       ) : (
         <div className="flex flex-col">
           <h3 className="mb-4 font-bold text-gray-900 text-xl">프로젝트 리스트</h3>
-          <div className="grid grid-cols-3 grid-rows-3 gap-4">
+          <div className="grid min-h-[80vh] min-w-[90vw] grid-cols-4 grid-rows-4 gap-4 border-2">
             <button
               type="button"
               id="createProjectButton"
@@ -98,10 +97,11 @@ function PageProjectList({ user }) {
           </div>
         </div>
       )}
-
-      <div>
-        <Outlet />
-      </div>
+      {isOpenModal && (
+        <div>
+          <CreateProjectModal setIsOpenModal={setIsOpenModal} />
+        </div>
+      )}
     </section>
   );
 }
