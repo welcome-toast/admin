@@ -1,10 +1,9 @@
+import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Button from "../shared/Button";
 import { createProject } from "../shared/supabase";
 
-function CreateProjectModal() {
-  const navigate = useNavigate();
+function CreateProjectModal({ setIsOpenModal }) {
   const outsideRef = useRef(null);
   const [input, setInput] = useState({
     name: "",
@@ -46,26 +45,26 @@ function CreateProjectModal() {
 
     setInput({ name: "", link: "" });
     setErrorMessage("");
-    navigate("/project");
+    setIsOpenModal(false);
     return;
   }
 
   function handleCloseButtonClick() {
-    navigate("/project");
+    setIsOpenModal(false);
     return;
   }
 
   useEffect(() => {
     function handleModalOutsideClick(event) {
       if (event?.target === outsideRef.current) {
-        navigate("/project");
+        setIsOpenModal(false);
       }
     }
 
     window.addEventListener("click", handleModalOutsideClick);
 
     return () => window.removeEventListener("click", handleModalOutsideClick);
-  }, [navigate]);
+  }, [setIsOpenModal]);
 
   return (
     <div
@@ -118,3 +117,7 @@ function CreateProjectModal() {
 }
 
 export default CreateProjectModal;
+
+CreateProjectModal.propTypes = {
+  setIsOpenModal: PropTypes.func.isRequired,
+};
