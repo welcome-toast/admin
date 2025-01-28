@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import Button from "../shared/Button";
+import CloseIcon from "../shared/Icon/CloseIcon";
 import { createProject } from "../shared/supabase";
 
 function CreateProjectModal({ setIsOpenModal }) {
@@ -75,7 +76,7 @@ function CreateProjectModal({ setIsOpenModal }) {
         <div className="flex justify-between">
           <h3 className="font-bold text-gray-900 text-xl">프로젝트 생성</h3>
           <button type="button" onClick={handleCloseButtonClick}>
-            X
+            <CloseIcon />
           </button>
         </div>
         <label className="mt-5 flex w-full flex-col gap-2 font-bold text-gray-900">
