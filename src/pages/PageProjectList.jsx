@@ -31,7 +31,7 @@ function PageProjectList({ user }) {
     navigate(`/toast/${projectId}`, {
       state: {
         user,
-        project: projectClicked[0],
+        project: projectClicked,
       },
     });
   }
@@ -82,10 +82,10 @@ function PageProjectList({ user }) {
             <button
               type="button"
               id="createProjectButton"
-              className="h-full w-full rounded border-2 border-gray-500 text-2xl hover:bg-gray-300"
+              className="flex w-full max-w-sm flex-col items-center justify-center rounded border-2 border-gray-500 p-6 text-2xl hover:bg-gray-300"
               onClick={handleCreateProjectClick}
             >
-              <span className="font-semibold text-2xl text-gray-800">+ 새로운 프로젝트</span>
+              <span className="font-semibold text-gray-800">+ 새로운 프로젝트</span>
             </button>
             {project?.map((project) => (
               <ProjectCard
@@ -97,11 +97,7 @@ function PageProjectList({ user }) {
           </div>
         </div>
       )}
-      {isOpenModal && (
-        <div>
-          <CreateProjectModal setIsOpenModal={setIsOpenModal} />
-        </div>
-      )}
+      {isOpenModal && <CreateProjectModal setIsOpenModal={setIsOpenModal} />}
     </section>
   );
 }
