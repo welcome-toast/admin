@@ -78,11 +78,11 @@ function PageProjectList({ user }) {
       ) : (
         <div className="flex flex-col">
           <h3 className="mb-4 font-bold text-gray-900 text-xl">프로젝트 리스트</h3>
-          <div className="grid min-h-[80vh] min-w-[90vw] grid-cols-4 grid-rows-4 gap-4 border-2">
+          <div className="grid min-h-[80vh] min-w-[90vw] grid-cols-4 grid-rows-4 gap-4">
             <button
               type="button"
               id="createProjectButton"
-              className="flex w-full max-w-sm flex-col items-center justify-center rounded border-2 border-gray-500 p-6 text-2xl hover:bg-gray-300"
+              className="flex w-full max-w-sm flex-col items-center justify-center rounded border-2 border-gray-300 p-6 text-2xl hover:border-2 hover:border-gray-800 hover:bg-gray-300"
               onClick={handleCreateProjectClick}
             >
               <span className="font-semibold text-gray-800">+ 새로운 프로젝트</span>
