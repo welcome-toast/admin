@@ -34,9 +34,7 @@ async function signOut() {
 }
 
 async function createProject(input) {
-  const { data: projectResult, error } = await supabase.from("project").insert([input]).select();
-
-  return { projectResult, error };
+  await supabase.from("project").insert([input]).select();
 }
 
 export { supabase, signIn, getSessionSignIn, signOut, createProject };
