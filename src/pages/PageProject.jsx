@@ -4,22 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ProjectPreview from "../features/ProjectPreview";
 import ToastCard from "../features/ToastCard";
 import ToastCardEditor from "../features/ToastCardEditor";
+import { INITIAL_TOAST } from "../shared/constant";
 import { supabase } from "../shared/supabase";
-
-const initialToast = {
-  id: "",
-  name: "",
-  type: "",
-  target_element_id: "",
-  message_title: "",
-  message_body: "",
-  image_url: "",
-  message_button_color: "#000000",
-  background_opacity: "20",
-  project_id: "",
-  created_at: "",
-  updated_at: "",
-};
 
 function PageProject() {
   const location = useLocation();
@@ -192,7 +178,7 @@ function PageProject() {
               <span>새로운 토스트를 만들어보세요</span>
             </div>
             <ToastCardEditor
-              toast={initialToast}
+              toast={INITIAL_TOAST}
               setToastList={setToastList}
               previewNode={previewNode}
               project={project}
