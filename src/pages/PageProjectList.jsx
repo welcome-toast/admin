@@ -4,21 +4,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProjectCard from "../features/ProjectCard";
 import Loading from "../shared/Loading";
+import { INITIAL_PROJECT } from "../shared/constant";
 import { supabase } from "../shared/supabase";
 import CreateProjectModal from "../widgets/CreateProjectModal";
-
-const INITIAL_PROJECT = [
-  {
-    id: "",
-    name: "",
-    user_id: "",
-    link: "",
-    api_key: "",
-    is_installed: false,
-    created_at: "",
-    updated_at: "",
-  },
-];
 
 function PageProjectList({ user }) {
   const [project, setProject] = useState(INITIAL_PROJECT);
