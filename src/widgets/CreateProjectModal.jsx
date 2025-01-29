@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Button from "../shared/Button";
 import CloseIcon from "../shared/Icon/CloseIcon";
 import { createProject } from "../shared/supabase";
+import { validateUrl } from "../shared/utils/validateUrl";
 
 function CreateProjectModal({ setIsOpenModal }) {
   const outsideRef = useRef(null);
@@ -15,12 +16,13 @@ function CreateProjectModal({ setIsOpenModal }) {
 
   function handleInputChange(type, input) {
     setInput((state) => ({ ...state, [type]: input }));
-    return;
   }
 
   async function handleCreateButtonClick() {
     const name = input.name.trim();
-    const link = input.link.trim();
+    const link = input.link.trim().toLowerCase();
+    const linkWithProtocol =
+      link.startsWith("https://") || link.startsWith("http://") ? link : `https://${link}`;
 
     if (name === "" || link === "") {
       if (name === "" && link === "") {
@@ -35,24 +37,27 @@ function CreateProjectModal({ setIsOpenModal }) {
       return;
     }
 
-    const { projectResult, error } = await createProject(input);
+    try {
+      const { isValid, errorMessage } = validateUrl(linkWithProtocol);
 
-    if (projectResult === null) {
-      if (error.message.includes("duplicate key")) {
-        setErrorMessage("이미 등록된 도메인이에요. 다른 URL을 등록해주세요.");
+      if (!isValid) {
+        setErrorMessage(errorMessage);
         return;
       }
-    }
 
-    setInput({ name: "", link: "" });
-    setErrorMessage("");
-    setIsOpenModal(false);
-    return;
+      await createProject({ name, link: linkWithProtocol });
+
+      setInput({ name: "", link: "" });
+      setErrorMessage("");
+      setIsOpenModal(false);
+    } catch (error) {
+      setErrorMessage("프로젝트 생성 중 오류가 발생했습니다");
+      console.error(error.message);
+    }
   }
 
   function handleCloseButtonClick() {
     setIsOpenModal(false);
-    return;
   }
 
   useEffect(() => {
@@ -70,9 +75,9 @@ function CreateProjectModal({ setIsOpenModal }) {
   return (
     <div
       ref={outsideRef}
-      className="fixed top-0 left-0 flex h-screen w-full flex-col items-center justify-center gap-5 border-2 border-black border-solid bg-black bg-opacity-70 p-20"
+      className="fixed top-0 left-0 flex h-screen w-full flex-col items-center justify-center gap-5 border-2 border-black border-solid bg-black bg-opacity-70 p-18"
     >
-      <div className="w-10/12 rounded bg-white p-10 md:w-1/3">
+      <div className="w-full rounded bg-white p-10 md:w-1/3">
         <div className="flex justify-between">
           <h3 className="font-bold text-gray-900 text-xl">프로젝트 생성</h3>
           <button type="button" onClick={handleCloseButtonClick}>
