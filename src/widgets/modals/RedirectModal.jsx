@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import Button from "../shared/Button";
-import ModalBackground from "./ModalBackground";
-import ModalContainer from "./ModalContainer";
+import Button from "../../shared/Button";
+import ModalBackground from "../../shared/ModalBackground";
+import ModalContainer from "../../shared/ModalContainer";
 
 function RedirectModal({ text, route }) {
   const navigate = useNavigate();

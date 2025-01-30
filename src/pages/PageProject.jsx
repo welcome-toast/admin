@@ -6,7 +6,7 @@ import ToastCard from "../features/ToastCard";
 import ToastCardEditor from "../features/ToastCardEditor";
 import { DESC_REDIRECT_API_KEY_ACCESS, INITIAL_TOAST } from "../shared/constant";
 import { supabase } from "../shared/supabase";
-import RedirectModal from "../widgets/RedirectModal";
+import RedirectModal from "../widgets/modals/RedirectModal";
 
 function PageProject() {
   const location = useLocation();
