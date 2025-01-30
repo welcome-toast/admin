@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import Button from "../shared/Button";
-import { createProject } from "../shared/supabase";
-import { validateUrl } from "../shared/utils/validateUrl";
-import ModalBackground from "./ModalBackground";
-import ModalContainer from "./ModalContainer";
+import Button from "../../shared/Button";
+import ModalBackground from "../../shared/ModalBackground";
+import ModalContainer from "../../shared/ModalContainer";
+import { createProject } from "../../shared/supabase";
+import { validateUrl } from "../../shared/utils/validateUrl";
 
 function CreateProjectModal({ setIsOpenModal }) {
   const [input, setInput] = useState({

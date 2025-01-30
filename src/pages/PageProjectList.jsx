@@ -6,7 +6,7 @@ import ProjectCard from "../features/ProjectCard";
 import Loading from "../shared/Loading";
 import { INITIAL_PROJECT } from "../shared/constant";
 import { supabase } from "../shared/supabase";
-import CreateProjectModal from "../widgets/CreateProjectModal";
+import CreateProjectModal from "../widgets/modals/CreateProjectModal";
 
 function PageProjectList({ user }) {
   const [project, setProject] = useState(INITIAL_PROJECT);
