@@ -18,7 +18,7 @@ function ModalBackground({ children, setIsOpenModal }) {
   return (
     <div
       ref={backgroundRef}
-      className="fixed top-0 left-0 flex h-screen w-full flex-col items-center justify-center gap-5 border-2 border-black border-solid bg-black bg-opacity-70 p-18"
+      className="fixed top-0 left-0 flex h-screen w-full items-center justify-center gap-5 border-2 border-black border-solid bg-black bg-opacity-70 p-18"
     >
       {children}
     </div>
