@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProjectCard from "../features/ProjectCard";
 import Loading from "../shared/Loading";
-import { INITIAL_PROJECT } from "../shared/constant";
+import { INITIAL_MODAL, INITIAL_PROJECT } from "../shared/constant";
 import { supabase } from "../shared/supabase";
 import CreateProjectModal from "../widgets/modals/CreateProjectModal";
+import GuideInstallProjectModal from "../widgets/modals/GuideInstallProjectModal";
 
 function PageProjectList({ user }) {
   const [project, setProject] = useState(INITIAL_PROJECT);
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(INITIAL_MODAL);
   const navigate = useNavigate();
 
   function handleProjectClick(projectId) {
@@ -25,7 +26,7 @@ function PageProjectList({ user }) {
   }
 
   function handleCreateProjectClick() {
-    setIsOpenModal(true);
+    setIsOpenModal((prev) => ({ ...prev, create: true }));
   }
 
   useEffect(() => {
@@ -79,13 +80,17 @@ function PageProjectList({ user }) {
               <ProjectCard
                 key={project.id}
                 project={project}
+                setIsOpenModal={setIsOpenModal}
                 handleProjectClick={handleProjectClick}
               />
             ))}
           </div>
         </div>
       )}
-      {isOpenModal && <CreateProjectModal setIsOpenModal={setIsOpenModal} />}
+      {isOpenModal.create && <CreateProjectModal setIsOpenModal={setIsOpenModal} />}
+      {isOpenModal.install && (
+        <GuideInstallProjectModal text={"설치 방법"} setIsOpenModal={setIsOpenModal} />
+      )}
     </section>
   );
 }
