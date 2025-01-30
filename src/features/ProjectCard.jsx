@@ -8,7 +8,7 @@ function ProjectCard({ project, handleProjectClick }) {
     <button
       key={project.id}
       type="button"
-      className="flex w-full max-w-sm flex-col items-center justify-center rounded border border-gray-300 bg-gray-100 p-6 text-black shadow-xl hover:border-2 hover:border-gray-800 hover:bg-gray-300"
+      className="flex w-full max-w-sm flex-col items-center justify-center rounded border border-gray-300 bg-gray-100 p-6 text-black shadow-xl hover:border-2 hover:border-blue-700 hover:bg-blue-100"
       onClick={() => handleProjectClick(project.id)}
     >
       <ul className="p-2">

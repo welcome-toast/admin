@@ -160,7 +160,7 @@ function PageProject() {
               type="button"
               id="createToastButton"
               onClick={handleNewToastButtonClick}
-              className="h-14 w-full rounded border-2 border-gray-500 text-base hover:bg-indigo-50"
+              className="h-14 w-full rounded border-2 border-gray-500 text-base hover:bg-blue-100"
             >
               + 새로운 토스트
             </button>
