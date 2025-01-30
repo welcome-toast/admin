@@ -1,17 +1,16 @@
 import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Button from "../shared/Button";
-import CloseIcon from "../shared/Icon/CloseIcon";
 import { createProject } from "../shared/supabase";
 import { validateUrl } from "../shared/utils/validateUrl";
+import ModalBackground from "./ModalBackground";
+import ModalContainer from "./ModalContainer";
 
 function CreateProjectModal({ setIsOpenModal }) {
-  const outsideRef = useRef(null);
   const [input, setInput] = useState({
     name: "",
     link: "",
   });
-
   const [errorMessage, setErrorMessage] = useState("");
 
   function handleInputChange(type, input) {
@@ -56,34 +55,9 @@ function CreateProjectModal({ setIsOpenModal }) {
     }
   }
 
-  function handleCloseButtonClick() {
-    setIsOpenModal(false);
-  }
-
-  useEffect(() => {
-    function handleModalOutsideClick(event) {
-      if (event?.target === outsideRef.current) {
-        setIsOpenModal(false);
-      }
-    }
-
-    window.addEventListener("click", handleModalOutsideClick);
-
-    return () => window.removeEventListener("click", handleModalOutsideClick);
-  }, [setIsOpenModal]);
-
   return (
-    <div
-      ref={outsideRef}
-      className="fixed top-0 left-0 flex h-screen w-full flex-col items-center justify-center gap-5 border-2 border-black border-solid bg-black bg-opacity-70 p-18"
-    >
-      <div className="w-full rounded bg-white p-10 md:w-1/3">
-        <div className="flex justify-between">
-          <h3 className="font-bold text-gray-900 text-xl">프로젝트 생성</h3>
-          <button type="button" onClick={handleCloseButtonClick}>
-            <CloseIcon />
-          </button>
-        </div>
+    <ModalBackground setIsOpenModal={setIsOpenModal}>
+      <ModalContainer modalTitle={"프로젝트 생성"} setIsOpenModal={setIsOpenModal}>
         <label className="mt-5 flex w-full flex-col gap-2 font-bold text-gray-900">
           프로젝트 이름
           <input
@@ -117,8 +91,8 @@ function CreateProjectModal({ setIsOpenModal }) {
         <div className="mt-5 flex justify-center">
           <Button text="생성" onClick={handleCreateButtonClick} />
         </div>
-      </div>
-    </div>
+      </ModalContainer>
+    </ModalBackground>
   );
 }
 
