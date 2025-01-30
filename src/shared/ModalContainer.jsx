@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import CloseIcon from "../shared/Icon/CloseIcon";
+import { INITIAL_MODAL } from "./constant";
 
 function ModalContainer({ children, modalTitle, hasCloseButton = true, setIsOpenModal }) {
   function handleCloseButtonClick() {
-    setIsOpenModal(false);
+    setIsOpenModal(INITIAL_MODAL);
   }
 
   return (
