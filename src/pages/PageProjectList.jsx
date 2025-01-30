@@ -70,7 +70,7 @@ function PageProjectList({ user }) {
             <button
               type="button"
               id="createProjectButton"
-              className="flex w-full max-w-sm flex-col items-center justify-center rounded border-2 border-gray-300 p-6 text-2xl hover:border-2 hover:border-gray-800 hover:bg-gray-300"
+              className="flex w-full max-w-sm flex-col items-center justify-center rounded border-2 border-gray-300 p-6 text-2xl hover:border-2 hover:border-blue-700 hover:bg-blue-100"
               onClick={handleCreateProjectClick}
             >
               <span className="font-semibold text-gray-800">+ 새로운 프로젝트</span>
