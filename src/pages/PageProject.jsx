@@ -67,7 +67,7 @@ function PageProject() {
           .from("toast")
           .select("*")
           .eq("project_id", project?.id)
-          .order("id", { ascending: false });
+          .order("id", { ascending: true });
 
         if (error !== null) {
           throw new Error(error);
