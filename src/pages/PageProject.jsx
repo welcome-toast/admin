@@ -4,15 +4,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ProjectPreview from "../features/ProjectPreview";
 import ToastCard from "../features/ToastCard";
 import ToastCardEditor from "../features/ToastCardEditor";
-import { INITIAL_TOAST } from "../shared/constant";
+import { DESC_REDIRECT_API_KEY_ACCESS, INITIAL_TOAST } from "../shared/constant";
 import { supabase } from "../shared/supabase";
+import RedirectModal from "../widgets/RedirectModal";
 
 function PageProject() {
   const location = useLocation();
   const navigate = useNavigate();
   const project = location.state?.project;
   const [previewNode, setPreviewNode] = useState(null);
-  const [isMatchedProject, setIsMatchedProject] = useState(false);
+  const [isMatchedProject, setIsMatchedProject] = useState(true);
   const [toastList, setToastList] = useState([]);
   const [indexToastForEdit, setIndexToastForEdit] = useState(0);
   const [isToastSaved, setIsToastSaved] = useState(false);
@@ -135,6 +136,9 @@ function PageProject() {
 
   return (
     <div className="flex h-fit w-screen overflow-scroll px-3 [&::-webkit-scrollbar]:hidden">
+      {!isMatchedProject && (
+        <RedirectModal text={DESC_REDIRECT_API_KEY_ACCESS} route={"/project"} />
+      )}
       <section className="mx-3 flex h-[90vh] w-[13vw] flex-col gap-5">
         <div className="flex w-full flex-col ">
           <h3 id="titleToastList" className="mt-3 mb-3 font-bold text-gray-900 text-xl">
@@ -168,6 +172,7 @@ function PageProject() {
           <ProjectPreview
             project={project}
             ref={setPreviewNode}
+            isMatchedProject={isMatchedProject}
             setIsMatchedProject={setIsMatchedProject}
           />
         </div>
