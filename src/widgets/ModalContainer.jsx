@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import CloseIcon from "../shared/Icon/CloseIcon";
 
-function ModalContainer({ ModalTitle, setIsOpenModal }) {
+function ModalContainer({ children, ModalTitle, setIsOpenModal }) {
   function handleCloseButtonClick() {
     setIsOpenModal(false);
   }
@@ -13,6 +13,7 @@ function ModalContainer({ ModalTitle, setIsOpenModal }) {
         <button type="button" onClick={handleCloseButtonClick}>
           <CloseIcon />
         </button>
+        {children}
       </div>
     </div>
   );
@@ -21,6 +22,7 @@ function ModalContainer({ ModalTitle, setIsOpenModal }) {
 export default ModalContainer;
 
 ModalContainer.propTypes = {
+  children: PropTypes.object.isRequired,
   ModalTitle: PropTypes.string.isRequired,
   setIsOpenModal: PropTypes.func.isRequired,
 };
