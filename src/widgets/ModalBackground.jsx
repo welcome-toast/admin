@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
 
-function ModalBackground({ children, setIsOpenModal }) {
+function ModalBackground({ children, setIsOpenModal, canCloseBackgroundClick = true }) {
   const backgroundRef = useRef(null);
 
   useEffect(() => {
@@ -11,9 +11,11 @@ function ModalBackground({ children, setIsOpenModal }) {
       }
     }
 
-    window.addEventListener("click", handleModalBackgroundClick);
-    return () => window.removeEventListener("click", handleModalBackgroundClick);
-  }, [setIsOpenModal]);
+    if (canCloseBackgroundClick) {
+      window.addEventListener("click", handleModalBackgroundClick);
+      return () => window.removeEventListener("click", handleModalBackgroundClick);
+    }
+  }, [setIsOpenModal, canCloseBackgroundClick]);
 
   return (
     <div
@@ -29,5 +31,6 @@ export default ModalBackground;
 
 ModalBackground.propTypes = {
   children: PropTypes.object.isRequired,
-  setIsOpenModal: PropTypes.func.isRequired,
+  setIsOpenModal: PropTypes.func,
+  canCloseBackgroundClick: PropTypes.bool,
 };
