@@ -12,11 +12,16 @@ function PageProject() {
   const navigate = useNavigate();
   const project = location.state?.project;
   const [previewNode, setPreviewNode] = useState(null);
+  const [isMatchedProject, setIsMatchedProject] = useState(false);
   const [toastList, setToastList] = useState([]);
   const [indexToastForEdit, setIndexToastForEdit] = useState(0);
   const [isToastSaved, setIsToastSaved] = useState(false);
 
   function sendToastInput(toastInput) {
+    if (!isMatchedProject) {
+      return;
+    }
+
     const {
       name,
       type,
@@ -89,6 +94,10 @@ function PageProject() {
 
   useEffect(() => {
     function setTargetElementId(e) {
+      if (!isMatchedProject) {
+        return;
+      }
+
       const targetElementId = e.data.target;
 
       if (
@@ -115,7 +124,7 @@ function PageProject() {
     window.addEventListener("message", setTargetElementId);
 
     return () => window.removeEventListener("message", setTargetElementId);
-  }, [project?.link, toastList, indexToastForEdit]);
+  }, [isMatchedProject, project?.link, toastList, indexToastForEdit]);
 
   useEffect(() => {
     if (project === undefined) {
@@ -156,7 +165,11 @@ function PageProject() {
       </section>
       <section className="flex h-[90vh] w-[70vw] flex-col gap-5 px-1">
         <div className="h-full w-full">
-          <ProjectPreview project={project} ref={setPreviewNode} />
+          <ProjectPreview
+            project={project}
+            ref={setPreviewNode}
+            setIsMatchedProject={setIsMatchedProject}
+          />
         </div>
       </section>
       <section className="flex h-[90vh] w-[20vw] flex-col gap-5">
