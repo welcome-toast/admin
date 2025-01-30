@@ -30,3 +30,8 @@ export const INITIAL_TOAST = {
   created_at: "",
   updated_at: "",
 };
+export const INITIAL_MODAL = {
+  create: false,
+  install: false,
+  delete: false,
+};
