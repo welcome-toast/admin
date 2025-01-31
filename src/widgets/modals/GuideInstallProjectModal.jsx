@@ -11,7 +11,7 @@ function GuideInstallProjectModal({ text, apiKeyInstallModal, setIsOpenModal }) 
     <ModalBackground setIsOpenModal={setIsOpenModal}>
       <ModalContainer modalTitle={"연동 스크립트"} setIsOpenModal={setIsOpenModal}>
         <div className="my-5 flex justify-center text-center">{text}</div>
-        <CodeBlock code={installCode} />
+        <CodeBlock title={"스크립트"} code={installCode} />
       </ModalContainer>
     </ModalBackground>
   );
