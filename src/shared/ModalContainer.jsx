@@ -25,7 +25,7 @@ function ModalContainer({ children, modalTitle, hasCloseButton = true, setIsOpen
 export default ModalContainer;
 
 ModalContainer.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
   modalTitle: PropTypes.string.isRequired,
   hasCloseButton: PropTypes.bool,
   setIsOpenModal: PropTypes.func,

@@ -31,7 +31,7 @@ function ModalBackground({ children, setIsOpenModal, canCloseBackgroundClick = t
 export default ModalBackground;
 
 ModalBackground.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
   setIsOpenModal: PropTypes.func,
   canCloseBackgroundClick: PropTypes.bool,
 };
