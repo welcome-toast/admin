@@ -1,4 +1,4 @@
-const getDate = (dateString) => {
+function getDate(dateString) {
   if (dateString === null || dateString === undefined) {
     return null;
   }
@@ -16,6 +16,6 @@ const getDate = (dateString) => {
   const currentMinute = date.getMinutes();
 
   return { year, month, currentDate, currentDay, currentHour, currentMinute };
-};
+}
 
 export { getDate };

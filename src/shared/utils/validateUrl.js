@@ -1,4 +1,4 @@
-const validateUrl = (urlString) => {
+function validateUrl(urlString) {
   try {
     const url = new URL(urlString);
 
@@ -26,6 +26,6 @@ const validateUrl = (urlString) => {
   } catch (error) {
     return { isValid: false, errorMessage: error.message };
   }
-};
+}
 
 export { validateUrl };
