@@ -1,18 +1,32 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
 
-function CodeBlock({ code }) {
+function CodeBlock({ title, code }) {
+  const [isCopied, setIsCopied] = useState(false);
+
+  async function handleCopyCodeClick(codeForCopy) {
+    try {
+      await navigator.clipboard.writeText(codeForCopy);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div className="rounded border border-gray-200 bg-gray-50">
       <div className="flex items-center justify-between border-gray-200 border-b px-4 py-2">
-        <span className="text-gray-600 text-sm">스크립트</span>
+        <span className="text-gray-600 text-sm">{title}</span>
         <button
           type="button"
-          className="rounded border border-gray-300 bg-white px-3 py-1 text-gray-600 text-sm hover:bg-gray-50"
+          className={`rounded border transition-all duration-200 ${isCopied ? "border-blue-500 bg-blue-100 text-blue-800" : "border-gray-300 bg-white text-gray-600 hover:bg-gray-50"} px-3 py-1 text-sm`}
+          onClick={() => handleCopyCodeClick(code)}
         >
-          복사
+          {isCopied ? "복사됨" : "복사"}
         </button>
       </div>
-      <pre className="overflow-x-auto">
+      <pre className="m-3 overflow-x-auto">
         <code className="font-mono text-blue-700 text-sm">{code}</code>
       </pre>
     </div>
@@ -22,5 +36,6 @@ function CodeBlock({ code }) {
 export default CodeBlock;
 
 CodeBlock.propTypes = {
+  title: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,
 };
