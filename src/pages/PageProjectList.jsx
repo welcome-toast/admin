@@ -11,7 +11,7 @@ import {
   INITIAL_PROJECT,
 } from "../shared/constant";
 import { supabase } from "../shared/supabase";
-import ConfirmModal from "../widgets/modals/ConfirmModal";
+import ConfirmDeleteProjectModal from "../widgets/modals/ConfirmDeleteProjectModal";
 import CreateProjectModal from "../widgets/modals/CreateProjectModal";
 import GuideInstallProjectModal from "../widgets/modals/GuideInstallProjectModal";
 
@@ -19,6 +19,10 @@ function PageProjectList({ user }) {
   const [projects, setProject] = useState(INITIAL_PROJECT);
   const [isOpenModal, setIsOpenModal] = useState(INITIAL_MODAL);
   const [apiKeyInstallModal, setApiKeyInstallModal] = useState("");
+  const [projectDeleteConfirmed, setProjectDeleteConfirmed] = useState({
+    projectId: "",
+    projectName: "",
+  });
   const navigate = useNavigate();
 
   function handleProjectClick(projectId) {
@@ -89,6 +93,7 @@ function PageProjectList({ user }) {
                 project={project}
                 setIsOpenModal={setIsOpenModal}
                 setApiKeyInstallModal={setApiKeyInstallModal}
+                setProjectDeleteConfirmed={setProjectDeleteConfirmed}
                 handleProjectClick={handleProjectClick}
               />
             ))}
@@ -104,9 +109,10 @@ function PageProjectList({ user }) {
         />
       )}
       {isOpenModal.delete && (
-        <ConfirmModal
+        <ConfirmDeleteProjectModal
           action={"프로젝트 삭제"}
           description={DESC_DELETE_PROJECT}
+          projectDeleteConfirmed={projectDeleteConfirmed}
           setIsOpenModal={setIsOpenModal}
         />
       )}
