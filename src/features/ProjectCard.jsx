@@ -4,20 +4,36 @@ import KebabIcon from "../shared/Icon/KebabIcon";
 import { getDate } from "../shared/utils/getDate";
 import ProjectDetailsDropdown from "../widgets/ProjectDetailsDropdown";
 
-function ProjectCard({ project, setIsOpenModal, setApiKeyInstallModal, handleProjectClick }) {
+function ProjectCard({
+  project,
+  setIsOpenModal,
+  setApiKeyInstallModal,
+  setProjectDeleteConfirmed,
+  handleProjectClick,
+}) {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const date = getDate(project.created_at);
 
   function handleProjectDetailClick(event) {
     event.stopPropagation();
-    setIsOpenDropdown(true);
+
+    switch (event.type) {
+      case "click":
+        setIsOpenDropdown(true);
+        return;
+      case "keydown":
+        if (event.key === "Enter" || event.key === " ") {
+          setIsOpenDropdown(true);
+        }
+        return;
+    }
   }
 
   return (
     <button
       key={project.id}
       type="button"
-      className="relative flex w-full max-w-sm flex-col items-center justify-center rounded border border-gray-300 bg-gray-100 p-6 text-black shadow-xl hover:border-2 hover:border-blue-700 hover:bg-blue-100"
+      className="relative flex w-full max-w-sm flex-col items-center justify-center rounded border border-gray-300 bg-gray-100 p-6 text-black shadow-xl hover:border-blue-700 hover:bg-blue-100"
       onClick={() => handleProjectClick(project.id)}
     >
       <ul className="p-2">
@@ -28,17 +44,19 @@ function ProjectCard({ project, setIsOpenModal, setApiKeyInstallModal, handlePro
           {`${date.year}. ${date.month}. ${date.currentDate}. ${date.currentHour}:${date.currentMinute}`}
         </li>
       </ul>
-      <button
+      <div
         type="button"
         onClick={handleProjectDetailClick}
+        onKeyDown={handleProjectDetailClick}
         className="absolute top-2 right-1 p-1"
       >
         <KebabIcon />
-      </button>
+      </div>
       {isOpenDropdown && (
         <ProjectDetailsDropdown
-          projectApiKey={project.api_key}
+          project={project}
           setApiKeyInstallModal={setApiKeyInstallModal}
+          setProjectDeleteConfirmed={setProjectDeleteConfirmed}
           setIsOpenDropdown={setIsOpenDropdown}
           setIsOpenModal={setIsOpenModal}
         />
@@ -53,5 +71,6 @@ ProjectCard.propTypes = {
   project: PropTypes.object.isRequired,
   setIsOpenModal: PropTypes.func.isRequired,
   setApiKeyInstallModal: PropTypes.func.isRequired,
+  setProjectDeleteConfirmed: PropTypes.func.isRequired,
   handleProjectClick: PropTypes.func.isRequired,
 };
