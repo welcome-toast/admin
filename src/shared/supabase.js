@@ -37,4 +37,10 @@ async function createProject(input) {
   await supabase.from("project").insert([input]).select();
 }
 
-export { supabase, signIn, getSessionSignIn, signOut, createProject };
+async function deleteProject(id) {
+  const { error } = await supabase.from("project").delete().eq("id", id);
+
+  return error;
+}
+
+export { supabase, signIn, getSessionSignIn, signOut, createProject, deleteProject };
