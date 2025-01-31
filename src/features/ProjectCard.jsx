@@ -4,7 +4,7 @@ import KebabIcon from "../shared/Icon/KebabIcon";
 import { getDate } from "../shared/utils/getDate";
 import ProjectDetailsDropdown from "../widgets/ProjectDetailsDropdown";
 
-function ProjectCard({ project, setIsOpenModal, handleProjectClick }) {
+function ProjectCard({ project, setIsOpenModal, setApiKeyInstallModal, handleProjectClick }) {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const date = getDate(project.created_at);
 
@@ -37,6 +37,8 @@ function ProjectCard({ project, setIsOpenModal, handleProjectClick }) {
       </button>
       {isOpenDropdown && (
         <ProjectDetailsDropdown
+          projectApiKey={project.api_key}
+          setApiKeyInstallModal={setApiKeyInstallModal}
           setIsOpenDropdown={setIsOpenDropdown}
           setIsOpenModal={setIsOpenModal}
         />
@@ -50,5 +52,6 @@ export default ProjectCard;
 ProjectCard.propTypes = {
   project: PropTypes.object.isRequired,
   setIsOpenModal: PropTypes.func.isRequired,
+  setApiKeyInstallModal: PropTypes.func.isRequired,
   handleProjectClick: PropTypes.func.isRequired,
 };
