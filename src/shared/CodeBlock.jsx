@@ -1,4 +1,6 @@
-function CodeBlock() {
+import PropTypes from "prop-types";
+
+function CodeBlock({ code }) {
   return (
     <div className="rounded border border-gray-200 bg-gray-50">
       <div className="flex items-center justify-between border-gray-200 border-b px-4 py-2">
@@ -10,11 +12,15 @@ function CodeBlock() {
           복사
         </button>
       </div>
-      <pre className="overflow-x-auto p-4">
-        <code className="font-mono text-gray-800 text-sm">code</code>
+      <pre className="overflow-x-auto">
+        <code className="font-mono text-blue-700 text-sm">{code}</code>
       </pre>
     </div>
   );
 }
 
 export default CodeBlock;
+
+CodeBlock.propTypes = {
+  code: PropTypes.string.isRequired,
+};
