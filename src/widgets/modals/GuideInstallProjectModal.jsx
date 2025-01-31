@@ -2,19 +2,10 @@ import PropTypes from "prop-types";
 import CodeBlock from "../../shared/CodeBlock";
 import ModalBackground from "../../shared/ModalBackground";
 import ModalContainer from "../../shared/ModalContainer";
+import { getInstallCode } from "../../shared/utils/getInstallCode";
 
 function GuideInstallProjectModal({ text, apiKeyInstallModal, setIsOpenModal }) {
-  const installCode = `
-    <script>
-      window.welcometoastConfig = {
-        apiKey: "${apiKeyInstallModal}",
-        init: function() {
-          window.welcometoast.getProject(window.welcometoastConfig.apiKey);
-        }
-      };
-    </script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/welcome-toast/welcome-toast@refs/heads/main/src/main.js"></script>
-  `;
+  const installCode = getInstallCode(apiKeyInstallModal);
 
   return (
     <ModalBackground setIsOpenModal={setIsOpenModal}>
