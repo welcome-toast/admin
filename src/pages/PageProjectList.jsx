@@ -4,18 +4,19 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProjectCard from "../features/ProjectCard";
 import Loading from "../shared/Loading";
-import { INITIAL_MODAL, INITIAL_PROJECT } from "../shared/constant";
+import { DESC_INSTALL_API_KEY, INITIAL_MODAL, INITIAL_PROJECT } from "../shared/constant";
 import { supabase } from "../shared/supabase";
 import CreateProjectModal from "../widgets/modals/CreateProjectModal";
 import GuideInstallProjectModal from "../widgets/modals/GuideInstallProjectModal";
 
 function PageProjectList({ user }) {
-  const [project, setProject] = useState(INITIAL_PROJECT);
+  const [projects, setProject] = useState(INITIAL_PROJECT);
   const [isOpenModal, setIsOpenModal] = useState(INITIAL_MODAL);
+  const [apiKeyInstallModal, setApiKeyInstallModal] = useState("");
   const navigate = useNavigate();
 
   function handleProjectClick(projectId) {
-    const projectClicked = project.find((el) => el.id === projectId);
+    const projectClicked = projects.find((el) => el.id === projectId);
 
     navigate(`/toast/${projectId}`, {
       state: {
@@ -62,7 +63,7 @@ function PageProjectList({ user }) {
 
   return (
     <section className="mt-28 flex h-[80vh] w-full justify-center gap-10">
-      {project[0]?.id === "" ? (
+      {projects[0]?.id === "" ? (
         <Loading />
       ) : (
         <div className="flex flex-col">
@@ -76,11 +77,12 @@ function PageProjectList({ user }) {
             >
               <span className="font-semibold text-gray-800">+ 새로운 프로젝트</span>
             </button>
-            {project?.map((project) => (
+            {projects?.map((project) => (
               <ProjectCard
                 key={project.id}
                 project={project}
                 setIsOpenModal={setIsOpenModal}
+                setApiKeyInstallModal={setApiKeyInstallModal}
                 handleProjectClick={handleProjectClick}
               />
             ))}
@@ -89,7 +91,11 @@ function PageProjectList({ user }) {
       )}
       {isOpenModal.create && <CreateProjectModal setIsOpenModal={setIsOpenModal} />}
       {isOpenModal.install && (
-        <GuideInstallProjectModal text={"설치 방법"} setIsOpenModal={setIsOpenModal} />
+        <GuideInstallProjectModal
+          text={DESC_INSTALL_API_KEY}
+          apiKeyInstallModal={apiKeyInstallModal}
+          setIsOpenModal={setIsOpenModal}
+        />
       )}
     </section>
   );
