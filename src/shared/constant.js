@@ -38,3 +38,21 @@ export const INITIAL_MODAL = {
   install: false,
   delete: false,
 };
+export const INSTALL_GUIDE_STEPS = [
+  {
+    index: 0,
+    title: "🏠 STEP 01. 새 프로젝트 만들기",
+    description: "프로젝트로 만들면 스크립트가 생성돼요.",
+  },
+  {
+    index: 1,
+    title: "👋 STEP 02. 웰컴 토스트와 웹사이트 연동하기",
+    description: "프로젝트 카드의 오른 쪽 ⋮ 클릭 후 연동 스크립트를 확인하세요.",
+  },
+  {
+    index: 2,
+    title: "🎨 STEP 03. 엘리먼트 id 심기",
+    description:
+      "웰컴 토스트는 HTML 요소 ID 값이 있는 요소에 토스트 메시지가 적용돼요. ID를 심고 토스트 편집을 시작해주세요!",
+  },
+];
