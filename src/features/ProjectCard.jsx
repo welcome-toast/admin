@@ -33,13 +33,15 @@ function ProjectCard({
     <button
       key={project.id}
       type="button"
-      className="relative flex w-full max-w-sm flex-col items-center justify-center rounded border border-gray-300 bg-gray-100 p-6 text-black shadow-xl hover:border-blue-700 hover:bg-blue-100"
+      className="relative flex w-full max-w-sm flex-col items-center justify-center overflow-y-clip rounded border border-gray-300 bg-gray-100 p-6 text-black shadow-xl hover:border-blue-700 hover:bg-blue-100"
       onClick={() => handleProjectClick(project.id)}
     >
       <ul className="p-2">
-        <li className="mb-3 font-semibold text-2xl">{project.name}</li>
-        <li className="my-1 font-extralight text-gray-800 text-sm italic">{project.link}</li>
-        <li className="mt-5 text-gray-800 text-sm">
+        <li className="mb-3 font-semibold text-lg lg:text-xl">{project.name}</li>
+        <li className="my-1 font-extralight text-gray-800 text-xs italic lg:text-sm">
+          {project.link}
+        </li>
+        <li className="mt-3 text-gray-800 text-xs lg:mt-5 lg:text-sm">
           생성일{" "}
           {`${date.year}. ${date.month}. ${date.currentDate}. ${date.currentHour}:${date.currentMinute}`}
         </li>
