@@ -76,9 +76,9 @@ function PageProjectList({ user }) {
       {projects[0]?.id === "" ? (
         <Loading />
       ) : (
-        <div className="flex flex-col">
+        <div className="mx-1 flex flex-col">
           <h3 className="mb-4 font-bold text-gray-900 text-xl">프로젝트 리스트</h3>
-          <div className="grid min-h-[80vh] min-w-[90vw] grid-cols-4 grid-rows-4 gap-4">
+          <div className="grid min-h-[80vh] min-w-[90vw] grid-cols-1 gap-4 md:grid-cols-4 md:grid-rows-4">
             <button
               type="button"
               id="createProjectButton"
