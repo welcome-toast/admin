@@ -33,7 +33,7 @@ function ProjectCard({
     <button
       key={project.id}
       type="button"
-      className="relative flex w-full flex-col items-center justify-center overflow-y-clip rounded border border-gray-300 bg-gray-100 p-6 text-black shadow-xl hover:border-blue-700 hover:bg-blue-100"
+      className="relative flex w-full flex-col items-center justify-center overflow-y-clip rounded border border-gray-300 bg-gray-100 p-6 text-black hover:border-blue-700 hover:bg-blue-100 hover:shadow-xl"
       onClick={() => handleProjectClick(project.id)}
     >
       <ul className="p-2">
