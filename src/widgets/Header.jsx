@@ -50,9 +50,13 @@ function Header({ user, setUser }) {
 
   return (
     <header className="fixed inset-0 z-100 mx-auto h-max w-full backdrop-blur-xl">
-      <nav className="flex justify-between border-2 border-b-gray-100 border-solid">
-        <div className="my-3 ml-10">
-          <img alt="logo-white-home" src="/assets/logo-header.png" width="90" />
+      <nav className="flex items-center justify-between border-2 border-b-gray-100 border-solid">
+        <div className="ml-4 md:ml-10">
+          <img
+            alt="logo-white-home"
+            src="/assets/logo-header.png"
+            className="w-[70px] md:w-[90px]"
+          />
         </div>
         <div className="my-3 mr-10">
           {user.id === "" ? (
