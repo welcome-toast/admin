@@ -11,6 +11,7 @@ import {
   INITIAL_PROJECT,
 } from "../shared/constant";
 import { supabase } from "../shared/supabase";
+import InstallGuide from "../widgets/InstallGuide";
 import ConfirmDeleteProjectModal from "../widgets/modals/ConfirmDeleteProjectModal";
 import CreateProjectModal from "../widgets/modals/CreateProjectModal";
 import GuideInstallProjectModal from "../widgets/modals/GuideInstallProjectModal";
@@ -72,17 +73,18 @@ function PageProjectList({ user }) {
   }, [user.id, user]);
 
   return (
-    <section className="mt-28 flex h-[80vh] w-full justify-center gap-10">
+    <main className="mt-20 flex h-[80vh] w-full justify-center gap-10 md:mt-28">
       {projects[0]?.id === "" ? (
         <Loading />
       ) : (
-        <div className="mx-1 flex flex-col">
+        <div className="mx-5 flex flex-col">
+          <InstallGuide />
           <h3 className="mb-4 font-bold text-gray-900 text-xl">프로젝트 리스트</h3>
           <div className="grid min-h-[80vh] min-w-[90vw] grid-cols-1 gap-4 md:grid-cols-4 md:grid-rows-4">
             <button
               type="button"
               id="createProjectButton"
-              className="flex w-full max-w-sm flex-col items-center justify-center rounded border-2 border-gray-300 p-6 text-2xl hover:border-2 hover:border-blue-700 hover:bg-blue-100"
+              className="flex w-full flex-col items-center justify-center rounded border-2 border-gray-300 p-6 text-2xl hover:border-2 hover:border-blue-700 hover:bg-blue-100"
               onClick={handleCreateProjectClick}
             >
               <span className="font-semibold text-gray-800">+ 새로운 프로젝트</span>
@@ -116,7 +118,7 @@ function PageProjectList({ user }) {
           setIsOpenModal={setIsOpenModal}
         />
       )}
-    </section>
+    </main>
   );
 }
 
