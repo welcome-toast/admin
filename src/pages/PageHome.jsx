@@ -13,6 +13,7 @@ function PageHome({ user, setUser }) {
     signIn();
     return;
   }
+  function handleSampleButtonClick() {}
 
   useEffect(() => {
     const {
@@ -38,7 +39,10 @@ function PageHome({ user, setUser }) {
       <div>
         <span className="font-bold text-5xl">{TITLE_HOME}</span>
       </div>
-      <Button text={CTA_SIGNIN} onClick={handleSignInButtonClick} />
+      <div className="flex gap-5">
+        <Button text={CTA_SIGNIN} onClick={handleSignInButtonClick} />
+        <Button text={"체험해보기"} onClick={handleSampleButtonClick} />
+      </div>
     </main>
   );
 }
