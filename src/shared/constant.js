@@ -21,7 +21,7 @@ export const INITIAL_PROJECT = [
 ];
 export const TITLE_INSTALL_GUIDE = "웰컴토스트 이용 가이드";
 export const DESC_INSTALL_GUIDE =
-  "준비물은 배포된 웹사이트 하나면 충분해요. 아래 세 단계를 따라 수행하고 토스트 메시지를 띄워볼까요? 궁금한 점은 언제든 오른쪽 하단 채널톡으로 문의 주세요!";
+  "준비물은 배포된 웹사이트 하나면 충분해요. 궁금한 점은 언제든 오른쪽 하단 채널톡으로 문의 주세요!";
 
 export const INITIAL_TOAST = {
   id: "",
