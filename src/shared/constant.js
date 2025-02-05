@@ -7,7 +7,7 @@ export const DESC_INSTALL_API_KEY =
   "토스트 메시지를 적용할 웹사이트 페이지의 </head> 태그 앞에 아래 JavaScript 코드 스니펫을 붙여넣어주세요.";
 export const DESC_DELETE_PROJECT =
   "프로젝트를 삭제하면 해당 프로젝트의 토스트 메시지, 데이터도 함께 삭제됩니다. 프로젝트를 삭제할까요?";
-export const INITIAL_PROJECT = [
+export const INITIAL_PROJECTS = [
   {
     id: "",
     name: "",
