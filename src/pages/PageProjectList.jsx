@@ -8,7 +8,7 @@ import {
   DESC_DELETE_PROJECT,
   DESC_INSTALL_API_KEY,
   INITIAL_MODAL,
-  INITIAL_PROJECT,
+  INITIAL_PROJECTS,
 } from "../shared/constant";
 import { supabase } from "../shared/supabase";
 import InstallGuide from "../widgets/InstallGuide";
@@ -17,7 +17,7 @@ import CreateProjectModal from "../widgets/modals/CreateProjectModal";
 import GuideInstallProjectModal from "../widgets/modals/GuideInstallProjectModal";
 
 function PageProjectList({ user }) {
-  const [projects, setProject] = useState(INITIAL_PROJECT);
+  const [projects, setProject] = useState(INITIAL_PROJECTS);
   const [isOpenModal, setIsOpenModal] = useState(INITIAL_MODAL);
   const [apiKeyInstallModal, setApiKeyInstallModal] = useState("");
   const [projectDeleteConfirmed, setProjectDeleteConfirmed] = useState({
