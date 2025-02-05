@@ -12,11 +12,11 @@ function PageProject() {
   const location = useLocation();
   const navigate = useNavigate();
   const project = location.state?.project;
-  const [previewNode, setPreviewNode] = useState(null);
   const [isMatchedProject, setIsMatchedProject] = useState(true);
   const [toastList, setToastList] = useState([]);
   const [indexToastForEdit, setIndexToastForEdit] = useState(0);
   const [isToastSaved, setIsToastSaved] = useState(false);
+  const [previewNode, setPreviewNode] = useState(null);
 
   function sendToastInput(toastInput) {
     if (!isMatchedProject) {
