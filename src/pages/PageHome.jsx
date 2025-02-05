@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import Button from "../shared/Button";
-import { CTA_SIGNIN, TITLE_HOME } from "../shared/constant";
+import { CTA_SAMPLE, CTA_SIGNIN, TITLE_HOME } from "../shared/constant";
 
 import { useEffect } from "react";
 import { signIn, supabase } from "../shared/supabase";
@@ -42,7 +42,7 @@ function PageHome({ user, setUser }) {
       </div>
       <div className="flex gap-5">
         <Button text={CTA_SIGNIN} onClick={handleSignInButtonClick} />
-        <Button text={"체험해보기"} onClick={handleSampleButtonClick} />
+        <Button text={CTA_SAMPLE} onClick={handleSampleButtonClick} />
       </div>
     </main>
   );
