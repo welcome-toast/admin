@@ -22,7 +22,13 @@ export const INITIAL_PROJECTS = [
 export const TITLE_INSTALL_GUIDE = "웰컴토스트 이용 가이드";
 export const DESC_INSTALL_GUIDE =
   "준비물은 배포된 웹사이트 하나면 충분해요. 궁금한 점은 언제든 오른쪽 하단 채널톡으로 문의 주세요!";
-
+export const INITIAL_USER = {
+  id: "",
+  email: "",
+  displayName: "",
+  photoUrl: "",
+  lastSignInAt: "",
+};
 export const INITIAL_TOAST = {
   id: "",
   name: "",
