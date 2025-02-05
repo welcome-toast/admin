@@ -10,8 +10,10 @@ import { signIn, signOut } from "../shared/supabase";
 function Header({ user, setUser }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const inPageProject = location.pathname.includes("toast");
+  const inPageProjectSample = location.pathname.includes("toast/sample");
 
-  if (location.pathname.includes("toast")) {
+  if (inPageProject) {
     return (
       <header className="h-12 w-screen border-2 border-gray-200 p-3">
         <button type="button" onClick={handleHomeButtonClick}>
@@ -21,13 +23,15 @@ function Header({ user, setUser }) {
     );
   }
   function handleHomeButtonClick() {
+    if (inPageProjectSample) {
+      navigate("/");
+      return;
+    }
     navigate("/project");
-    return;
   }
 
   function handleSignInButtonClick() {
     signIn();
-    return;
   }
 
   async function handleSignOutButtonClick() {
@@ -42,10 +46,7 @@ function Header({ user, setUser }) {
         lastSignInAt: "",
       });
     }
-
     navigate("/");
-
-    return;
   }
 
   return (
