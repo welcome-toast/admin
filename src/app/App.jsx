@@ -8,6 +8,7 @@ import Footer from "../widgets/Footer";
 import Header from "../widgets/Header";
 import "../index.css";
 import { useEffect, useState } from "react";
+import PageProjectSample from "../pages/PageProjectSample";
 import { getSessionSignIn } from "../shared/supabase";
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/" exact element={<PageHome user={user} setUser={setUser} />} />
         <Route path="project" exact element={<PageProjectList user={user} />} />
         <Route path="toast/:projectId" exact element={<PageProject />} />
+        <Route path="toast/sample" exact element={<PageProjectSample />} />
         <Route path="*" element={<PageError />} />
       </Routes>
       <Footer />
