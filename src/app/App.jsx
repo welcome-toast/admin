@@ -9,16 +9,11 @@ import Header from "../widgets/Header";
 import "../index.css";
 import { useEffect, useState } from "react";
 import PageProjectSample from "../pages/PageProjectSample";
+import { INITIAL_USER } from "../shared/constant";
 import { getSessionSignIn } from "../shared/supabase";
 
 function App() {
-  const [user, setUser] = useState({
-    id: "",
-    email: "",
-    displayName: "",
-    photoUrl: "",
-    lastSignInAt: "",
-  });
+  const [user, setUser] = useState(INITIAL_USER);
 
   useEffect(() => {
     async function getSession() {
