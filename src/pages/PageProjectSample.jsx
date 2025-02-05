@@ -1,19 +1,24 @@
 import { useEffect, useState } from "react";
 
-import ProjectPreviewSample from "../features/ProjectPreviewSample";
+import ProjectPreview from "../features/ProjectPreview";
 import ToastCard from "../features/ToastCard";
 import ToastCardEditor from "../features/ToastCardEditor";
-import { INITIAL_PROJECTS, INITIAL_TOAST } from "../shared/constant";
+import { DESC_REDIRECT_API_KEY_ACCESS, INITIAL_PROJECTS, INITIAL_TOAST } from "../shared/constant";
 import { supabase } from "../shared/supabase";
+import RedirectModal from "../widgets/modals/RedirectModal";
 
 function PageProjectSample() {
   const [project, setProject] = useState(INITIAL_PROJECTS[0]);
-  const [previewNode, setPreviewNode] = useState(null);
+  const [isMatchedProject, setIsMatchedProject] = useState(true);
   const [toastList, setToastList] = useState([]);
   const [indexToastForEdit, setIndexToastForEdit] = useState(0);
   const [isToastSaved, setIsToastSaved] = useState(false);
+  const [previewNode, setPreviewNode] = useState(null);
 
   function sendToastInput(toastInput) {
+    if (!isMatchedProject) {
+      return;
+    }
     previewNode.contentWindow.postMessage(toastInput, project.link);
   }
 
@@ -78,6 +83,9 @@ function PageProjectSample() {
 
   useEffect(() => {
     function setTargetElementId(e) {
+      if (!isMatchedProject) {
+        return;
+      }
       const targetElementId = e.data.target;
 
       if (
@@ -103,10 +111,11 @@ function PageProjectSample() {
 
     window.addEventListener("message", setTargetElementId);
     return () => window.removeEventListener("message", setTargetElementId);
-  }, [project?.link, toastList, indexToastForEdit]);
+  }, [isMatchedProject, project?.link, toastList, indexToastForEdit]);
 
   return (
     <div className="flex h-fit w-screen overflow-scroll px-3 [&::-webkit-scrollbar]:hidden">
+      {!isMatchedProject && <RedirectModal text={DESC_REDIRECT_API_KEY_ACCESS} route={"/"} />}
       <section className="mx-3 flex h-[90vh] w-[13vw] flex-col gap-5">
         <div className="flex w-full flex-col ">
           <h3 id="titleToastList" className="mt-3 mb-3 font-bold text-gray-900 text-xl">
@@ -137,7 +146,12 @@ function PageProjectSample() {
       </section>
       <section className="flex h-[90vh] w-[70vw] flex-col gap-5 px-1">
         <div className="h-full w-full">
-          <ProjectPreviewSample project={project} ref={setPreviewNode} />
+          <ProjectPreview
+            project={project}
+            ref={setPreviewNode}
+            isMatchedProject={isMatchedProject}
+            setIsMatchedProject={setIsMatchedProject}
+          />
         </div>
       </section>
       <section className="flex h-[90vh] w-[20vw] flex-col gap-5">
