@@ -38,7 +38,7 @@ function PageProjectSample() {
       const { data: project, error } = await supabase
         .from("project_sample")
         .select("*")
-        .eq("id", import.meta.env.VITE_SUPABASE_API_KEY_SAMPLE);
+        .eq("id", import.meta.env.VITE_SAMPLE_PROJECT_ID);
 
       if (!project) {
         throw new Error(error.message);
