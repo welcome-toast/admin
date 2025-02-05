@@ -24,21 +24,20 @@ function ToastEditorSample({
       debounceTimerId = setTimeout(() => {
         sendToastInput({ ...toastInput, [toastType]: input });
       }, 500);
-
       return;
     }
 
     sendToastInput({ ...toastInput, [toastType]: input });
-    return;
   }
 
   async function handleToastImageUpload(files) {
     setIsToastSaved(false);
-    const uploadImage = files[0];
 
+    const uploadImage = files[0];
+    const imageFileName = crypto.randomUUID();
     const { data, error } = await supabase.storage
-      .from("toast_image_storage")
-      .upload(uploadImage.name, uploadImage, {
+      .from("toast_sample_image_storage")
+      .upload(imageFileName, uploadImage, {
         cacheControl: "3600",
         upsert: false,
       });
@@ -48,7 +47,7 @@ function ToastEditorSample({
       return;
     }
 
-    const imageUrl = supabase.storage.from("toast_image_storage").getPublicUrl(data.path)
+    const imageUrl = supabase.storage.from("toast_sample_image_storage").getPublicUrl(data.path)
       .data.publicUrl;
     setToastList((prev) =>
       prev.map((toast) =>
@@ -56,23 +55,15 @@ function ToastEditorSample({
       ),
     );
     sendToastInput({ ...toastInput, image_url: imageUrl });
-
-    return;
   }
 
   async function handleSaveToastButtonClick() {
     if (toastInput.id === "") {
       const { data: resultToastList, error } = await supabase
-        .from("toast")
+        .from("toast_sample")
         .insert([
           {
-            name: toastInput.name,
-            target_element_id: toastInput.target_element_id,
-            message_title: toastInput.message_title,
-            message_body: toastInput.message_body,
-            image_url: toastInput.image_url,
-            message_button_color: toastInput.message_button_color,
-            background_opacity: toastInput.background_opacity,
+            ...toastInput,
             project_id: project.id,
           },
         ])
@@ -89,16 +80,8 @@ function ToastEditorSample({
       setIsToastSaved(true);
     } else {
       const { data: resultToastList, error } = await supabase
-        .from("toast")
-        .update({
-          name: toastInput.name,
-          target_element_id: toastInput.target_element_id,
-          message_title: toastInput.message_title,
-          message_body: toastInput.message_body,
-          image_url: toastInput.image_url,
-          message_button_color: toastInput.message_button_color,
-          background_opacity: toastInput.background_opacity,
-        })
+        .from("toast_sample")
+        .update(toastInput)
         .eq("id", toastInput.id)
         .select();
 
@@ -118,7 +101,6 @@ function ToastEditorSample({
 
   useEffect(() => {
     setToastInput(toast);
-    return;
   }, [toast]);
 
   return (
