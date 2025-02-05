@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import ProjectPreview from "../features/ProjectPreview";
 import ToastCard from "../features/ToastCard";
-import ToastCardEditor from "../features/ToastCardEditor";
+import ToastEditor from "../features/ToastEditor";
 import { DESC_REDIRECT_API_KEY_ACCESS, INITIAL_TOAST } from "../shared/constant";
 import { supabase } from "../shared/supabase";
 import RedirectModal from "../widgets/modals/RedirectModal";
@@ -154,7 +154,7 @@ function PageProject() {
       <section className="flex h-[90vh] w-[20vw] flex-col gap-5">
         {indexToastForEdit >= 0 && toastList.length > 0 ? (
           <>
-            <ToastCardEditor
+            <ToastEditor
               toast={toastList[indexToastForEdit]}
               setToastList={setToastList}
               previewNode={previewNode}
@@ -169,7 +169,7 @@ function PageProject() {
             <div id="titleNewToast" className="w-full bg-gray-200 p-3">
               <span>새로운 토스트를 만들어보세요</span>
             </div>
-            <ToastCardEditor
+            <ToastEditor
               toast={INITIAL_TOAST}
               setToastList={setToastList}
               previewNode={previewNode}
