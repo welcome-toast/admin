@@ -22,43 +22,17 @@ function PageProject() {
     if (!isMatchedProject) {
       return;
     }
-
-    const {
-      name,
-      type,
-      target_element_id,
-      message_title,
-      message_body,
-      image_url,
-      message_button_color,
-      background_opacity,
-    } = toastInput;
-
-    previewNode.contentWindow.postMessage(
-      {
-        name,
-        type,
-        target_element_id,
-        message_title,
-        message_body,
-        image_url,
-        message_button_color,
-        background_opacity,
-      },
-      project.link,
-    );
+    previewNode.contentWindow.postMessage(toastInput, project.link);
   }
 
   function handleToastCardClick(index) {
     setIndexToastForEdit(index);
     sendToastInput(toastList[index]);
     setIsToastSaved(false);
-    return;
   }
 
   function handleNewToastButtonClick() {
     setIndexToastForEdit(-1);
-    return;
   }
 
   useEffect(() => {
