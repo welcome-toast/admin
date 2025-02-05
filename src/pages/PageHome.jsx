@@ -11,9 +11,10 @@ function PageHome({ user, setUser }) {
 
   function handleSignInButtonClick() {
     signIn();
-    return;
   }
-  function handleSampleButtonClick() {}
+  function handleSampleButtonClick() {
+    navigate("/toast/sample");
+  }
 
   useEffect(() => {
     const {
