@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 
-function ToastCardEditor({
+function ToastEditor({
   toast,
   setToastList,
   project,
@@ -234,9 +234,9 @@ function ToastCardEditor({
   );
 }
 
-export default ToastCardEditor;
+export default ToastEditor;
 
-ToastCardEditor.propTypes = {
+ToastEditor.propTypes = {
   toast: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
