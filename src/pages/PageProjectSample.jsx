@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import ProjectPreview from "../features/ProjectPreview";
 import ToastCard from "../features/ToastCard";
-import ToastCardEditor from "../features/ToastCardEditor";
+import ToastEditorSample from "../features/ToastEditorSample";
 import { DESC_REDIRECT_API_KEY_ACCESS, INITIAL_PROJECTS, INITIAL_TOAST } from "../shared/constant";
 import { supabase } from "../shared/supabase";
 import RedirectModal from "../widgets/modals/RedirectModal";
@@ -157,7 +157,7 @@ function PageProjectSample() {
       <section className="flex h-[90vh] w-[20vw] flex-col gap-5">
         {indexToastForEdit >= 0 && toastList.length > 0 ? (
           <>
-            <ToastCardEditor
+            <ToastEditorSample
               toast={toastList[indexToastForEdit]}
               setToastList={setToastList}
               previewNode={previewNode}
@@ -172,7 +172,7 @@ function PageProjectSample() {
             <div id="titleNewToast" className="w-full bg-gray-200 p-3">
               <span>새로운 토스트를 만들어보세요</span>
             </div>
-            <ToastCardEditor
+            <ToastEditorSample
               toast={INITIAL_TOAST}
               setToastList={setToastList}
               previewNode={previewNode}
