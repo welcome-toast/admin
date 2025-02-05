@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 import Button from "../shared/Button";
 import HomeIcon from "../shared/Icon/HomeIcon";
-import { CTA_SIGNIN, CTA_SIGNOUT } from "../shared/constant";
+import { CTA_SIGNIN, CTA_SIGNOUT, INITIAL_USER } from "../shared/constant";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { signIn, signOut } from "../shared/supabase";
@@ -38,13 +38,7 @@ function Header({ user, setUser }) {
     const signOutError = await signOut();
 
     if (signOutError === null) {
-      setUser({
-        id: "",
-        email: "",
-        displayName: "",
-        photoUrl: "",
-        lastSignInAt: "",
-      });
+      setUser(INITIAL_USER);
     }
     navigate("/");
   }
