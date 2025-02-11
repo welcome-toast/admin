@@ -17,6 +17,7 @@ function PageProject() {
   const [indexToastForEdit, setIndexToastForEdit] = useState(0);
   const [isToastSaved, setIsToastSaved] = useState(false);
   const [previewNode, setPreviewNode] = useState(null);
+  const firstToast = toastList.length > 0 ? toastList[0] : null;
 
   const sendToastInput = useCallback(
     (toastInput) => {
@@ -154,6 +155,8 @@ function PageProject() {
             ref={setPreviewNode}
             isMatchedProject={isMatchedProject}
             setIsMatchedProject={setIsMatchedProject}
+            sendToastInput={sendToastInput}
+            firstToast={firstToast}
           />
         </div>
       </section>

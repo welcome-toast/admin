@@ -3,7 +3,7 @@ import { forwardRef, useEffect, useState } from "react";
 import Loading from "../shared/Loading";
 
 const ProjectPreview = forwardRef(function ProjectPreview(
-  { project, isMatchedProject, setIsMatchedProject },
+  { project, isMatchedProject, setIsMatchedProject, sendToastInput, firstToast },
   ref,
 ) {
   const [isLoadSuccedd, setIsLoadSuccedd] = useState(false);
@@ -19,8 +19,13 @@ const ProjectPreview = forwardRef(function ProjectPreview(
 
         if (previewApiKey !== undefined && previewApiKey === project?.api_key) {
           setIsMatchedProject(true);
+
           if (isPreviewLoadSuccedd) {
             setIsLoadSuccedd(true);
+          }
+
+          if (firstToast !== null) {
+            sendToastInput(firstToast);
           }
         } else {
           setIsMatchedProject(false);
@@ -30,7 +35,7 @@ const ProjectPreview = forwardRef(function ProjectPreview(
 
     window.addEventListener("message", handlePreviewLoad);
     return () => window.removeEventListener("message", handlePreviewLoad);
-  }, [project?.api_key, project?.link, setIsMatchedProject]);
+  }, [project?.api_key, project?.link, setIsMatchedProject, sendToastInput, firstToast]);
 
   return (
     <div className="flex h-full w-full items-center justify-center px-1">
@@ -66,4 +71,6 @@ ProjectPreview.propTypes = {
   project: PropTypes.object,
   isMatchedProject: PropTypes.bool.isRequired,
   setIsMatchedProject: PropTypes.func.isRequired,
+  sendToastInput: PropTypes.func.isRequired,
+  firstToast: PropTypes.object,
 };
