@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import ProjectPreview from "../features/ProjectPreview";
 import ToastCard from "../features/ToastCard";
@@ -15,12 +15,18 @@ function PageProjectSample() {
   const [isToastSaved, setIsToastSaved] = useState(false);
   const [previewNode, setPreviewNode] = useState(null);
 
-  function sendToastInput(toastInput) {
-    if (!isMatchedProject) {
-      return;
-    }
-    previewNode.contentWindow.postMessage(toastInput, project.link);
-  }
+  const sendToastInput = useCallback(
+    (toastInput) => {
+      if (!isMatchedProject) {
+        return;
+      }
+
+      if (previewNode?.contentWindow) {
+        previewNode.contentWindow.postMessage(toastInput, project.link);
+      }
+    },
+    [isMatchedProject, previewNode?.contentWindow, project.link],
+  );
 
   function handleToastCardClick(index) {
     setIndexToastForEdit(index);
