@@ -20,15 +20,24 @@ function Header({ user, setUser, sampleProject }) {
         <button type="button" onClick={handleHomeButtonClick}>
           <HomeIcon />
         </button>
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href={sampleProject.link}
-          className="flex h-fit gap-2 rounded border border-gray-200 px-2 py-1 align-middle shadow-sm hover:border-blue-700 hover:bg-blue-100"
-        >
-          <OutLinkIcon />
-          <span className="text-sm">적용된 토스트 보러가기</span>
-        </a>
+        <div className="flex gap-3">
+          <button
+            type="button"
+            onClick={handleSignInButtonClick}
+            className="flex h-fit items-center rounded border border-gray-200 px-3 py-1 shadow-sm hover:border-blue-700 hover:bg-blue-100"
+          >
+            <span className="text-sm">로그인 하러가기</span>
+          </button>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href={sampleProject.link}
+            className="flex h-fit gap-2 rounded border border-gray-200 px-2 py-1 align-middle shadow-sm hover:border-blue-700 hover:bg-blue-100"
+          >
+            <OutLinkIcon />
+            <span className="text-sm">적용된 토스트 보러가기</span>
+          </a>
+        </div>
       </header>
     );
   }
