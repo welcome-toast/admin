@@ -72,7 +72,7 @@ function Header({ user, setUser, sampleProject }) {
             className="w-[70px] md:w-[90px]"
           />
         </div>
-        <div className="my-3 mr-10">
+        <div className="my-3 mr-4 md:mr-10">
           {user.id === "" ? (
             <Button text={CTA_SIGNIN} onClick={handleSignInButtonClick} />
           ) : (
