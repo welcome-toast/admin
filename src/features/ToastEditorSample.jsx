@@ -10,6 +10,7 @@ function ToastEditorSample({
   sendToastInput,
   isToastSaved,
   setIsToastSaved,
+  setToastShown,
 }) {
   const [toastInput, setToastInput] = useState(() => toast);
 
@@ -30,31 +31,13 @@ function ToastEditorSample({
     sendToastInput({ ...toastInput, [toastType]: input });
   }
 
-  async function handleToastImageUpload(files) {
+  function handleToastImageUpload(event) {
+    event.preventDefault();
+
     setIsToastSaved(false);
 
-    const uploadImage = files[0];
-    const imageFileName = crypto.randomUUID();
-    const { data, error } = await supabase.storage
-      .from("toast_sample_image_storage")
-      .upload(imageFileName, uploadImage, {
-        cacheControl: "3600",
-        upsert: false,
-      });
-
-    if (error) {
-      console.log("파일이 업로드 되지 않았습니다", error);
-      return;
-    }
-
-    const imageUrl = supabase.storage.from("toast_sample_image_storage").getPublicUrl(data.path)
-      .data.publicUrl;
-    setToastList((prev) =>
-      prev.map((toast) =>
-        toast.id === toastInput.id ? { ...toast, image_url: imageUrl } : { ...toast },
-      ),
-    );
-    sendToastInput({ ...toastInput, image_url: imageUrl });
+    setToastShown((prev) => ({ ...prev, isRedirect: true }));
+    setTimeout(() => setToastShown((prev) => ({ ...prev, isRedirect: false })), 2000);
   }
 
   async function handleSaveToastButtonClick() {
@@ -173,7 +156,7 @@ function ToastEditorSample({
             name="toastMessageImage"
             accept="image/png, image/jpeg"
             className="block w-full text-base text-slate-500 file:mr-4 file:rounded file:border-1 file:border-gray-500 file:bg-gray-50 file:px-4 file:py-2 file:font-semibold file:text-base file:text-gray-700 hover:file:bg-gray-200"
-            onChange={(e) => handleToastImageUpload(e.target.files)}
+            onClick={handleToastImageUpload}
           />
         </label>
       </div>
@@ -238,4 +221,5 @@ ToastEditorSample.propTypes = {
   sendToastInput: PropTypes.func.isRequired,
   isToastSaved: PropTypes.bool.isRequired,
   setIsToastSaved: PropTypes.func.isRequired,
+  setToastShown: PropTypes.func.isRequired,
 };
