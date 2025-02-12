@@ -15,12 +15,11 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
   const [toastList, setToastList] = useState([]);
   const [indexToastForEdit, setIndexToastForEdit] = useState(0);
   const [previewNode, setPreviewNode] = useState(null);
-  const firstToast = toastList.length > 0 ? toastList[0] : null;
   const [toastShown, setToastShown] = useState({
     isRedirect: false,
     isToastSaved: false,
   });
-
+  const firstToast = toastList.length > 0 ? toastList[0] : null;
   const sendToastInput = useCallback(
     (toastInput) => {
       if (!isMatchedProject) {
@@ -159,7 +158,7 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
               type="button"
               id="createToastButton"
               onClick={handleNewToastButtonClick}
-              className="h-14 w-full rounded border-2 border-gray-500 text-base hover:bg-blue-100"
+              className="h-14 w-full rounded border border-gray-500 text-base hover:bg-blue-100"
             >
               + 새로운 토스트
             </button>
