@@ -26,10 +26,10 @@ function PageProject() {
       }
 
       if (previewNode?.contentWindow) {
-        previewNode.contentWindow.postMessage(toastInput, project.link);
+        previewNode.contentWindow.postMessage(toastInput, project?.link);
       }
     },
-    [isMatchedProject, previewNode.contentWindow, project.link],
+    [isMatchedProject, previewNode?.contentWindow, project?.link],
   );
 
   function handleToastCardClick(index) {
