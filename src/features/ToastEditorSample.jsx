@@ -3,9 +3,8 @@ import { useState } from "react";
 import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 
-function ToastEditorSample({ toast, setToastList, project, sendToastInput, setToastShown }) {
+function ToastEditorSample({ toast, setToastList, sendToastInput, setToastShown }) {
   const [toastInput, setToastInput] = useState(() => toast);
-
   let debounceTimerId;
 
   function handleToastInputChange(toastType, input, debounce) {
@@ -31,43 +30,25 @@ function ToastEditorSample({ toast, setToastList, project, sendToastInput, setTo
 
   async function handleSaveToastButtonClick() {
     if (toastInput.id === "") {
-      const { data: resultToastList, error } = await supabase
-        .from("toast_sample")
-        .insert([
-          {
-            ...toastInput,
-            project_id: project.id,
-          },
-        ])
-        .select();
-
-      if (resultToastList.length === 0) {
-        throw new Error(error.message);
-      }
-
-      setToastList((prev) =>
-        prev.map((toast) => (toast.id === toastInput.id ? resultToastList[0] : toast)),
-      );
-    } else {
-      const { data: resultToastList, error } = await supabase
-        .from("toast_sample")
-        .update(toastInput)
-        .eq("id", toastInput.id)
-        .select();
-
-      if (resultToastList.length === 0) {
-        throw new Error(error.message);
-      }
-
-      setToastList((prev) =>
-        prev.map((toast) => (toast.id === toastInput.id ? resultToastList[0] : toast)),
-      );
-
-      setToastShown((prev) => ({ ...prev, isToastSaved: true }));
-      setTimeout(() => setToastShown((prev) => ({ ...prev, isToastSaved: false })), 2000);
+      return;
     }
 
-    return;
+    const { data: resultToastList, error } = await supabase
+      .from("toast_sample")
+      .update(toastInput)
+      .eq("id", toastInput.id)
+      .select();
+
+    if (resultToastList.length === 0) {
+      throw new Error(error.message);
+    }
+
+    setToastList((prev) =>
+      prev.map((toast) => (toast.id === toastInput.id ? resultToastList[0] : toast)),
+    );
+
+    setToastShown((prev) => ({ ...prev, isToastSaved: true }));
+    setTimeout(() => setToastShown((prev) => ({ ...prev, isToastSaved: false })), 2000);
   }
 
   return (
@@ -82,7 +63,7 @@ function ToastEditorSample({ toast, setToastList, project, sendToastInput, setTo
             name="actionName"
             value={toastInput.name}
             placeholder="토스트 이름을 입력하세요"
-            className="h-10 rounded border-2 border-solid bg-gray-50 px-2 text-sm"
+            className="h-10 rounded border border-solid bg-gray-50 px-2 text-sm"
             onChange={(e) => handleToastInputChange("name", e.target.value)}
           />
         </label>
@@ -96,7 +77,7 @@ function ToastEditorSample({ toast, setToastList, project, sendToastInput, setTo
             name="toastMessageTitle"
             value={toastInput.message_title}
             placeholder="제목을 입력하세요"
-            className="h-10 rounded border-2 border-solid bg-gray-50 px-2 text-sm"
+            className="h-10 rounded border border-solid bg-gray-50 px-2 text-sm"
             onChange={(e) => handleToastInputChange("message_title", e.target.value)}
           />
         </label>
@@ -126,7 +107,7 @@ function ToastEditorSample({ toast, setToastList, project, sendToastInput, setTo
             name="toastTargetElementId"
             value={toastInput.target_element_id}
             placeholder="(예시) welcomeToast"
-            className="h-10 rounded border-2 border-solid bg-gray-50 px-2 text-sm"
+            className="h-10 rounded border bg-gray-50 px-2 text-sm"
             onChange={(e) => handleToastInputChange("target_element_id", e.target.value)}
           />
         </label>
@@ -139,7 +120,7 @@ function ToastEditorSample({ toast, setToastList, project, sendToastInput, setTo
             id="toastMessageImage"
             name="toastMessageImage"
             accept="image/png, image/jpeg"
-            className="block w-full text-base text-slate-500 file:mr-4 file:rounded file:border-1 file:border-gray-500 file:bg-gray-50 file:px-4 file:py-2 file:font-semibold file:text-base file:text-gray-700 hover:file:bg-gray-200"
+            className="block w-full text-base text-slate-500 file:mr-4 file:rounded file:border file:border-gray-500 file:bg-gray-50 file:px-4 file:py-2 file:font-semibold file:text-base file:text-gray-700 hover:file:bg-gray-200"
             onClick={handleToastImageUpload}
           />
         </label>
@@ -194,7 +175,6 @@ ToastEditorSample.propTypes = {
     updated_at: PropTypes.string,
   }).isRequired,
   setToastList: PropTypes.func.isRequired,
-  project: PropTypes.object,
   sendToastInput: PropTypes.func.isRequired,
   setToastShown: PropTypes.func.isRequired,
 };
