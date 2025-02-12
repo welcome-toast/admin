@@ -9,11 +9,12 @@ import Header from "../widgets/Header";
 import "../index.css";
 import { useEffect, useState } from "react";
 import PageProjectSample from "../pages/PageProjectSample";
-import { INITIAL_USER } from "../shared/constant";
+import { INITIAL_PROJECTS, INITIAL_USER } from "../shared/constant";
 import { getSessionSignIn } from "../shared/supabase";
 
 function App() {
   const [user, setUser] = useState(INITIAL_USER);
+  const [sampleProject, setSampleProject] = useState(INITIAL_PROJECTS[0]);
 
   useEffect(() => {
     async function getSession() {
@@ -30,12 +31,18 @@ function App() {
 
   return (
     <>
-      <Header user={user} setUser={setUser} />
+      <Header user={user} setUser={setUser} sampleProject={sampleProject} />
       <Routes>
         <Route path="/" exact element={<PageHome user={user} setUser={setUser} />} />
         <Route path="project" exact element={<PageProjectList user={user} />} />
         <Route path="toast/:projectId" exact element={<PageProject />} />
-        <Route path="toast/sample" exact element={<PageProjectSample />} />
+        <Route
+          path="toast/sample"
+          exact
+          element={
+            <PageProjectSample sampleProject={sampleProject} setSampleProject={setSampleProject} />
+          }
+        />
         <Route path="*" element={<PageError />} />
       </Routes>
       <Footer />

@@ -1,16 +1,16 @@
+import PropTypes from "prop-types";
 import { useCallback, useEffect, useState } from "react";
 
 import ProjectPreview from "../features/ProjectPreview";
 import ToastCard from "../features/ToastCard";
 import ToastEditorSample from "../features/ToastEditorSample";
-import { DESC_REDIRECT_API_KEY_ACCESS, INITIAL_PROJECTS } from "../shared/constant";
+import { DESC_REDIRECT_API_KEY_ACCESS } from "../shared/constant";
 import { supabase } from "../shared/supabase";
 import ToastRedirectGuide from "../widgets/ToastRedirectGuide";
 import ToastSaveSuccess from "../widgets/ToastSaveSuccess";
 import RedirectModal from "../widgets/modals/RedirectModal";
 
-function PageProjectSample() {
-  const [project, setProject] = useState(INITIAL_PROJECTS[0]);
+function PageProjectSample({ sampleProject, setSampleProject }) {
   const [isMatchedProject, setIsMatchedProject] = useState(true);
   const [toastList, setToastList] = useState([]);
   const [indexToastForEdit, setIndexToastForEdit] = useState(0);
@@ -29,10 +29,10 @@ function PageProjectSample() {
       }
 
       if (previewNode?.contentWindow) {
-        previewNode.contentWindow.postMessage(toastInput, project.link);
+        previewNode.contentWindow.postMessage(toastInput, sampleProject.link);
       }
     },
-    [isMatchedProject, previewNode?.contentWindow, project.link],
+    [isMatchedProject, previewNode?.contentWindow, sampleProject.link],
   );
 
   function handleToastCardClick(index) {
@@ -47,20 +47,20 @@ function PageProjectSample() {
   }
 
   useEffect(() => {
-    let projectId;
+    let sampleProjectId;
     async function getProject() {
-      const { data: project, error } = await supabase
+      const { data: projectResult, error } = await supabase
         .from("project_sample")
         .select("*")
         .eq("id", import.meta.env.VITE_SAMPLE_PROJECT_ID);
 
-      if (!project) {
+      if (!projectResult) {
         throw new Error(error.message);
       }
 
-      setProject(project[0]);
-      projectId = project[0].id;
-      getToastList(projectId);
+      setSampleProject(projectResult[0]);
+      sampleProjectId = projectResult[0].id;
+      getToastList(sampleProjectId);
     }
     getProject();
 
@@ -86,14 +86,14 @@ function PageProjectSample() {
         { event: "*", schema: "public", table: "toast_sample" },
         (payload) => {
           if (payload.eventType !== null) {
-            getToastList(projectId);
+            getToastList(sampleProjectId);
           }
         },
       )
       .subscribe();
 
     return () => channels.unsubscribe();
-  }, []);
+  }, [setSampleProject]);
 
   useEffect(() => {
     function setTargetElementId(e) {
@@ -111,7 +111,7 @@ function PageProjectSample() {
         return;
       }
 
-      if (project.link.includes(e.origin)) {
+      if (sampleProject.link.includes(e.origin)) {
         setToastList(
           toastList.map((toast, index) => {
             return index === indexToastForEdit
@@ -125,7 +125,7 @@ function PageProjectSample() {
 
     window.addEventListener("message", setTargetElementId);
     return () => window.removeEventListener("message", setTargetElementId);
-  }, [isMatchedProject, project?.link, toastList, indexToastForEdit]);
+  }, [isMatchedProject, sampleProject?.link, toastList, indexToastForEdit]);
 
   return (
     <div className="flex h-fit w-screen overflow-scroll px-3 [&::-webkit-scrollbar]:hidden">
@@ -171,7 +171,7 @@ function PageProjectSample() {
       <section className="flex h-[90vh] w-[70vw] flex-col gap-5 px-1">
         <div className="h-full w-full">
           <ProjectPreview
-            project={project}
+            project={sampleProject}
             ref={setPreviewNode}
             isMatchedProject={isMatchedProject}
             setIsMatchedProject={setIsMatchedProject}
@@ -187,7 +187,7 @@ function PageProjectSample() {
               toast={toastList[indexToastForEdit]}
               setToastList={setToastList}
               previewNode={previewNode}
-              project={project}
+              project={sampleProject}
               sendToastInput={sendToastInput}
               isToastSaved={isToastSaved}
               setIsToastSaved={setIsToastSaved}
@@ -207,3 +207,8 @@ function PageProjectSample() {
 }
 
 export default PageProjectSample;
+
+PageProjectSample.propTypes = {
+  sampleProject: PropTypes.object.isRequired,
+  setSampleProject: PropTypes.func.isRequired,
+};
