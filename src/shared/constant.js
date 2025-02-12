@@ -23,7 +23,7 @@ export const INITIAL_PROJECTS = [
 ];
 export const TITLE_INSTALL_GUIDE = "웰컴토스트 이용 가이드";
 export const DESC_INSTALL_GUIDE =
-  "준비물은 배포된 웹사이트 하나면 충분해요. 궁금한 점은 언제든 오른쪽 하단 채널톡으로 문의 주세요!";
+  "준비물은 배포된 웹사이트 하나면 충분해요. (💬 문의 : 오른쪽 하단 채널톡을 이용해주세요!)";
 export const INITIAL_USER = {
   id: "",
   email: "",
@@ -53,20 +53,19 @@ export const INITIAL_MODAL = {
 export const INSTALL_GUIDE_STEPS = [
   {
     index: 0,
-    title: "STEP 01. 새 프로젝트 만들기",
+    title: "STEP 1. 새로운 프로젝트 만들기",
     description:
-      "웹사이트를 프로젝트로 등록해주세요. 프로젝트를 만들면 연동 스크립트 코드가 생성돼요. 스크립트는 프로젝트마다 고유의 key를 포함하고 있는 점을 참고해주세요.",
+      "프로젝트를 만들고 웹사이트와 연동할 스크립트를 확인해요. (프로젝트 카드 ⋮ 클릭 후 확인)",
   },
   {
     index: 1,
-    title: "STEP 02. 웰컴 토스트와 연동하기",
+    title: "STEP 2. 스크립트 연동, Element id 설정하기",
     description:
-      "스크립트 코드를 웹사이트 HTML 코드에 붙여넣고 배포해주세요. 스크립트는 생성된 프로젝트 카드의 오른 쪽 ⋮ 클릭 후 확인할 수 있어요.",
+      "웹사이트에 스크립트 연동 후, 토스트 메시지 위치로 강조할 타겟 Element id를 설정해주세요.",
   },
   {
     index: 2,
-    title: "STEP 03. Element id 설정하기",
-    description:
-      "웹사이트 엘리먼트 ID의 속성 값을 설정했다면, 프로젝트 카드를 눌러 편집을 시작하세요! 웰컴 토스트는 ID 값을 탐색해서 해당 요소에 알맞는 토스트 메시지를 적용해요.",
+    title: "STEP 3. 웹사이트 배포, 토스트 편집 시작하기",
+    description: "웹사이트를 배포하면 모든 준비가 끝났어요. 토스트 에디터에서 편집을 시작하세요!",
   },
 ];
