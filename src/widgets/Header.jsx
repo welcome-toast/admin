@@ -5,9 +5,10 @@ import HomeIcon from "../shared/Icon/HomeIcon";
 import { CTA_SIGNIN, CTA_SIGNOUT, INITIAL_USER } from "../shared/constant";
 
 import { useLocation, useNavigate } from "react-router-dom";
+import OutLinkIcon from "../shared/Icon/OutlinkIcon";
 import { signIn, signOut } from "../shared/supabase";
 
-function Header({ user, setUser }) {
+function Header({ user, setUser, sampleProject }) {
   const navigate = useNavigate();
   const location = useLocation();
   const inPageProject = location.pathname.includes("toast");
@@ -15,10 +16,19 @@ function Header({ user, setUser }) {
 
   if (inPageProject) {
     return (
-      <header className="h-12 w-screen border-2 border-gray-200 p-3">
+      <header className="flex h-12 w-screen items-center justify-between border-2 border-gray-200 p-3">
         <button type="button" onClick={handleHomeButtonClick}>
           <HomeIcon />
         </button>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={sampleProject.link}
+          className="flex h-fit gap-2 rounded border border-gray-200 px-2 py-1 align-middle shadow-sm hover:border-blue-700 hover:bg-blue-100"
+        >
+          <OutLinkIcon />
+          <span className="text-sm">적용된 토스트 보러가기</span>
+        </a>
       </header>
     );
   }
@@ -70,4 +80,5 @@ export default Header;
 Header.propTypes = {
   user: PropTypes.object.isRequired,
   setUser: PropTypes.func.isRequired,
+  sampleProject: PropTypes.object.isRequired,
 };
