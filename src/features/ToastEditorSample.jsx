@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 
@@ -69,10 +69,6 @@ function ToastEditorSample({ toast, setToastList, project, sendToastInput, setTo
 
     return;
   }
-
-  useEffect(() => {
-    setToastInput(toast);
-  }, [toast]);
 
   return (
     <div className="px-3">
