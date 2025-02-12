@@ -21,13 +21,15 @@ function Header({ user, setUser, sampleProject }) {
           <HomeIcon />
         </button>
         <div className="flex gap-3">
-          <button
-            type="button"
-            onClick={handleSignInButtonClick}
-            className="flex h-fit items-center rounded border border-gray-200 px-3 py-1 shadow-sm hover:border-blue-700 hover:bg-blue-100"
-          >
-            <span className="text-sm">로그인 하러가기</span>
-          </button>
+          {user.id === "" && (
+            <button
+              type="button"
+              onClick={handleSignInButtonClick}
+              className="flex h-fit items-center rounded border border-gray-200 px-3 py-1 shadow-sm hover:border-blue-700 hover:bg-blue-100"
+            >
+              <span className="text-sm">로그인 하러가기</span>
+            </button>
+          )}
           <a
             target="_blank"
             rel="noreferrer"
@@ -53,6 +55,10 @@ function Header({ user, setUser, sampleProject }) {
     signIn();
   }
 
+  function handleSampleEditorButtonClick() {
+    navigate("/toast/sample");
+  }
+
   async function handleSignOutButtonClick() {
     const signOutError = await signOut();
 
@@ -76,7 +82,17 @@ function Header({ user, setUser, sampleProject }) {
           {user.id === "" ? (
             <Button text={CTA_SIGNIN} onClick={handleSignInButtonClick} />
           ) : (
-            <Button text={CTA_SIGNOUT} onClick={handleSignOutButtonClick} />
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={handleSampleEditorButtonClick}
+                className="flex h-full items-center gap-2 rounded border border-gray-200 px-3 py-2 shadow-sm hover:border-blue-700 hover:bg-blue-100"
+              >
+                <OutLinkIcon />
+                <span className="text-sm">샘플 토스트 편집해보기</span>
+              </button>
+              <Button text={CTA_SIGNOUT} onClick={handleSignOutButtonClick} />
+            </div>
           )}
         </div>
       </nav>
