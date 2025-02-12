@@ -3,8 +3,10 @@ import { useCallback, useEffect, useState } from "react";
 import ProjectPreview from "../features/ProjectPreview";
 import ToastCard from "../features/ToastCard";
 import ToastEditorSample from "../features/ToastEditorSample";
-import { DESC_REDIRECT_API_KEY_ACCESS, INITIAL_PROJECTS, INITIAL_TOAST } from "../shared/constant";
+import { DESC_REDIRECT_API_KEY_ACCESS, INITIAL_PROJECTS } from "../shared/constant";
 import { supabase } from "../shared/supabase";
+import ToastRedirectGuide from "../widgets/ToastRedirectGuide";
+import ToastSaveSuccess from "../widgets/ToastSaveSuccess";
 import RedirectModal from "../widgets/modals/RedirectModal";
 
 function PageProjectSample() {
@@ -15,6 +17,10 @@ function PageProjectSample() {
   const [isToastSaved, setIsToastSaved] = useState(false);
   const [previewNode, setPreviewNode] = useState(null);
   const firstToast = toastList.length > 0 ? toastList[0] : null;
+  const [toastShown, setToastShown] = useState({
+    isRedirect: false,
+    isToastSaved: false,
+  });
 
   const sendToastInput = useCallback(
     (toastInput) => {
@@ -36,7 +42,8 @@ function PageProjectSample() {
   }
 
   function handleNewToastButtonClick() {
-    setIndexToastForEdit(-1);
+    setToastShown((prev) => ({ ...prev, isRedirect: true }));
+    setTimeout(() => setToastShown((prev) => ({ ...prev, isRedirect: false })), 2000);
   }
 
   useEffect(() => {
@@ -123,6 +130,16 @@ function PageProjectSample() {
   return (
     <div className="flex h-fit w-screen overflow-scroll px-3 [&::-webkit-scrollbar]:hidden">
       {!isMatchedProject && <RedirectModal text={DESC_REDIRECT_API_KEY_ACCESS} route={"/"} />}
+      <ToastSaveSuccess
+        isToastSaved={toastShown.isToastSaved}
+        title={"토스트가 저장되었어요"}
+        description={"웹사이트에서 적용된 토스트를 확인해보세요!"}
+      />
+      <ToastRedirectGuide
+        isRedirect={toastShown.isRedirect}
+        title={"로그인, 연동 후 이용가능해요"}
+        description={"샘플 에디터 미지원 기능은 로그인 후 이용해보세요!"}
+      />
       <section className="mx-3 flex h-[90vh] w-[13vw] flex-col gap-5">
         <div className="flex w-full flex-col ">
           <h3 id="titleToastList" className="mt-3 mb-3 font-bold text-gray-900 text-xl">
@@ -174,22 +191,14 @@ function PageProjectSample() {
               sendToastInput={sendToastInput}
               isToastSaved={isToastSaved}
               setIsToastSaved={setIsToastSaved}
+              setToastShown={setToastShown}
             />
           </>
         ) : (
           <>
             <div id="titleNewToast" className="w-full bg-gray-200 p-3">
-              <span>새로운 토스트를 만들어보세요</span>
+              <span>토스트를 불러오고 있어요</span>
             </div>
-            <ToastEditorSample
-              toast={INITIAL_TOAST}
-              setToastList={setToastList}
-              previewNode={previewNode}
-              project={project}
-              sendToastInput={sendToastInput}
-              isToastSaved={isToastSaved}
-              setIsToastSaved={setIsToastSaved}
-            />
           </>
         )}
       </section>
