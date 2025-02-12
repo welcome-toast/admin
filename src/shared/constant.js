@@ -1,6 +1,7 @@
-export const TITLE_HOME = "새로운 유저의 눈길을 끄는 방법";
-export const CTA_SIGNIN = "🧑‍💻 코드 한 줄로 끝내기";
-export const CTA_SAMPLE = "👉 체험 먼저 해볼게요!";
+export const TITLE_HOME = "5분 만에 띄우는 토스트 메시지";
+export const TITLE_DESC = "사용자 온보딩을 돕거나 새로운 기능을 소개해보세요.";
+export const CTA_SIGNIN = "🧑‍💻 로그인";
+export const CTA_SAMPLE = "🎨 토스트 에디터 체험하기";
 export const CTA_SIGNOUT = "로그아웃";
 export const DESC_REDIRECT_API_KEY_ACCESS =
   "프로젝트의 API Key로 연동된 웹사이트만 확인할 수 있습니다. 연동 여부 혹은 프로젝트 목록에서 API Key를 확인해주세요.";
