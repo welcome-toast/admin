@@ -14,7 +14,6 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
   const [isMatchedProject, setIsMatchedProject] = useState(true);
   const [toastList, setToastList] = useState([]);
   const [indexToastForEdit, setIndexToastForEdit] = useState(0);
-  const [isToastSaved, setIsToastSaved] = useState(false);
   const [previewNode, setPreviewNode] = useState(null);
   const firstToast = toastList.length > 0 ? toastList[0] : null;
   const [toastShown, setToastShown] = useState({
@@ -38,7 +37,6 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
   function handleToastCardClick(index) {
     setIndexToastForEdit(index);
     sendToastInput(toastList[index]);
-    setIsToastSaved(false);
   }
 
   function handleNewToastButtonClick() {
@@ -189,8 +187,6 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
               previewNode={previewNode}
               project={sampleProject}
               sendToastInput={sendToastInput}
-              isToastSaved={isToastSaved}
-              setIsToastSaved={setIsToastSaved}
               setToastShown={setToastShown}
             />
           </>

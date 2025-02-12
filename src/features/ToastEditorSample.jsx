@@ -3,21 +3,12 @@ import { useEffect, useState } from "react";
 import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 
-function ToastEditorSample({
-  toast,
-  setToastList,
-  project,
-  sendToastInput,
-  isToastSaved,
-  setIsToastSaved,
-  setToastShown,
-}) {
+function ToastEditorSample({ toast, setToastList, project, sendToastInput, setToastShown }) {
   const [toastInput, setToastInput] = useState(() => toast);
 
   let debounceTimerId;
 
   function handleToastInputChange(toastType, input, debounce) {
-    setIsToastSaved(false);
     setToastInput((prev) => ({ ...prev, [toastType]: input }));
 
     if (debounce) {
@@ -33,8 +24,6 @@ function ToastEditorSample({
 
   function handleToastImageUpload(event) {
     event.preventDefault();
-
-    setIsToastSaved(false);
 
     setToastShown((prev) => ({ ...prev, isRedirect: true }));
     setTimeout(() => setToastShown((prev) => ({ ...prev, isRedirect: false })), 2000);
@@ -59,8 +48,6 @@ function ToastEditorSample({
       setToastList((prev) =>
         prev.map((toast) => (toast.id === toastInput.id ? resultToastList[0] : toast)),
       );
-
-      setIsToastSaved(true);
     } else {
       const { data: resultToastList, error } = await supabase
         .from("toast_sample")
@@ -76,7 +63,8 @@ function ToastEditorSample({
         prev.map((toast) => (toast.id === toastInput.id ? resultToastList[0] : toast)),
       );
 
-      setIsToastSaved(true);
+      setToastShown((prev) => ({ ...prev, isToastSaved: true }));
+      setTimeout(() => setToastShown((prev) => ({ ...prev, isToastSaved: false })), 2000);
     }
 
     return;
@@ -187,13 +175,6 @@ function ToastEditorSample({
       </div>
       <div className="my-5 flex">
         <Button text={"저장"} onClick={handleSaveToastButtonClick} />
-        {isToastSaved && (
-          <div className="my-3 ml-5">
-            <span className="animate-pulse font-semibold text-green-600 text-lg">
-              토스트가 저장되었어요.
-            </span>
-          </div>
-        )}
       </div>
     </div>
   );
@@ -219,7 +200,5 @@ ToastEditorSample.propTypes = {
   setToastList: PropTypes.func.isRequired,
   project: PropTypes.object,
   sendToastInput: PropTypes.func.isRequired,
-  isToastSaved: PropTypes.bool.isRequired,
-  setIsToastSaved: PropTypes.func.isRequired,
   setToastShown: PropTypes.func.isRequired,
 };
