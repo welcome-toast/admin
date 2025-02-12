@@ -5,8 +5,8 @@ function HomeIcon() {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="#c5c5c7"
+      strokeWidth="1"
+      stroke="black"
       className="size-6"
     >
       <title id="homeIcon">homeIcon</title>
