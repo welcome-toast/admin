@@ -42,8 +42,6 @@ export const INITIAL_TOAST = {
   message_button_color: "#000000",
   background_opacity: "20",
   project_id: "",
-  created_at: "",
-  updated_at: "",
 };
 export const INITIAL_MODAL = {
   create: false,
