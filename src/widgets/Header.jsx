@@ -25,7 +25,7 @@ function Header({ user, setUser, sampleProject }) {
             <button
               type="button"
               onClick={handleSignInButtonClick}
-              className="flex h-fit items-center rounded border border-gray-200 px-3 py-1 shadow-sm hover:border-blue-700 hover:bg-blue-100"
+              className="invisible flex h-fit items-center rounded border border-gray-200 px-3 py-1 shadow-sm hover:border-blue-700 hover:bg-blue-100 sm:visible"
             >
               <span className="text-sm">로그인 하러가기</span>
             </button>

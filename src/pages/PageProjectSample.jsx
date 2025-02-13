@@ -125,59 +125,49 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
   }, [isMatchedProject, sampleProject?.link, toastList, indexToastForEdit]);
 
   return (
-    <div className="flex h-fit w-screen overflow-scroll px-3 [&::-webkit-scrollbar]:hidden">
-      {!isMatchedProject && <RedirectModal text={DESC_REDIRECT_API_KEY_ACCESS} route={"/"} />}
-      <ToastSaveSuccess
-        isToastSaved={toastShown.isToastSaved}
-        title={"토스트가 저장되었어요"}
-        description={"웹사이트에서 적용된 토스트를 확인해보세요!"}
-      />
-      <ToastRedirectGuide
-        isRedirect={toastShown.isRedirect}
-        title={"로그인, 연동 후 이용가능해요"}
-        description={"샘플 에디터 미지원 기능은 로그인 후 이용해보세요!"}
-      />
-      <section className="mx-3 flex h-[90vh] w-[13vw] flex-col gap-5">
-        <div className="flex w-full flex-col ">
-          <h3 id="titleToastList" className="mt-3 mb-3 font-bold text-gray-900 text-xl">
+    <div className="flex h-fit w-screen flex-col gap-1 overflow-scroll px-3 md:flex-row [&::-webkit-scrollbar]:hidden">
+      <section className="flex h-fit w-full min-w-fit flex-col md:mx-3 md:h-[90vh] md:w-[13vw] md:gap-5">
+        <div className="flex w-full flex-col">
+          <h3
+            id="titleToastList"
+            className="mt-3 mb-1 font-bold text-base text-gray-900 md:mb-3 md:text-xl"
+          >
             토스트 리스트
           </h3>
-          <div className="flex flex-col gap-5">
-            {toastList.map((toastSaved, index) => (
-              <ToastCard
-                key={toastSaved.id}
-                toastSaved={toastSaved}
-                index={index}
-                indexToastForEdit={indexToastForEdit}
-                handleToastCardClick={() => handleToastCardClick(index)}
-              />
-            ))}
-          </div>
-          <div className="mt-5">
+          <div className="flex gap-2 md:flex-col">
+            <div className="flex gap-1 md:flex-col md:gap-5">
+              {toastList.map((toastSaved, index) => (
+                <ToastCard
+                  key={toastSaved.id}
+                  toastSaved={toastSaved}
+                  index={index}
+                  indexToastForEdit={indexToastForEdit}
+                  handleToastCardClick={() => handleToastCardClick(index)}
+                />
+              ))}
+            </div>
             <button
               type="button"
               id="createToastButton"
               onClick={handleNewToastButtonClick}
-              className="h-14 w-full rounded border border-gray-500 text-base hover:bg-blue-100"
+              className="invisible absolute w-xl rounded border border-gray-500 p-2 text-base hover:bg-blue-100 md:visible md:static md:h-14"
             >
               + 새로운 토스트
             </button>
           </div>
         </div>
       </section>
-      <section className="flex h-[90vh] w-[70vw] flex-col gap-5 px-1">
-        <div className="h-full w-full">
-          <ProjectPreview
-            project={sampleProject}
-            ref={setPreviewNode}
-            isMatchedProject={isMatchedProject}
-            setIsMatchedProject={setIsMatchedProject}
-            sendToastInput={sendToastInput}
-            firstToast={firstToast}
-          />
-        </div>
+      <section className="flex h-[50vh] w-[95vw] flex-col gap-5 rounded md:h-[90vh] md:w-[70vw] md:border-none">
+        <ProjectPreview
+          project={sampleProject}
+          ref={setPreviewNode}
+          isMatchedProject={isMatchedProject}
+          setIsMatchedProject={setIsMatchedProject}
+          sendToastInput={sendToastInput}
+          firstToast={firstToast}
+        />
       </section>
-      <section className="flex h-[90vh] w-[20vw] flex-col gap-5">
+      <section className="flex h-[50vh] w-[95vw] min-w-fit flex-col gap-5 md:h-[90vh] md:w-[20vw]">
         {indexToastForEdit >= 0 && toastList.length > 0 ? (
           <>
             <ToastEditorSample
@@ -197,6 +187,17 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
           </>
         )}
       </section>
+      {!isMatchedProject && <RedirectModal text={DESC_REDIRECT_API_KEY_ACCESS} route={"/"} />}
+      <ToastSaveSuccess
+        isToastSaved={toastShown.isToastSaved}
+        title={"토스트가 저장되었어요"}
+        description={"웹사이트에서 적용된 토스트를 확인해보세요!"}
+      />
+      <ToastRedirectGuide
+        isRedirect={toastShown.isRedirect}
+        title={"로그인, 연동 후 이용가능해요"}
+        description={"샘플 에디터 미지원 기능은 로그인 후 이용해보세요!"}
+      />
     </div>
   );
 }

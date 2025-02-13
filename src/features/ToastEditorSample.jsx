@@ -52,11 +52,11 @@ function ToastEditorSample({ toast, setToastList, sendToastInput, setToastShown 
   }
 
   return (
-    <div className="px-3">
+    <div className="px-1 md:px-3">
       <div className="mb-3 flex flex-col divide-y-2">
-        <span className="mt-3 font-bold text-gray-900 text-xl">토스트 편집</span>
+        <span className="mt-3 font-bold text-base text-gray-900 md:text-xl">토스트 편집</span>
         <label className="my-3 flex flex-col gap-5">
-          <span className="mt-5 font-bold text-lg">토스트 이름</span>
+          <span className="mt-5 font-bold text-base md:text-lg">토스트 이름</span>
           <input
             type="text"
             id="actionName"
@@ -69,7 +69,7 @@ function ToastEditorSample({ toast, setToastList, sendToastInput, setToastShown 
         </label>
       </div>
       <div className="mb-5 flex flex-col gap-3">
-        <span className="font-bold text-lg">메시지</span>
+        <span className="font-bold text-base md:text-lg">메시지</span>
         <label className="flex flex-col">
           <input
             type="text"
@@ -94,7 +94,7 @@ function ToastEditorSample({ toast, setToastList, sendToastInput, setToastShown 
       </div>
       <div className="my-8 flex flex-col">
         <div className="flex justify-between">
-          <span className="font-bold text-lg">선택된 타겟 요소 ID</span>
+          <span className="font-bold text-base md:text-lg">선택된 타겟 요소 ID</span>
           <span className="font-semibold text-base">{toastInput.target_element_id}</span>
         </div>
         <label className="my-2 flex flex-col gap-2">
@@ -113,7 +113,7 @@ function ToastEditorSample({ toast, setToastList, sendToastInput, setToastShown 
         </label>
       </div>
       <div className="my-8 flex flex-col gap-3">
-        <span className="font-bold text-lg">이미지</span>
+        <span className="font-bold text-base md:text-lg">이미지</span>
         <label htmlFor="upload" className="flex flex-col">
           <input
             type="file"
@@ -127,7 +127,7 @@ function ToastEditorSample({ toast, setToastList, sendToastInput, setToastShown 
       </div>
       <div className="mt-10 flex flex-col">
         <div className="flex justify-between">
-          <span className="font-bold text-lg">배경 투명도</span>
+          <span className="font-bold text-base md:text-lg">배경 투명도</span>
           <input
             type="number"
             id="toastBackgroundOpacityNumber"
