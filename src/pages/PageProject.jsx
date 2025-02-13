@@ -52,7 +52,7 @@ function PageProject() {
           .from("toast")
           .select("*")
           .eq("project_id", project?.id)
-          .order("id", { ascending: true });
+          .order("created_at", { ascending: true });
 
         if (error !== null) {
           throw new Error(error);
@@ -166,7 +166,6 @@ function PageProject() {
               toast={toastList[indexToastForEdit]}
               setToastList={setToastList}
               previewNode={previewNode}
-              project={project}
               sendToastInput={sendToastInput}
               setToastShown={setToastShown}
             />
@@ -180,7 +179,7 @@ function PageProject() {
               toast={INITIAL_TOAST}
               setToastList={setToastList}
               previewNode={previewNode}
-              project={project}
+              projectId={project.id}
               sendToastInput={sendToastInput}
               setToastShown={setToastShown}
             />
