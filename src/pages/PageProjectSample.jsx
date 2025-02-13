@@ -66,7 +66,7 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
         .from("toast_sample")
         .select("*")
         .eq("project_id", projectId)
-        .order("id", { ascending: true });
+        .order("created_at", { ascending: true });
 
       if (error !== null) {
         throw new Error(error);
