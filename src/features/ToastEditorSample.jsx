@@ -133,7 +133,7 @@ function ToastEditorSample({ toast, setToastList, sendToastInput, setToastShown 
             id="toastBackgroundOpacityNumber"
             name="toastBackgroundOpacityNumber"
             value={toastInput.background_opacity}
-            className="w-16"
+            className="w-16 rounded border bg-gray-50 px-2 py-1"
             onChange={(e) =>
               handleToastInputChange("background_opacity", e.target.value, "debounce")
             }

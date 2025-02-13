@@ -3,7 +3,11 @@ import { useState } from "react";
 import Button from "../shared/Button";
 import { supabase } from "../shared/supabase";
 
-function ToastEditor({ toast, setToastList, sendToastInput, setToastShown }) {
+function isNewToast([toastKey, toastValue], key) {
+  return toastKey === key && toastValue === "";
+}
+
+function ToastEditor({ toast, setToastList, sendToastInput, setToastShown, projectId }) {
   const [toastInput, setToastInput] = useState(() => toast);
   let debounceTimerId;
 
@@ -48,57 +52,42 @@ function ToastEditor({ toast, setToastList, sendToastInput, setToastShown }) {
   }
 
   async function handleSaveToastButtonClick() {
-    let resultToastList;
+    const toastData = {};
+    for (const [toastKey, toastValue] of Object.entries(toastInput)) {
+      if (isNewToast([toastKey, toastValue], "id")) {
+        continue;
+      }
+
+      if (isNewToast([toastKey, toastValue], "project_id")) {
+        toastData[toastKey] = projectId;
+        continue;
+      }
+
+      const input = toastValue.trim();
+      if (input.length === 0) {
+        return;
+      }
+
+      toastData[toastKey] = input;
+    }
 
     try {
-      if (toastInput.id === "") {
-        const { data, error } = await supabase
-          .from("toast")
-          .insert([
-            {
-              name: toastInput.name,
-              target_element_id: toastInput.target_element_id,
-              message_title: toastInput.message_title,
-              message_body: toastInput.message_body,
-              image_url: toastInput.image_url,
-              message_button_color: toastInput.message_button_color,
-              background_opacity: toastInput.background_opacity,
-              project_id: toastInput.project_id,
-            },
-          ])
-          .select();
-        resultToastList = data;
+      const { data: resultToastList, error } = await supabase
+        .from("toast")
+        .upsert(toastData, { onConflict: "id" })
+        .select();
 
-        if (resultToastList.length === 0) {
-          throw new Error(error.message);
-        }
-      } else {
-        const { data, error } = await supabase
-          .from("toast")
-          .update({
-            name: toastInput.name,
-            target_element_id: toastInput.target_element_id,
-            message_title: toastInput.message_title,
-            message_body: toastInput.message_body,
-            image_url: toastInput.image_url,
-            message_button_color: toastInput.message_button_color,
-            background_opacity: toastInput.background_opacity,
-          })
-          .eq("id", toastInput.id)
-          .select();
-        resultToastList = data;
-
-        if (resultToastList.length === 0) {
-          throw new Error(error.message);
-        }
+      if (resultToastList.length === 0) {
+        throw new Error(error.message);
       }
+
+      setToastList((prev) =>
+        prev.map((toast) => (toast.id === toastInput.id ? resultToastList[0] : toast)),
+      );
     } catch (error) {
       console.error(error);
     }
 
-    setToastList((prev) =>
-      prev.map((toast) => (toast.id === toastInput.id ? resultToastList[0] : toast)),
-    );
     setToastShown((prev) => ({ ...prev, isToastSaved: true }));
     setTimeout(() => setToastShown((prev) => ({ ...prev, isToastSaved: false })), 2000);
   }
@@ -185,7 +174,7 @@ function ToastEditor({ toast, setToastList, sendToastInput, setToastShown }) {
             id="toastBackgroundOpacityNumber"
             name="toastBackgroundOpacityNumber"
             value={toastInput.background_opacity}
-            className="w-16"
+            className="w-16 rounded border bg-gray-50 px-2 py-1"
             onChange={(e) =>
               handleToastInputChange("background_opacity", e.target.value, "debounce")
             }
@@ -229,4 +218,5 @@ ToastEditor.propTypes = {
   setToastList: PropTypes.func.isRequired,
   sendToastInput: PropTypes.func.isRequired,
   setToastShown: PropTypes.func.isRequired,
+  projectId: PropTypes.string,
 };
