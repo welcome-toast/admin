@@ -4,21 +4,25 @@ import { useCallback, useEffect, useState } from "react";
 import ProjectPreview from "../features/ProjectPreview";
 import ToastCard from "../features/ToastCard";
 import ToastEditorSample from "../features/ToastEditorSample";
-import { DESC_REDIRECT_API_KEY_ACCESS } from "../shared/constant";
+import {
+  DESC_REDIRECT_API_KEY_ACCESS,
+  INITIAL_ERROR_MESSAGE_TOAST_INPUT,
+} from "../shared/constant";
 import { supabase } from "../shared/supabase";
-import ToastRedirectGuide from "../widgets/ToastRedirectGuide";
 import ToastSaveSuccess from "../widgets/ToastSaveSuccess";
+import ToastWarning from "../widgets/ToastWarning";
 import RedirectModal from "../widgets/modals/RedirectModal";
 
 function PageProjectSample({ sampleProject, setSampleProject }) {
   const [isMatchedProject, setIsMatchedProject] = useState(true);
   const [toastList, setToastList] = useState([]);
   const [indexToastForEdit, setIndexToastForEdit] = useState(0);
-  const [previewNode, setPreviewNode] = useState(null);
   const [toastShown, setToastShown] = useState({
-    isRedirect: false,
     isToastSaved: false,
+    warningType: "",
   });
+  const [inputError, setInputError] = useState(INITIAL_ERROR_MESSAGE_TOAST_INPUT);
+  const [previewNode, setPreviewNode] = useState(null);
   const firstToast = toastList.length > 0 ? toastList[0] : null;
   const sendToastInput = useCallback(
     (toastInput) => {
@@ -35,12 +39,14 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
 
   function handleToastCardClick(index) {
     setIndexToastForEdit(index);
+    setInputError(INITIAL_ERROR_MESSAGE_TOAST_INPUT);
     sendToastInput(toastList[index]);
   }
 
   function handleNewToastButtonClick() {
-    setToastShown((prev) => ({ ...prev, isRedirect: true }));
-    setTimeout(() => setToastShown((prev) => ({ ...prev, isRedirect: false })), 2000);
+    setToastShown((prev) => ({ ...prev, warningType: "signInRequired" }));
+    setTimeout(() => setToastShown((prev) => ({ ...prev, warningType: "" })), 2000);
+    setInputError(INITIAL_ERROR_MESSAGE_TOAST_INPUT);
   }
 
   useEffect(() => {
@@ -99,12 +105,7 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
       }
       const targetElementId = e.data.target;
 
-      if (
-        targetElementId === "" ||
-        targetElementId === null ||
-        targetElementId === undefined ||
-        targetElementId.includes("welcomeToast")
-      ) {
+      if (!targetElementId || targetElementId.includes("welcomeToast")) {
         return;
       }
 
@@ -117,7 +118,6 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
           }),
         );
       }
-      return;
     }
 
     window.addEventListener("message", setTargetElementId);
@@ -173,8 +173,8 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
             <ToastEditorSample
               toast={toastList[indexToastForEdit]}
               setToastList={setToastList}
-              previewNode={previewNode}
-              project={sampleProject}
+              inputError={inputError}
+              setInputError={setInputError}
               sendToastInput={sendToastInput}
               setToastShown={setToastShown}
             />
@@ -193,10 +193,18 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
         title={"토스트가 저장되었어요"}
         description={"웹사이트에서 적용된 토스트를 확인해보세요!"}
       />
-      <ToastRedirectGuide
-        isRedirect={toastShown.isRedirect}
-        title={"로그인, 연동 후 이용가능해요"}
-        description={"샘플 에디터 미지원 기능은 로그인 후 이용해보세요!"}
+      <ToastWarning
+        warningType={toastShown.warningType}
+        title={
+          toastShown.warningType === "blankInput"
+            ? "필수 정보를 모두 입력해주세요"
+            : "로그인, 연동 후 이용가능해요"
+        }
+        description={
+          toastShown.warningType === "blankInput"
+            ? "토스트 저장을 위해 필수* 정보 입력이 필요해요!"
+            : "샘플 에디터 미지원 기능은 로그인 후 이용해보세요!"
+        }
       />
     </div>
   );
