@@ -1,6 +1,6 @@
 export const MAX_INPUT_LENGTH = 999;
 export const TITLE_HOME = "5분 만에 띄우는 토스트 메시지";
-export const TITLE_DESC = "사용자 온보딩을 돕거나 새로운 기능을 소개해보세요.";
+export const TITLE_DESC = "친절한 토스트 메시지로 사용자 온보딩 경험을 높여보세요!";
 export const CTA_SIGNIN = "🧑‍💻 로그인";
 export const CTA_SAMPLE = "🎨 토스트 에디터 체험하기";
 export const CTA_SIGNOUT = "로그아웃";
