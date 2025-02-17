@@ -1,9 +1,18 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import Button from "../shared/Button";
+import { INITIAL_ERROR_MESSAGE_TOAST_INPUT } from "../shared/constant";
 import { supabase } from "../shared/supabase";
+import { validateInputLengthLimit } from "../shared/utils/validateEditorInput";
 
-function ToastEditorSample({ toast, setToastList, sendToastInput, setToastShown }) {
+function ToastEditorSample({
+  toast,
+  setToastList,
+  inputError,
+  setInputError,
+  sendToastInput,
+  setToastShown,
+}) {
   const [toastInput, setToastInput] = useState(() => toast);
   let debounceTimerId;
 
@@ -19,33 +28,65 @@ function ToastEditorSample({ toast, setToastList, sendToastInput, setToastShown 
     }
 
     sendToastInput({ ...toastInput, [toastType]: input });
+    setInputError(INITIAL_ERROR_MESSAGE_TOAST_INPUT);
   }
 
   function handleToastImageUpload(event) {
     event.preventDefault();
 
-    setToastShown((prev) => ({ ...prev, isRedirect: true }));
-    setTimeout(() => setToastShown((prev) => ({ ...prev, isRedirect: false })), 2000);
+    setToastShown((prev) => ({ ...prev, warningType: "signInRequired" }));
+    setTimeout(() => setToastShown((prev) => ({ ...prev, warningType: "" })), 2000);
   }
 
   async function handleSaveToastButtonClick() {
-    if (toastInput.id === "") {
+    const toastToSave = {};
+    const inputErrors = {};
+
+    for (const [toastKey, toastValue] of Object.entries(toastInput)) {
+      if (toastKey === "user_id") {
+        toastToSave[toastKey] = null;
+        continue;
+      }
+
+      const input = toastValue.trim();
+      const inputLength = input.length;
+
+      if (inputLength === 0 && toastKey !== "image_url") {
+        setToastShown((prev) => ({ ...prev, warningType: "blankInput" }));
+        setTimeout(() => setToastShown((prev) => ({ ...prev, warningType: "" })), 2000);
+        return;
+      }
+
+      const errorMessage = validateInputLengthLimit(toastKey, inputLength);
+      if (errorMessage !== true) {
+        inputErrors[toastKey] = errorMessage;
+      }
+
+      toastToSave[toastKey] = input;
+    }
+
+    if (Object.entries(inputErrors).length > 0) {
+      setInputError((prev) => ({ ...prev, ...inputErrors }));
       return;
     }
 
-    const { data: resultToastList, error } = await supabase
-      .from("toast_sample")
-      .update(toastInput)
-      .eq("id", toastInput.id)
-      .select();
+    try {
+      const { data: resultToastList, error } = await supabase
+        .from("toast_sample")
+        .update(toastToSave)
+        .eq("id", toastToSave.id)
+        .select();
 
-    if (resultToastList.length === 0) {
-      throw new Error(error.message);
+      if (resultToastList.length === 0) {
+        throw new Error(error.message);
+      }
+
+      setToastList((prev) =>
+        prev.map((toast) => (toast.id === toastInput.id ? resultToastList[0] : toast)),
+      );
+    } catch (error) {
+      console.error(error);
     }
-
-    setToastList((prev) =>
-      prev.map((toast) => (toast.id === toastInput.id ? resultToastList[0] : toast)),
-    );
 
     setToastShown((prev) => ({ ...prev, isToastSaved: true }));
     setTimeout(() => setToastShown((prev) => ({ ...prev, isToastSaved: false })), 2000);
@@ -53,10 +94,10 @@ function ToastEditorSample({ toast, setToastList, sendToastInput, setToastShown 
 
   return (
     <div className="px-1 md:px-3">
-      <div className="mb-3 flex flex-col divide-y-2">
-        <span className="mt-3 font-bold text-base text-gray-900 md:text-xl">토스트 편집</span>
-        <label className="my-3 flex flex-col gap-5">
-          <span className="mt-5 font-bold text-base md:text-lg">토스트 이름</span>
+      <div className="my-3 flex flex-col">
+        <span className="font-bold text-base text-gray-900 md:text-xl">토스트 편집</span>
+        <label className="flex flex-col">
+          <span className="mt-5 font-bold text-base md:text-lg">토스트 이름*</span>
           <input
             type="text"
             id="actionName"
@@ -66,10 +107,11 @@ function ToastEditorSample({ toast, setToastList, sendToastInput, setToastShown 
             className="h-10 rounded border border-solid bg-gray-50 px-2 text-sm"
             onChange={(e) => handleToastInputChange("name", e.target.value)}
           />
+          <span className="mt-2 ml-1 font-normal text-red-500 text-xs">{inputError.name}</span>
         </label>
       </div>
       <div className="mb-5 flex flex-col gap-3">
-        <span className="font-bold text-base md:text-lg">메시지</span>
+        <span className="font-bold text-base md:text-lg">메시지*</span>
         <label className="flex flex-col">
           <input
             type="text"
@@ -80,6 +122,9 @@ function ToastEditorSample({ toast, setToastList, sendToastInput, setToastShown 
             className="h-10 rounded border border-solid bg-gray-50 px-2 text-sm"
             onChange={(e) => handleToastInputChange("message_title", e.target.value)}
           />
+          <span className="mt-2 ml-1 font-normal text-red-500 text-xs">
+            {inputError.message_title}
+          </span>
         </label>
         <label className="flex h-32 flex-col">
           <textarea
@@ -90,11 +135,14 @@ function ToastEditorSample({ toast, setToastList, sendToastInput, setToastShown 
             className="block h-full w-full resize-none rounded border bg-gray-50 p-2.5 text-gray-900 text-sm"
             onChange={(e) => handleToastInputChange("message_body", e.target.value)}
           />
+          <span className="mt-2 ml-1 font-normal text-red-500 text-xs">
+            {inputError.message_body}
+          </span>
         </label>
       </div>
       <div className="my-8 flex flex-col">
         <div className="flex justify-between">
-          <span className="font-bold text-base md:text-lg">선택된 타겟 요소 ID</span>
+          <span className="font-bold text-base md:text-lg">선택된 타겟 요소 ID*</span>
           <span className="font-semibold text-base">{toastInput.target_element_id}</span>
         </div>
         <label className="my-2 flex flex-col gap-2">
@@ -110,6 +158,9 @@ function ToastEditorSample({ toast, setToastList, sendToastInput, setToastShown 
             className="h-10 rounded border bg-gray-50 px-2 text-sm"
             onChange={(e) => handleToastInputChange("target_element_id", e.target.value)}
           />
+          <span className="mt-2 ml-1 font-normal text-red-500 text-xs">
+            {inputError.target_element_id}
+          </span>
         </label>
       </div>
       <div className="my-8 flex flex-col gap-3">
@@ -174,6 +225,8 @@ ToastEditorSample.propTypes = {
     created_at: PropTypes.string,
     updated_at: PropTypes.string,
   }).isRequired,
+  inputError: PropTypes.object.isRequired,
+  setInputError: PropTypes.func.isRequired,
   setToastList: PropTypes.func.isRequired,
   sendToastInput: PropTypes.func.isRequired,
   setToastShown: PropTypes.func.isRequired,
