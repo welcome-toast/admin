@@ -12,7 +12,6 @@ async function signIn() {
       redirectTo: import.meta.env.VITE_SUPABASE_GOOGLE_REDIRECT_URL,
       queryParams: {
         access_type: "offline",
-        prompt: "consent",
       },
     },
   });
