@@ -35,13 +35,19 @@ export const INITIAL_TOAST = {
   id: "",
   name: "",
   type: "",
-  target_element_id: "",
   message_title: "",
   message_body: "",
+  target_element_id: "",
   image_url: "",
-  message_button_color: "#000000",
   background_opacity: "20",
+  message_button_color: "#000000",
   project_id: "",
+};
+export const INITIAL_ERROR_MESSAGE_TOAST_INPUT = {
+  name: "",
+  message_title: "",
+  message_body: "",
+  target_element_id: "",
 };
 export const INITIAL_MODAL = {
   create: false,
