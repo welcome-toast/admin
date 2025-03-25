@@ -10,7 +10,7 @@ function getInstallCode(apiKey) {
     }
   };
 </script>
-<script type="text/javascript" src="${SDK_URL}"></script>`;
+<script defer type="text/javascript" src="${SDK_URL}"></script>`;
 }
 
 export { getInstallCode };
