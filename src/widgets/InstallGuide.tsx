@@ -1,7 +1,7 @@
 import CheckIcon from "../shared/Icon/CheckIcon";
 import { DESC_INSTALL_GUIDE, INSTALL_GUIDE_STEPS, TITLE_INSTALL_GUIDE } from "../shared/constant";
 
-function InstallGuide() {
+function InstallGuide(): JSX.Element {
   return (
     <section className="mb-10 h-fit">
       <div className="my-3 flex flex-col gap-2">
