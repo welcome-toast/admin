@@ -1,4 +1,6 @@
-function getInstallCode(apiKey) {
+type ApiKey = string;
+
+function getInstallCode(apiKey: ApiKey) {
   const VERSION = "1.0.0";
   const SDK_URL = `https://cdn.jsdelivr.net/gh/welcome-toast/welcome-toast@refs/heads/v${VERSION}/src/main.js`;
 
