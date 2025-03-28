@@ -1,5 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 
+import type { ProjectId, ProjectInput } from "@/types/project";
+
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
   import.meta.env.VITE_SUPABASE_API_KEY,
@@ -32,13 +34,12 @@ async function signOut() {
   return error;
 }
 
-async function createProject(input) {
+async function createProject(input: ProjectInput) {
   await supabase.from("project").insert([input]).select();
 }
 
-async function deleteProject(id) {
-  const { error } = await supabase.from("project").delete().eq("id", id);
-
+async function deleteProject(projectId: ProjectId): Promise<Error | null> {
+  const { error } = await supabase.from("project").delete().eq("id", projectId);
   return error;
 }
 
