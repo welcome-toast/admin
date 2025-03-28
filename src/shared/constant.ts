@@ -40,7 +40,7 @@ export const INITIAL_TOAST = {
   message_body: "",
   target_element_id: "",
   image_url: "",
-  background_opacity: "20",
+  background_opacity: 20,
   message_button_color: "#000000",
   project_id: "",
 };
