@@ -1,14 +1,20 @@
-import PropTypes from "prop-types";
-
-import Button from "../shared/Button";
-import HomeIcon from "../shared/Icon/HomeIcon";
-import { CTA_SIGNIN, CTA_SIGNOUT, INITIAL_USER } from "../shared/constant";
-
+import type { Dispatch, SetStateAction } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import OutLinkIcon from "../shared/Icon/OutlinkIcon";
-import { signIn, signOut } from "../shared/supabase";
 
-function Header({ user, setUser, sampleProject }) {
+import Button from "@/shared/Button";
+import HomeIcon from "@/shared/Icon/HomeIcon";
+import OutLinkIcon from "@/shared/Icon/OutlinkIcon";
+import { CTA_SIGNIN, CTA_SIGNOUT, INITIAL_USER } from "@/shared/constant";
+import { signIn, signOut } from "@/shared/supabase";
+import type { Project, User } from "@/types";
+
+interface HeaderProps {
+  user: User;
+  setUser: Dispatch<SetStateAction<User>>;
+  sampleProject: Project;
+}
+
+function Header({ user, setUser, sampleProject }: HeaderProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const inPageProject = location.pathname.includes("toast");
@@ -43,6 +49,7 @@ function Header({ user, setUser, sampleProject }) {
       </header>
     );
   }
+
   function handleHomeButtonClick() {
     if (inPageProjectSample) {
       navigate("/");
@@ -101,9 +108,3 @@ function Header({ user, setUser, sampleProject }) {
 }
 
 export default Header;
-
-Header.propTypes = {
-  user: PropTypes.object.isRequired,
-  setUser: PropTypes.func.isRequired,
-  sampleProject: PropTypes.object.isRequired,
-};
