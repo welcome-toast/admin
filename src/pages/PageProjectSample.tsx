@@ -5,7 +5,13 @@ import ToastCard from "@/features/ToastCard";
 import ToastEditorSample from "@/features/ToastEditorSample";
 import { DESC_REDIRECT_API_KEY_ACCESS, INITIAL_ERROR_MESSAGE_TOAST_INPUT } from "@/shared/constant";
 import { supabase } from "@/shared/supabase";
-import type { IndexToastForEdit, IsMatchedProject, PreviewNode, Project } from "@/types/project";
+import type {
+  IndexToastForEdit,
+  IsMatchedProject,
+  PreviewNode,
+  Project,
+  ProjectId,
+} from "@/types/project";
 import type {
   FirstToast,
   SendToastInput,
@@ -18,7 +24,6 @@ import ToastSaveSuccess from "@/widgets/ToastSaveSuccess";
 import ToastWarning from "@/widgets/ToastWarning";
 import RedirectModal from "@/widgets/modals/RedirectModal";
 
-type ProjectId = Pick<Project, "id">;
 interface PageProjectSampleProps {
   sampleProject: Project;
   setSampleProject: Dispatch<SetStateAction<Project>>;
