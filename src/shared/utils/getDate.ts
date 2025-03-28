@@ -1,10 +1,16 @@
-function getDate(dateString) {
-  if (dateString === null || dateString === undefined) {
-    return null;
-  }
+type DateString = string;
 
+interface CurrentDateObject {
+  year: number;
+  month: number;
+  currentDate: number;
+  currentDay: number;
+  currentHour: string;
+  currentMinute: number;
+}
+
+function getDate(dateString: DateString): CurrentDateObject {
   const date = new Date(dateString);
-
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
 
