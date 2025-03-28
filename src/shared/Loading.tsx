@@ -1,4 +1,4 @@
-const Loading = () => {
+function Loading(): JSX.Element {
   return (
     <div className="h-30">
       <div>
@@ -22,6 +22,6 @@ const Loading = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Loading;
