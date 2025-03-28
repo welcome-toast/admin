@@ -1,12 +1,23 @@
-import PropTypes from "prop-types";
-import { useEffect, useRef } from "react";
-import { INITIAL_MODAL } from "./constant";
+import { type Dispatch, type SetStateAction, useEffect, useRef } from "react";
 
-function ModalBackground({ children, setIsOpenModal, canCloseBackgroundClick = true }) {
+import { INITIAL_MODAL } from "@/shared/constant";
+import type { Modal } from "@/types";
+
+interface ModalBackgroundProps {
+  children: React.ReactNode;
+  setIsOpenModal: Dispatch<SetStateAction<Modal>>;
+  canCloseBackgroundClick?: boolean;
+}
+
+function ModalBackground({
+  children,
+  setIsOpenModal,
+  canCloseBackgroundClick = true,
+}: ModalBackgroundProps) {
   const backgroundRef = useRef(null);
 
   useEffect(() => {
-    function handleModalBackgroundClick(event) {
+    function handleModalBackgroundClick(event: MouseEvent) {
       if (event?.target === backgroundRef.current) {
         setIsOpenModal(INITIAL_MODAL);
       }
@@ -29,9 +40,3 @@ function ModalBackground({ children, setIsOpenModal, canCloseBackgroundClick = t
 }
 
 export default ModalBackground;
-
-ModalBackground.propTypes = {
-  children: PropTypes.node.isRequired,
-  setIsOpenModal: PropTypes.func,
-  canCloseBackgroundClick: PropTypes.bool,
-};
