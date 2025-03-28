@@ -5,6 +5,7 @@ interface Toast {
   message_body: string;
   image_url: string;
   target_element_id: string;
+  updated_at: string;
 }
 
 type FirstToast = Toast | null;
