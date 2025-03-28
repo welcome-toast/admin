@@ -1,9 +1,29 @@
-import PropTypes from "prop-types";
-import { useState } from "react";
+import { type Dispatch, type SetStateAction, useRef, useState } from "react";
+
+import type { SendToastInput, Toast, ToastInputError, ToastShown } from "@/types/toast";
 import Button from "../shared/Button";
 import { INITIAL_ERROR_MESSAGE_TOAST_INPUT } from "../shared/constant";
 import { supabase } from "../shared/supabase";
 import { validateInputLengthLimit } from "../shared/utils/validateEditorInput";
+
+interface ToastEditorSampleProps {
+  toast: Toast;
+  setToastList: Dispatch<SetStateAction<Toast[]>>;
+  inputError: ToastInputError;
+  setInputError: Dispatch<SetStateAction<ToastInputError>>;
+  sendToastInput: SendToastInput;
+  setToastShown: Dispatch<SetStateAction<ToastShown>>;
+}
+
+interface ToastInputParams {
+  toastType: string;
+  input: string;
+  debounce?: boolean;
+}
+
+interface ToastEditing {
+  [key: string]: string | undefined;
+}
 
 function ToastEditorSample({
   toast,
@@ -12,26 +32,30 @@ function ToastEditorSample({
   setInputError,
   sendToastInput,
   setToastShown,
-}) {
+}: ToastEditorSampleProps) {
   const [toastInput, setToastInput] = useState(() => toast);
-  let debounceTimerId;
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  function handleToastInputChange(toastType, input, debounce) {
+  function handleToastInputChange({ toastType, input, debounce }: ToastInputParams) {
     setToastInput((prev) => ({ ...prev, [toastType]: input }));
 
-    if (debounce) {
-      clearTimeout(debounceTimerId);
-      debounceTimerId = setTimeout(() => {
-        sendToastInput({ ...toastInput, [toastType]: input });
-      }, 500);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
       return;
     }
 
-    sendToastInput({ ...toastInput, [toastType]: input });
+    if (debounce) {
+      timeoutRef.current = setTimeout(() => {
+        sendToastInput({ ...toastInput, [toastType]: input });
+      }, 500);
+    } else {
+      sendToastInput({ ...toastInput, [toastType]: input });
+    }
+
     setInputError(INITIAL_ERROR_MESSAGE_TOAST_INPUT);
   }
 
-  function handleToastImageUpload(event) {
+  function handleToastImageUpload(event: React.MouseEvent<HTMLInputElement>) {
     event.preventDefault();
 
     setToastShown((prev) => ({ ...prev, warningType: "signInRequired" }));
@@ -39,12 +63,12 @@ function ToastEditorSample({
   }
 
   async function handleSaveToastButtonClick() {
-    const toastToSave = {};
-    const inputErrors = {};
+    const toastToSave: ToastEditing = {};
+    const inputErrors: ToastEditing = {};
 
     for (const [toastKey, toastValue] of Object.entries(toastInput)) {
       if (toastKey === "user_id") {
-        toastToSave[toastKey] = null;
+        toastToSave[toastKey] = undefined;
         continue;
       }
 
@@ -77,12 +101,12 @@ function ToastEditorSample({
         .eq("id", toastToSave.id)
         .select();
 
-      if (resultToastList.length === 0) {
-        throw new Error(error.message);
+      if (resultToastList?.length === 0) {
+        throw new Error(error?.message);
       }
 
       setToastList((prev) =>
-        prev.map((toast) => (toast.id === toastInput.id ? resultToastList[0] : toast)),
+        prev.map((toast) => (toast.id === toastInput.id ? resultToastList?.[0] : toast)),
       );
     } catch (error) {
       console.error(error);
@@ -105,7 +129,7 @@ function ToastEditorSample({
             value={toastInput.name}
             placeholder="토스트 이름을 입력하세요"
             className="h-10 rounded border border-solid bg-gray-50 px-2 text-sm"
-            onChange={(e) => handleToastInputChange("name", e.target.value)}
+            onChange={(e) => handleToastInputChange({ toastType: "name", input: e.target.value })}
           />
           <span className="mt-2 ml-1 font-normal text-red-500 text-xs">{inputError.name}</span>
         </label>
@@ -120,7 +144,9 @@ function ToastEditorSample({
             value={toastInput.message_title}
             placeholder="제목을 입력하세요"
             className="h-10 rounded border border-solid bg-gray-50 px-2 text-sm"
-            onChange={(e) => handleToastInputChange("message_title", e.target.value)}
+            onChange={(e) =>
+              handleToastInputChange({ toastType: "message_title", input: e.target.value })
+            }
           />
           <span className="mt-2 ml-1 font-normal text-red-500 text-xs">
             {inputError.message_title}
@@ -128,12 +154,14 @@ function ToastEditorSample({
         </label>
         <label className="flex h-32 flex-col">
           <textarea
-            rows="4"
+            rows={4}
             id="toastMessageBody"
             placeholder="본문을 입력하세요"
             value={toastInput.message_body}
             className="block h-full w-full resize-none rounded border bg-gray-50 p-2.5 text-gray-900 text-sm"
-            onChange={(e) => handleToastInputChange("message_body", e.target.value)}
+            onChange={(e) =>
+              handleToastInputChange({ toastType: "message_body", input: e.target.value })
+            }
           />
           <span className="mt-2 ml-1 font-normal text-red-500 text-xs">
             {inputError.message_body}
@@ -156,7 +184,9 @@ function ToastEditorSample({
             value={toastInput.target_element_id}
             placeholder="(예시) welcomeToast"
             className="h-10 rounded border bg-gray-50 px-2 text-sm"
-            onChange={(e) => handleToastInputChange("target_element_id", e.target.value)}
+            onChange={(e) =>
+              handleToastInputChange({ toastType: "target_element_id", input: e.target.value })
+            }
           />
           <span className="mt-2 ml-1 font-normal text-red-500 text-xs">
             {inputError.target_element_id}
@@ -186,7 +216,11 @@ function ToastEditorSample({
             value={toastInput.background_opacity}
             className="w-16 rounded border bg-gray-50 px-2 py-1"
             onChange={(e) =>
-              handleToastInputChange("background_opacity", e.target.value, "debounce")
+              handleToastInputChange({
+                toastType: "background_opacity",
+                input: e.target.value,
+                debounce: true,
+              })
             }
           />
         </div>
@@ -197,7 +231,12 @@ function ToastEditorSample({
             name="toastBackgroundOpacityRange"
             value={toastInput.background_opacity}
             className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
-            onChange={(e) => handleToastInputChange("background_opacity", e.target.value)}
+            onChange={(e) =>
+              handleToastInputChange({
+                toastType: "background_opacity",
+                input: e.target.value,
+              })
+            }
           />
         </label>
       </div>
@@ -209,25 +248,3 @@ function ToastEditorSample({
 }
 
 export default ToastEditorSample;
-
-ToastEditorSample.propTypes = {
-  toast: PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    target_element_id: PropTypes.string,
-    message_title: PropTypes.string,
-    message_body: PropTypes.string,
-    message_button_color: PropTypes.string,
-    image_url: PropTypes.string,
-    background_opacity: PropTypes.string,
-    project_id: PropTypes.string,
-    created_at: PropTypes.string,
-    updated_at: PropTypes.string,
-  }).isRequired,
-  inputError: PropTypes.object.isRequired,
-  setInputError: PropTypes.func.isRequired,
-  setToastList: PropTypes.func.isRequired,
-  sendToastInput: PropTypes.func.isRequired,
-  setToastShown: PropTypes.func.isRequired,
-};
