@@ -16,4 +16,10 @@ interface Project {
   updated_at: string;
 }
 
-export type { User, Project };
+interface Modal {
+  create: boolean;
+  install: boolean;
+  delete: boolean;
+}
+
+export type { User, Project, Modal };
