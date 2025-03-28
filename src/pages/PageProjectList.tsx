@@ -1,32 +1,39 @@
-import PropTypes from "prop-types";
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ProjectCard from "../features/ProjectCard";
-import Loading from "../shared/Loading";
+
+import ProjectCard from "@/features/ProjectCard";
+import Loading from "@/shared/Loading";
 import {
   DESC_DELETE_PROJECT,
   DESC_INSTALL_API_KEY,
   INITIAL_MODAL,
   INITIAL_PROJECTS,
-} from "../shared/constant";
-import { supabase } from "../shared/supabase";
-import InstallGuide from "../widgets/InstallGuide";
-import ConfirmDeleteProjectModal from "../widgets/modals/ConfirmDeleteProjectModal";
-import CreateProjectModal from "../widgets/modals/CreateProjectModal";
-import GuideInstallProjectModal from "../widgets/modals/GuideInstallProjectModal";
+} from "@/shared/constant";
+import { supabase } from "@/shared/supabase";
+import type { Modal, Project, User } from "@/types";
+import InstallGuide from "@/widgets/InstallGuide";
+import ConfirmDeleteProjectModal from "@/widgets/modals/ConfirmDeleteProjectModal";
+import CreateProjectModal from "@/widgets/modals/CreateProjectModal";
+import GuideInstallProjectModal from "@/widgets/modals/GuideInstallProjectModal";
 
-function PageProjectList({ user }) {
-  const [projects, setProject] = useState(INITIAL_PROJECTS);
-  const [isOpenModal, setIsOpenModal] = useState(INITIAL_MODAL);
-  const [apiKeyInstallModal, setApiKeyInstallModal] = useState("");
-  const [projectDeleteConfirmed, setProjectDeleteConfirmed] = useState({
+type ApiKeyInstallModal = string;
+
+interface ProjectDeleteConfirmed {
+  projectId: string;
+  projectName: string;
+}
+
+function PageProjectList({ user }: { user: User }) {
+  const [projects, setProject] = useState<Project[]>(INITIAL_PROJECTS);
+  const [isOpenModal, setIsOpenModal] = useState<Modal>(INITIAL_MODAL);
+  const [apiKeyInstallModal, setApiKeyInstallModal] = useState<ApiKeyInstallModal>("");
+  const [projectDeleteConfirmed, setProjectDeleteConfirmed] = useState<ProjectDeleteConfirmed>({
     projectId: "",
     projectName: "",
   });
   const navigate = useNavigate();
 
-  function handleProjectClick(projectId) {
+  function handleProjectClick(projectId: string) {
     const projectClicked = projects.find((el) => el.id === projectId);
 
     navigate(`/toast/${projectId}`, {
@@ -69,7 +76,9 @@ function PageProjectList({ user }) {
       })
       .subscribe();
 
-    return () => channels.unsubscribe();
+    return () => {
+      channels.unsubscribe();
+    };
   }, [user.id, user]);
 
   return (
@@ -123,7 +132,3 @@ function PageProjectList({ user }) {
 }
 
 export default PageProjectList;
-
-PageProjectList.propTypes = {
-  user: PropTypes.object.isRequired,
-};
