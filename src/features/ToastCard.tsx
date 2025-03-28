@@ -1,7 +1,19 @@
-import PropTypes from "prop-types";
-import { getDate } from "../shared/utils/getDate";
+import { getDate } from "@/shared/utils/getDate";
+import type { Toast } from "@/types/toast";
 
-function ProjectCard({ toastSaved, index, indexToastForEdit, handleToastCardClick }) {
+interface ToastCardProps {
+  toastSaved: Toast;
+  index: number;
+  indexToastForEdit: number;
+  handleToastCardClick: (index: number) => void;
+}
+
+function ToastCard({
+  toastSaved,
+  index,
+  indexToastForEdit,
+  handleToastCardClick,
+}: ToastCardProps): JSX.Element {
   const date = getDate(toastSaved.updated_at);
 
   return (
@@ -21,11 +33,4 @@ function ProjectCard({ toastSaved, index, indexToastForEdit, handleToastCardClic
   );
 }
 
-export default ProjectCard;
-
-ProjectCard.propTypes = {
-  toastSaved: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired,
-  indexToastForEdit: PropTypes.number.isRequired,
-  handleToastCardClick: PropTypes.func.isRequired,
-};
+export default ToastCard;
