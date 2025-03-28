@@ -1,6 +1,9 @@
-import PropTypes from "prop-types";
+interface ButtonProps {
+  text: string;
+  onClick: () => void;
+}
 
-function Button({ text, onClick }) {
+function Button({ text, onClick }: ButtonProps): JSX.Element {
   return (
     <button
       type="button"
@@ -13,8 +16,3 @@ function Button({ text, onClick }) {
 }
 
 export default Button;
-
-Button.propTypes = {
-  text: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
