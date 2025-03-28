@@ -1,15 +1,37 @@
-import PropTypes from "prop-types";
-import { forwardRef, useEffect, useState } from "react";
-import Loading from "../shared/Loading";
+import Loading from "@/shared/Loading";
+import type { Project } from "@/types/project";
+import type { FirstToast, SendToastInput } from "@/types/toast";
+import {
+  type Dispatch,
+  type ForwardedRef,
+  type SetStateAction,
+  forwardRef,
+  useEffect,
+  useState,
+} from "react";
+
+interface ProjectPreviewProps {
+  project: Project;
+  isMatchedProject: boolean;
+  setIsMatchedProject: Dispatch<SetStateAction<boolean>>;
+  sendToastInput: SendToastInput;
+  firstToast: FirstToast;
+}
 
 const ProjectPreview = forwardRef(function ProjectPreview(
-  { project, isMatchedProject, setIsMatchedProject, sendToastInput, firstToast },
-  ref,
+  {
+    project,
+    isMatchedProject,
+    setIsMatchedProject,
+    sendToastInput,
+    firstToast,
+  }: ProjectPreviewProps,
+  ref: ForwardedRef<HTMLIFrameElement>,
 ) {
   const [isLoadSuccedd, setIsLoadSuccedd] = useState(false);
 
   useEffect(() => {
-    function handlePreviewLoad(e) {
+    function handlePreviewLoad(e: MessageEvent) {
       if (!project.link.includes(e.origin)) {
         return;
       }
@@ -69,11 +91,3 @@ const ProjectPreview = forwardRef(function ProjectPreview(
 ProjectPreview.displayName = "ProjectPreview";
 
 export default ProjectPreview;
-
-ProjectPreview.propTypes = {
-  project: PropTypes.object,
-  isMatchedProject: PropTypes.bool.isRequired,
-  setIsMatchedProject: PropTypes.func.isRequired,
-  sendToastInput: PropTypes.func.isRequired,
-  firstToast: PropTypes.object,
-};
