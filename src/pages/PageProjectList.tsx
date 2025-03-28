@@ -10,18 +10,12 @@ import {
   INITIAL_PROJECTS,
 } from "@/shared/constant";
 import { supabase } from "@/shared/supabase";
-import type { Modal, Project, User } from "@/types";
+import type { ApiKeyInstallModal, Modal, User } from "@/types";
+import type { Project, ProjectDeleteConfirmed, ProjectId } from "@/types/project";
 import InstallGuide from "@/widgets/InstallGuide";
 import ConfirmDeleteProjectModal from "@/widgets/modals/ConfirmDeleteProjectModal";
 import CreateProjectModal from "@/widgets/modals/CreateProjectModal";
 import GuideInstallProjectModal from "@/widgets/modals/GuideInstallProjectModal";
-
-type ApiKeyInstallModal = string;
-
-interface ProjectDeleteConfirmed {
-  projectId: string;
-  projectName: string;
-}
 
 function PageProjectList({ user }: { user: User }) {
   const [projects, setProject] = useState<Project[]>(INITIAL_PROJECTS);
@@ -33,8 +27,8 @@ function PageProjectList({ user }: { user: User }) {
   });
   const navigate = useNavigate();
 
-  function handleProjectClick(projectId: string) {
-    const projectClicked = projects.find((el) => el.id === projectId);
+  function handleProjectClick(projectId: ProjectId) {
+    const projectClicked = projects.find((project) => project.id === projectId);
 
     navigate(`/toast/${projectId}`, {
       state: {
