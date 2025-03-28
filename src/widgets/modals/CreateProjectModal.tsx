@@ -1,20 +1,36 @@
-import PropTypes from "prop-types";
-import { useState } from "react";
-import Button from "../../shared/Button";
-import ModalBackground from "../../shared/ModalBackground";
-import ModalContainer from "../../shared/ModalContainer";
-import { createProject } from "../../shared/supabase";
-import { validateUrl } from "../../shared/utils/validateUrl";
+import { type Dispatch, type SetStateAction, useState } from "react";
 
-function CreateProjectModal({ setIsOpenModal }) {
-  const [input, setInput] = useState({
+import Button from "@/shared/Button";
+import ModalBackground from "@/shared/ModalBackground";
+import ModalContainer from "@/shared/ModalContainer";
+import { INITIAL_MODAL } from "@/shared/constant";
+import { createProject } from "@/shared/supabase";
+import { validateUrl } from "@/shared/utils/validateUrl";
+import type { Modal } from "@/types";
+
+interface CreateProjectModalProps {
+  setIsOpenModal: Dispatch<SetStateAction<Modal>>;
+}
+
+interface ProjectInput {
+  name: string;
+  link: string;
+}
+
+interface ProjectInputEditing {
+  name: string;
+  input: string;
+}
+
+function CreateProjectModal({ setIsOpenModal }: CreateProjectModalProps): JSX.Element {
+  const [input, setInput] = useState<ProjectInput>({
     name: "",
     link: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
 
-  function handleInputChange(type, input) {
-    setInput((state) => ({ ...state, [type]: input }));
+  function handleInputChange({ name, input }: ProjectInputEditing) {
+    setInput((state) => ({ ...state, [name]: input }));
   }
 
   async function handleCreateButtonClick() {
@@ -40,7 +56,7 @@ function CreateProjectModal({ setIsOpenModal }) {
       const { isValid, errorMessage } = validateUrl(linkWithProtocol);
 
       if (!isValid) {
-        setErrorMessage(errorMessage);
+        setErrorMessage(errorMessage ?? "");
         return;
       }
 
@@ -48,10 +64,10 @@ function CreateProjectModal({ setIsOpenModal }) {
 
       setInput({ name: "", link: "" });
       setErrorMessage("");
-      setIsOpenModal(false);
+      setIsOpenModal(INITIAL_MODAL);
     } catch (error) {
       setErrorMessage("프로젝트 생성 중 오류가 발생했습니다");
-      console.error(error.message);
+      console.error((error as Error).message);
     }
   }
 
@@ -67,7 +83,7 @@ function CreateProjectModal({ setIsOpenModal }) {
             value={input.name}
             placeholder="(예시) 웰컴토스트 12월 런칭 하이라이트"
             className={`${errorMessage.includes("이름") ? "border-red-400" : "border-gray-500"} h-11 w-full rounded border-2 border-solid p-5 font-normal`}
-            onChange={(e) => handleInputChange("name", e.target.value)}
+            onChange={(e) => handleInputChange({ name: "name", input: e.target.value })}
           />
         </label>
         <label className="mt-5 flex w-full flex-col gap-2 font-bold text-gray-900">
@@ -82,7 +98,7 @@ function CreateProjectModal({ setIsOpenModal }) {
             value={input.link}
             placeholder="(예시) https://welcome-toast.io/"
             className={`${errorMessage.includes("도메인") ? "border-red-400" : "border-gray-500"} h-11 w-full rounded border-2 border-solid p-5 font-normal`}
-            onChange={(e) => handleInputChange("link", e.target.value)}
+            onChange={(e) => handleInputChange({ name: "link", input: e.target.value })}
           />
         </label>
         <div className="my-1">
@@ -97,7 +113,3 @@ function CreateProjectModal({ setIsOpenModal }) {
 }
 
 export default CreateProjectModal;
-
-CreateProjectModal.propTypes = {
-  setIsOpenModal: PropTypes.func.isRequired,
-};
