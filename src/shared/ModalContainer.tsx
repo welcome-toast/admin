@@ -1,8 +1,23 @@
-import PropTypes from "prop-types";
-import CloseIcon from "../shared/Icon/CloseIcon";
-import { INITIAL_MODAL } from "./constant";
+import type { Dispatch, SetStateAction } from "react";
 
-function ModalContainer({ children, modalTitle, hasCloseButton = true, setIsOpenModal }) {
+import { INITIAL_MODAL } from "@/shared/constant";
+import type { Modal } from "@/types";
+
+import CloseIcon from "@/shared/Icon/CloseIcon";
+
+interface ModalContainerProps {
+  children: React.ReactNode;
+  modalTitle: string;
+  hasCloseButton?: boolean;
+  setIsOpenModal: Dispatch<SetStateAction<Modal>>;
+}
+
+function ModalContainer({
+  children,
+  modalTitle,
+  hasCloseButton = true,
+  setIsOpenModal,
+}: ModalContainerProps) {
   function handleCloseButtonClick() {
     setIsOpenModal(INITIAL_MODAL);
   }
@@ -23,10 +38,3 @@ function ModalContainer({ children, modalTitle, hasCloseButton = true, setIsOpen
 }
 
 export default ModalContainer;
-
-ModalContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-  modalTitle: PropTypes.string.isRequired,
-  hasCloseButton: PropTypes.bool,
-  setIsOpenModal: PropTypes.func,
-};
