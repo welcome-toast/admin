@@ -12,4 +12,6 @@ interface Modal {
   delete: boolean;
 }
 
-export type { User, Modal };
+type ApiKeyInstallModal = string;
+
+export type { User, Modal, ApiKeyInstallModal };
