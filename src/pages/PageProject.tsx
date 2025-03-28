@@ -10,41 +10,34 @@ import {
   INITIAL_TOAST,
 } from "@/shared/constant";
 import { supabase } from "@/shared/supabase";
-import type { Toast, ToastInput, firstToast, sendToastInput } from "@/types/toast";
+import type { IndexToastForEdit, IsMatchedProject, PreviewNode } from "@/types/project";
+import type {
+  FirstToast,
+  SendToastInput,
+  Toast,
+  ToastInput,
+  ToastInputError,
+  ToastShown,
+} from "@/types/toast";
 import ToastSaveSuccess from "@/widgets/ToastSaveSuccess";
 import ToastWarning from "@/widgets/ToastWarning";
 import RedirectModal from "@/widgets/modals/RedirectModal";
-
-type isMatchedProject = boolean;
-type indexToastForEdit = number;
-type PreviewNode = HTMLIFrameElement | null;
-
-interface ToastShown {
-  isToastSaved: boolean;
-  warningType: string;
-}
-interface inputError {
-  name: string;
-  message_title: string;
-  message_body: string;
-  target_element_id: string;
-}
 
 function PageProject(): JSX.Element {
   const location = useLocation();
   const navigate = useNavigate();
   const project = location.state?.project;
-  const [isMatchedProject, setIsMatchedProject] = useState<isMatchedProject>(true);
+  const [isMatchedProject, setIsMatchedProject] = useState<IsMatchedProject>(true);
   const [toastList, setToastList] = useState<Toast[]>([]);
-  const [indexToastForEdit, setIndexToastForEdit] = useState<indexToastForEdit>(0);
+  const [indexToastForEdit, setIndexToastForEdit] = useState<IndexToastForEdit>(0);
   const [toastShown, setToastShown] = useState<ToastShown>({
     isToastSaved: false,
     warningType: "",
   });
-  const [inputError, setInputError] = useState<inputError>(INITIAL_ERROR_MESSAGE_TOAST_INPUT);
+  const [inputError, setInputError] = useState<ToastInputError>(INITIAL_ERROR_MESSAGE_TOAST_INPUT);
   const [previewNode, setPreviewNode] = useState<PreviewNode>(null);
-  const firstToast: firstToast = toastList.length > 0 ? toastList[0] : null;
-  const sendToastInput: sendToastInput = useCallback(
+  const firstToast: FirstToast = toastList.length > 0 ? toastList[0] : null;
+  const sendToastInput: SendToastInput = useCallback(
     (toastInput: ToastInput) => {
       if (!isMatchedProject) {
         return;
@@ -57,7 +50,7 @@ function PageProject(): JSX.Element {
     [isMatchedProject, previewNode?.contentWindow, project?.link],
   );
 
-  function handleToastCardClick(index: indexToastForEdit) {
+  function handleToastCardClick(index: IndexToastForEdit) {
     setIndexToastForEdit(index);
     setInputError(INITIAL_ERROR_MESSAGE_TOAST_INPUT);
     sendToastInput(toastList[index]);
