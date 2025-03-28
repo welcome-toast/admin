@@ -1,14 +1,21 @@
-import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import Button from "../../shared/Button";
-import ModalBackground from "../../shared/ModalBackground";
-import ModalContainer from "../../shared/ModalContainer";
 
-function RedirectModal({ text, route }) {
+import Button from "@/shared/Button";
+import ModalBackground from "@/shared/ModalBackground";
+import ModalContainer from "@/shared/ModalContainer";
+
+type Route = string;
+
+interface RedirectModalProps {
+  text: string;
+  route: Route;
+}
+
+function RedirectModal({ text, route }: RedirectModalProps): JSX.Element {
   const navigate = useNavigate();
 
-  function handleRedirectButtonClick(redirectRoute) {
-    navigate(`${redirectRoute}`);
+  function handleRedirectButtonClick(route: Route) {
+    navigate(`${route}`);
   }
 
   return (
@@ -24,8 +31,3 @@ function RedirectModal({ text, route }) {
 }
 
 export default RedirectModal;
-
-RedirectModal.propTypes = {
-  text: PropTypes.string.isRequired,
-  route: PropTypes.string.isRequired,
-};
