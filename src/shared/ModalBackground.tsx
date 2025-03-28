@@ -5,7 +5,7 @@ import type { Modal } from "@/types";
 
 interface ModalBackgroundProps {
   children: React.ReactNode;
-  setIsOpenModal: Dispatch<SetStateAction<Modal>>;
+  setIsOpenModal?: Dispatch<SetStateAction<Modal>>;
   canCloseBackgroundClick?: boolean;
 }
 
@@ -13,13 +13,13 @@ function ModalBackground({
   children,
   setIsOpenModal,
   canCloseBackgroundClick = true,
-}: ModalBackgroundProps) {
+}: ModalBackgroundProps): JSX.Element {
   const backgroundRef = useRef(null);
 
   useEffect(() => {
     function handleModalBackgroundClick(event: MouseEvent) {
       if (event?.target === backgroundRef.current) {
-        setIsOpenModal(INITIAL_MODAL);
+        setIsOpenModal?.(INITIAL_MODAL);
       }
     }
 
