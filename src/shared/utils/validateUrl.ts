@@ -1,4 +1,6 @@
-function validateUrl(urlString) {
+type UrlString = string;
+
+function validateUrl(urlString: UrlString) {
   try {
     const url = new URL(urlString);
 
@@ -24,7 +26,7 @@ function validateUrl(urlString) {
 
     return { isValid: true, errorMessage: null };
   } catch (error) {
-    return { isValid: false, errorMessage: error.message };
+    return { isValid: false, errorMessage: (error as Error).message };
   }
 }
 
