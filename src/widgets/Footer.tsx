@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 
 const HOME_PATH_NAME = "/";
 
-function Footer() {
+function Footer(): JSX.Element | null {
   const location = useLocation();
 
   if (location.pathname !== HOME_PATH_NAME) {
