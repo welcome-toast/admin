@@ -1,35 +1,51 @@
 import { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import ProjectPreview from "../features/ProjectPreview";
-import ToastCard from "../features/ToastCard";
-import ToastEditor from "../features/ToastEditor";
+import ProjectPreview from "@/features/ProjectPreview";
+import ToastCard from "@/features/ToastCard";
+import ToastEditor from "@/features/ToastEditor";
 import {
   DESC_REDIRECT_API_KEY_ACCESS,
   INITIAL_ERROR_MESSAGE_TOAST_INPUT,
   INITIAL_TOAST,
-} from "../shared/constant";
-import { supabase } from "../shared/supabase";
-import ToastSaveSuccess from "../widgets/ToastSaveSuccess";
-import ToastWarning from "../widgets/ToastWarning";
-import RedirectModal from "../widgets/modals/RedirectModal";
+} from "@/shared/constant";
+import { supabase } from "@/shared/supabase";
+import type { Toast, ToastInput, firstToast, sendToastInput } from "@/types/toast";
+import ToastSaveSuccess from "@/widgets/ToastSaveSuccess";
+import ToastWarning from "@/widgets/ToastWarning";
+import RedirectModal from "@/widgets/modals/RedirectModal";
 
-function PageProject() {
+type isMatchedProject = boolean;
+type indexToastForEdit = number;
+type PreviewNode = HTMLIFrameElement | null;
+
+interface ToastShown {
+  isToastSaved: boolean;
+  warningType: string;
+}
+interface inputError {
+  name: string;
+  message_title: string;
+  message_body: string;
+  target_element_id: string;
+}
+
+function PageProject(): JSX.Element {
   const location = useLocation();
   const navigate = useNavigate();
   const project = location.state?.project;
-  const [isMatchedProject, setIsMatchedProject] = useState(true);
-  const [toastList, setToastList] = useState([]);
-  const [indexToastForEdit, setIndexToastForEdit] = useState(0);
-  const [toastShown, setToastShown] = useState({
+  const [isMatchedProject, setIsMatchedProject] = useState<isMatchedProject>(true);
+  const [toastList, setToastList] = useState<Toast[]>([]);
+  const [indexToastForEdit, setIndexToastForEdit] = useState<indexToastForEdit>(0);
+  const [toastShown, setToastShown] = useState<ToastShown>({
     isToastSaved: false,
     warningType: "",
   });
-  const [inputError, setInputError] = useState(INITIAL_ERROR_MESSAGE_TOAST_INPUT);
-  const [previewNode, setPreviewNode] = useState(null);
-  const firstToast = toastList.length > 0 ? toastList[0] : null;
-  const sendToastInput = useCallback(
-    (toastInput) => {
+  const [inputError, setInputError] = useState<inputError>(INITIAL_ERROR_MESSAGE_TOAST_INPUT);
+  const [previewNode, setPreviewNode] = useState<PreviewNode>(null);
+  const firstToast: firstToast = toastList.length > 0 ? toastList[0] : null;
+  const sendToastInput: sendToastInput = useCallback(
+    (toastInput: ToastInput) => {
       if (!isMatchedProject) {
         return;
       }
@@ -41,7 +57,7 @@ function PageProject() {
     [isMatchedProject, previewNode?.contentWindow, project?.link],
   );
 
-  function handleToastCardClick(index) {
+  function handleToastCardClick(index: indexToastForEdit) {
     setIndexToastForEdit(index);
     setInputError(INITIAL_ERROR_MESSAGE_TOAST_INPUT);
     sendToastInput(toastList[index]);
@@ -62,7 +78,7 @@ function PageProject() {
           .order("created_at", { ascending: true });
 
         if (error !== null) {
-          throw new Error(error);
+          throw new Error(error.message);
         }
 
         if (resultToastList.length > 0) {
@@ -80,12 +96,14 @@ function PageProject() {
         })
         .subscribe();
 
-      return () => channels.unsubscribe();
+      return () => {
+        channels.unsubscribe();
+      };
     }
   }, [project]);
 
   useEffect(() => {
-    function setTargetElementId(e) {
+    function setTargetElementId(e: MessageEvent) {
       if (!isMatchedProject) {
         return;
       }
