@@ -1,10 +1,15 @@
 import { MAX_INPUT_LENGTH } from "../constant";
 
-function checkNewToast([toastKey, toastValue], key) {
+type ToastSet = [string, string];
+type ToastKey = string;
+type InputType = string;
+type InputLength = number;
+
+function checkNewToast([toastKey, toastValue]: ToastSet, key: ToastKey) {
   return toastKey === key && toastValue === "";
 }
 
-function validateInputLengthLimit(inputType, inputLength) {
+function validateInputLengthLimit(inputType: InputType, inputLength: InputLength) {
   const lengthGuide = `(현재 글자 수 ${inputLength > MAX_INPUT_LENGTH ? "999+" : inputLength})`;
 
   switch (inputType) {
