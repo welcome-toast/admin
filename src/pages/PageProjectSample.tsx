@@ -1,31 +1,42 @@
-import PropTypes from "prop-types";
-import { useCallback, useEffect, useState } from "react";
+import { type Dispatch, type SetStateAction, useCallback, useEffect, useState } from "react";
 
-import ProjectPreview from "../features/ProjectPreview";
-import ToastCard from "../features/ToastCard";
-import ToastEditorSample from "../features/ToastEditorSample";
-import {
-  DESC_REDIRECT_API_KEY_ACCESS,
-  INITIAL_ERROR_MESSAGE_TOAST_INPUT,
-} from "../shared/constant";
-import { supabase } from "../shared/supabase";
-import ToastSaveSuccess from "../widgets/ToastSaveSuccess";
-import ToastWarning from "../widgets/ToastWarning";
-import RedirectModal from "../widgets/modals/RedirectModal";
+import ProjectPreview from "@/features/ProjectPreview";
+import ToastCard from "@/features/ToastCard";
+import ToastEditorSample from "@/features/ToastEditorSample";
+import { DESC_REDIRECT_API_KEY_ACCESS, INITIAL_ERROR_MESSAGE_TOAST_INPUT } from "@/shared/constant";
+import { supabase } from "@/shared/supabase";
+import type { IndexToastForEdit, IsMatchedProject, PreviewNode, Project } from "@/types/project";
+import type {
+  FirstToast,
+  SendToastInput,
+  Toast,
+  ToastInput,
+  ToastInputError,
+  ToastShown,
+} from "@/types/toast";
+import ToastSaveSuccess from "@/widgets/ToastSaveSuccess";
+import ToastWarning from "@/widgets/ToastWarning";
+import RedirectModal from "@/widgets/modals/RedirectModal";
 
-function PageProjectSample({ sampleProject, setSampleProject }) {
-  const [isMatchedProject, setIsMatchedProject] = useState(true);
-  const [toastList, setToastList] = useState([]);
-  const [indexToastForEdit, setIndexToastForEdit] = useState(0);
-  const [toastShown, setToastShown] = useState({
+type ProjectId = Pick<Project, "id">;
+interface PageProjectSampleProps {
+  sampleProject: Project;
+  setSampleProject: Dispatch<SetStateAction<Project>>;
+}
+
+function PageProjectSample({ sampleProject, setSampleProject }: PageProjectSampleProps) {
+  const [isMatchedProject, setIsMatchedProject] = useState<IsMatchedProject>(true);
+  const [toastList, setToastList] = useState<Toast[]>([]);
+  const [indexToastForEdit, setIndexToastForEdit] = useState<IndexToastForEdit>(0);
+  const [toastShown, setToastShown] = useState<ToastShown>({
     isToastSaved: false,
     warningType: "",
   });
-  const [inputError, setInputError] = useState(INITIAL_ERROR_MESSAGE_TOAST_INPUT);
-  const [previewNode, setPreviewNode] = useState(null);
-  const firstToast = toastList.length > 0 ? toastList[0] : null;
-  const sendToastInput = useCallback(
-    (toastInput) => {
+  const [inputError, setInputError] = useState<ToastInputError>(INITIAL_ERROR_MESSAGE_TOAST_INPUT);
+  const [previewNode, setPreviewNode] = useState<PreviewNode>(null);
+  const firstToast: FirstToast = toastList.length > 0 ? toastList[0] : null;
+  const sendToastInput: SendToastInput = useCallback(
+    (toastInput: ToastInput) => {
       if (!isMatchedProject) {
         return;
       }
@@ -37,7 +48,7 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
     [isMatchedProject, previewNode?.contentWindow, sampleProject.link],
   );
 
-  function handleToastCardClick(index) {
+  function handleToastCardClick(index: IndexToastForEdit) {
     setIndexToastForEdit(index);
     setInputError(INITIAL_ERROR_MESSAGE_TOAST_INPUT);
     sendToastInput(toastList[index]);
@@ -50,7 +61,7 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
   }
 
   useEffect(() => {
-    let sampleProjectId;
+    let sampleProjectId: ProjectId;
     async function getProject() {
       const { data: projectResult, error } = await supabase
         .from("project_sample")
@@ -67,7 +78,7 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
     }
     getProject();
 
-    async function getToastList(projectId) {
+    async function getToastList(projectId: ProjectId) {
       const { data: resultToastList, error } = await supabase
         .from("toast_sample")
         .select("*")
@@ -75,7 +86,7 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
         .order("created_at", { ascending: true });
 
       if (error !== null) {
-        throw new Error(error);
+        throw new Error(error.message);
       }
 
       if (resultToastList.length > 0) {
@@ -95,11 +106,13 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
       )
       .subscribe();
 
-    return () => channels.unsubscribe();
+    return () => {
+      channels.unsubscribe();
+    };
   }, [setSampleProject]);
 
   useEffect(() => {
-    function setTargetElementId(e) {
+    function setTargetElementId(e: MessageEvent) {
       if (!isMatchedProject) {
         return;
       }
@@ -211,8 +224,3 @@ function PageProjectSample({ sampleProject, setSampleProject }) {
 }
 
 export default PageProjectSample;
-
-PageProjectSample.propTypes = {
-  sampleProject: PropTypes.object.isRequired,
-  setSampleProject: PropTypes.func.isRequired,
-};
