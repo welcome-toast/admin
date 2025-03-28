@@ -1,10 +1,16 @@
-import PropTypes from "prop-types";
 import { useState } from "react";
 
-function CodeBlock({ title, code }) {
+type CodeForCopy = string;
+
+interface CodeBlockProps {
+  title: string;
+  code: string;
+}
+
+function CodeBlock({ title, code }: CodeBlockProps): JSX.Element {
   const [isCopied, setIsCopied] = useState(false);
 
-  async function handleCopyCodeClick(codeForCopy) {
+  async function handleCopyCodeClick(codeForCopy: CodeForCopy) {
     try {
       await navigator.clipboard.writeText(codeForCopy);
       setIsCopied(true);
@@ -34,8 +40,3 @@ function CodeBlock({ title, code }) {
 }
 
 export default CodeBlock;
-
-CodeBlock.propTypes = {
-  title: PropTypes.string.isRequired,
-  code: PropTypes.string.isRequired,
-};
