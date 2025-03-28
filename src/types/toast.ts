@@ -7,7 +7,7 @@ interface Toast {
   target_element_id: string;
 }
 
-type firstToast = Toast | null;
+type FirstToast = Toast | null;
 
 interface ToastInput {
   name: string;
@@ -17,6 +17,18 @@ interface ToastInput {
   target_element_id: string;
 }
 
-type sendToastInput = (toastInput: ToastInput) => void;
+interface ToastShown {
+  isToastSaved: boolean;
+  warningType: string;
+}
 
-export type { Toast, firstToast, ToastInput, sendToastInput };
+interface ToastInputError {
+  name: string;
+  message_title: string;
+  message_body: string;
+  target_element_id: string;
+}
+
+type SendToastInput = (toastInput: ToastInput) => void;
+
+export type { Toast, FirstToast, ToastInput, SendToastInput, ToastShown, ToastInputError };
