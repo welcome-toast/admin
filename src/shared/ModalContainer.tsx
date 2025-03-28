@@ -9,7 +9,7 @@ interface ModalContainerProps {
   children: React.ReactNode;
   modalTitle: string;
   hasCloseButton?: boolean;
-  setIsOpenModal: Dispatch<SetStateAction<Modal>>;
+  setIsOpenModal?: Dispatch<SetStateAction<Modal>>;
 }
 
 function ModalContainer({
@@ -17,9 +17,9 @@ function ModalContainer({
   modalTitle,
   hasCloseButton = true,
   setIsOpenModal,
-}: ModalContainerProps) {
+}: ModalContainerProps): JSX.Element {
   function handleCloseButtonClick() {
-    setIsOpenModal(INITIAL_MODAL);
+    setIsOpenModal?.(INITIAL_MODAL);
   }
 
   return (
