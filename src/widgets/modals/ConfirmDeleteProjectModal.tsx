@@ -1,24 +1,35 @@
-import PropTypes from "prop-types";
-import Button from "../../shared/Button";
-import ModalBackground from "../../shared/ModalBackground";
-import ModalContainer from "../../shared/ModalContainer";
-import { deleteProject } from "../../shared/supabase";
+import type { Dispatch, SetStateAction } from "react";
+
+import Button from "@/shared/Button";
+import ModalBackground from "@/shared/ModalBackground";
+import ModalContainer from "@/shared/ModalContainer";
+import { INITIAL_MODAL } from "@/shared/constant";
+import { deleteProject } from "@/shared/supabase";
+import type { Modal } from "@/types";
+import type { ProjectId } from "@/types/project";
+
+interface ConfirmDeleteProjectModalProps {
+  action: string;
+  description: string;
+  projectDeleteConfirmed: { projectId: ProjectId; projectName: string };
+  setIsOpenModal: Dispatch<SetStateAction<Modal>>;
+}
 
 function ConfirmDeleteProjectModal({
   action,
   description,
   projectDeleteConfirmed,
   setIsOpenModal,
-}) {
-  async function handleDeleteProjectClick(projectId) {
+}: ConfirmDeleteProjectModalProps): JSX.Element {
+  async function handleDeleteProjectClick(projectId: ProjectId) {
     try {
       const deleteError = await deleteProject(projectId);
 
       if (deleteError) {
-        throw new Error(deleteError);
+        throw new Error(deleteError.message);
       }
 
-      setIsOpenModal(false);
+      setIsOpenModal(INITIAL_MODAL);
     } catch (error) {
       console.error(error);
     }
@@ -45,10 +56,3 @@ function ConfirmDeleteProjectModal({
 }
 
 export default ConfirmDeleteProjectModal;
-
-ConfirmDeleteProjectModal.propTypes = {
-  action: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  projectDeleteConfirmed: PropTypes.object.isRequired,
-  setIsOpenModal: PropTypes.func.isRequired,
-};
