@@ -1,10 +1,15 @@
 type ProjectId = string;
+type ProjectName = string;
+type ProjectApiKey = string;
 
-interface Project {
-  id: ProjectId;
-  name: string;
+interface ProjectInput {
+  name: ProjectName;
   link: string;
-  api_key: string;
+}
+
+interface Project extends ProjectInput {
+  id: ProjectId;
+  api_key: ProjectApiKey;
   is_installed: boolean;
   created_at: string;
   updated_at: string;
@@ -12,7 +17,7 @@ interface Project {
 
 interface ProjectDeleteConfirmed {
   projectId: ProjectId;
-  projectName: string;
+  projectName: ProjectName;
 }
 
 type PreviewNode = HTMLIFrameElement | null;
@@ -21,7 +26,10 @@ type IsMatchedProject = boolean;
 
 export type {
   Project,
+  ProjectInput,
   ProjectId,
+  ProjectName,
+  ProjectApiKey,
   ProjectDeleteConfirmed,
   PreviewNode,
   IndexToastForEdit,
