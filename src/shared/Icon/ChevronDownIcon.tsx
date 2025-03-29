@@ -1,9 +1,11 @@
-import PropTypes from "prop-types";
+type ChevronDownIconProps = {
+  color: string;
+};
 
-function ChevronDownIcon({ color }) {
+function ChevronDownIcon({ color }: ChevronDownIconProps): JSX.Element {
   return (
     <svg
-      id="CheckIcon"
+      id="ChevronDownIcon"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -18,7 +20,3 @@ function ChevronDownIcon({ color }) {
 }
 
 export default ChevronDownIcon;
-
-ChevronDownIcon.propTypes = {
-  color: PropTypes.string.isRequired,
-};

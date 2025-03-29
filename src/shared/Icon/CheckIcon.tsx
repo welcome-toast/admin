@@ -1,6 +1,8 @@
-import PropTypes from "prop-types";
+type CheckIconProps = {
+  color: string;
+};
 
-function CheckIcon({ color }) {
+function CheckIcon({ color }: CheckIconProps): JSX.Element {
   return (
     <svg
       id="CheckIcon"
@@ -22,7 +24,3 @@ function CheckIcon({ color }) {
 }
 
 export default CheckIcon;
-
-CheckIcon.propTypes = {
-  color: PropTypes.string.isRequired,
-};
