@@ -12,6 +12,11 @@ interface Modal {
   delete: boolean;
 }
 
+interface ToastMessage {
+  title: string;
+  description: string;
+}
+
 type ApiKeyInstallModal = string;
 
-export type { User, Modal, ApiKeyInstallModal };
+export type { User, Modal, ApiKeyInstallModal, ToastMessage };

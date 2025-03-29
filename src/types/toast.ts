@@ -1,11 +1,16 @@
 interface Toast {
   id: string;
   name: string;
+  type: string;
   message_title: string;
   message_body: string;
-  image_url: string;
+  message_button_color: string;
   target_element_id: string;
-  updated_at: string;
+  image_url: string;
+  background_opacity: number;
+  project_id?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 type FirstToast = Toast | null;
@@ -15,7 +20,9 @@ interface ToastInput {
   message_title: string;
   message_body: string;
   image_url: string;
+  message_button_color: string;
   target_element_id: string;
+  background_opacity: number;
 }
 
 interface ToastShown {
