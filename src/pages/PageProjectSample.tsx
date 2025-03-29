@@ -29,7 +29,10 @@ interface PageProjectSampleProps {
   setSampleProject: Dispatch<SetStateAction<Project>>;
 }
 
-function PageProjectSample({ sampleProject, setSampleProject }: PageProjectSampleProps) {
+function PageProjectSample({
+  sampleProject,
+  setSampleProject,
+}: PageProjectSampleProps): JSX.Element {
   const [isMatchedProject, setIsMatchedProject] = useState<IsMatchedProject>(true);
   const [toastList, setToastList] = useState<Toast[]>([]);
   const [indexToastForEdit, setIndexToastForEdit] = useState<IndexToastForEdit>(0);
@@ -208,21 +211,23 @@ function PageProjectSample({ sampleProject, setSampleProject }: PageProjectSampl
       {!isMatchedProject && <RedirectModal text={DESC_REDIRECT_API_KEY_ACCESS} route={"/"} />}
       <ToastSaveSuccess
         isToastSaved={toastShown.isToastSaved}
-        title={"토스트가 저장되었어요"}
-        description={"웹사이트에서 적용된 토스트를 확인해보세요!"}
+        toastMessage={{
+          title: "토스트가 저장되었어요",
+          description: "웹사이트에서 적용된 토스트를 확인해보세요!",
+        }}
       />
       <ToastWarning
         warningType={toastShown.warningType}
-        title={
-          toastShown.warningType === "blankInput"
-            ? "필수 정보를 모두 입력해주세요"
-            : "로그인, 연동 후 이용가능해요"
-        }
-        description={
-          toastShown.warningType === "blankInput"
-            ? "토스트 저장을 위해 필수* 정보 입력이 필요해요!"
-            : "샘플 에디터 미지원 기능은 로그인 후 이용해보세요!"
-        }
+        toastMessage={{
+          title:
+            toastShown.warningType === "blankInput"
+              ? "필수 정보를 모두 입력해주세요"
+              : "로그인, 연동 후 이용가능해요",
+          description:
+            toastShown.warningType === "blankInput"
+              ? "토스트 저장을 위해 필수* 정보 입력이 필요해요!"
+              : "샘플 에디터 미지원 기능은 로그인 후 이용해보세요!",
+        }}
       />
     </div>
   );
