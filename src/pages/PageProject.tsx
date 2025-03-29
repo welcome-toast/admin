@@ -205,13 +205,17 @@ function PageProject(): JSX.Element {
       )}
       <ToastSaveSuccess
         isToastSaved={toastShown.isToastSaved}
-        title={"토스트가 저장되었어요"}
-        description={"웹사이트에서 적용된 토스트를 확인해보세요!"}
+        toastMessage={{
+          title: "토스트가 저장되었어요",
+          description: "웹사이트에서 적용된 토스트를 확인해보세요!",
+        }}
       />
       <ToastWarning
         warningType={toastShown.warningType}
-        title={"필수 정보를 모두 입력해주세요"}
-        description={"토스트 저장을 위해 필수* 정보 입력이 필요해요!"}
+        toastMessage={{
+          title: "필수 정보를 모두 입력해주세요",
+          description: "토스트 저장을 위해 필수* 정보 입력이 필요해요!",
+        }}
       />
     </div>
   );
