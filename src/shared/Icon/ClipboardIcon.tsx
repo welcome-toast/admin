@@ -1,4 +1,4 @@
-function ClipboardIcon() {
+function ClipboardIcon(): JSX.Element {
   return (
     <svg
       id="ClipboardIcon"

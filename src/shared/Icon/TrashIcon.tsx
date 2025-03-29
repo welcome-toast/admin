@@ -1,4 +1,4 @@
-function TrashIcon() {
+function TrashIcon(): JSX.Element {
   return (
     <svg
       id="TrashIcon"

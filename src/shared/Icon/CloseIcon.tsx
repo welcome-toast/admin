@@ -1,4 +1,4 @@
-function CloseIcon() {
+function CloseIcon(): JSX.Element {
   return (
     <svg
       id="closeIcon"

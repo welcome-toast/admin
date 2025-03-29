@@ -1,4 +1,4 @@
-function KebabIcon() {
+function KebabIcon(): JSX.Element {
   return (
     <svg
       id="KebabIcon"

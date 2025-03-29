@@ -1,4 +1,4 @@
-function LightIcon() {
+function LightIcon(): JSX.Element {
   return (
     <svg
       id="LightIcon"

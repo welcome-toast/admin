@@ -1,4 +1,4 @@
-function HomeIcon() {
+function HomeIcon(): JSX.Element {
   return (
     <svg
       id="homeIcon"
