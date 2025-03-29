@@ -1,7 +1,30 @@
-import PropTypes from "prop-types";
-import { useEffect, useRef } from "react";
-import ClipboardIcon from "../shared/Icon/ClipboardIcon";
-import TrashIcon from "../shared/Icon/TrashIcon";
+import {
+  type Dispatch,
+  type KeyboardEvent,
+  type MouseEvent,
+  type SetStateAction,
+  useEffect,
+  useRef,
+} from "react";
+
+import ClipboardIcon from "@/shared/Icon/ClipboardIcon";
+import TrashIcon from "@/shared/Icon/TrashIcon";
+import type { ApiKeyInstallModal, Modal } from "@/types";
+import type {
+  Project,
+  ProjectApiKey,
+  ProjectDeleteConfirmed,
+  ProjectId,
+  ProjectName,
+} from "@/types/project";
+
+interface ProjectDetailsDropdownProps {
+  project: Project;
+  setApiKeyInstallModal: Dispatch<SetStateAction<ApiKeyInstallModal>>;
+  setProjectDeleteConfirmed: Dispatch<SetStateAction<ProjectDeleteConfirmed>>;
+  setIsOpenDropdown: Dispatch<SetStateAction<boolean>>;
+  setIsOpenModal: Dispatch<SetStateAction<Modal>>;
+}
 
 function ProjectDetailsDropdown({
   project,
@@ -9,56 +32,71 @@ function ProjectDetailsDropdown({
   setProjectDeleteConfirmed,
   setIsOpenDropdown,
   setIsOpenModal,
-}) {
-  const dropdownRef = useRef(null);
+}: ProjectDetailsDropdownProps): JSX.Element {
+  const dropdownRef = useRef<HTMLUListElement>(null);
 
-  function handleViewInstallScriptClick(event, projectApiKey) {
+  function handleViewInstallScriptClick(
+    event: MouseEvent | KeyboardEvent,
+    projectApiKey: ProjectApiKey,
+  ) {
     event.stopPropagation();
 
     switch (event.type) {
-      case "click":
+      case "click": {
         setIsOpenModal((prev) => ({ ...prev, install: true }));
         setApiKeyInstallModal(projectApiKey);
         setIsOpenDropdown(false);
         return;
-      case "keydown":
-        if (event.key === "Enter" || event.key === " ") {
+      }
+      case "keydown": {
+        const key = (event as KeyboardEvent).key;
+        if (key === "Enter" || key === " ") {
           setIsOpenModal((prev) => ({ ...prev, install: true }));
           setApiKeyInstallModal(projectApiKey);
           setIsOpenDropdown(false);
         }
         return;
+      }
     }
   }
 
-  function handleDeleteProjectClick(event, projectId, projectName) {
+  function handleDeleteProjectClick(
+    event: MouseEvent<HTMLDivElement> | KeyboardEvent<HTMLDivElement>,
+    projectId: ProjectId,
+    projectName: ProjectName,
+  ) {
     event.stopPropagation();
 
     switch (event.type) {
-      case "click":
+      case "click": {
         setIsOpenModal((prev) => ({ ...prev, delete: true }));
         setProjectDeleteConfirmed((prev) => ({ ...prev, projectId, projectName }));
         setIsOpenDropdown(false);
         return;
-      case "keydown":
-        if (event.key === "Enter" || event.key === " ") {
+      }
+      case "keydown": {
+        const key = (event as KeyboardEvent).key;
+        if (key === "Enter" || key === " ") {
           setIsOpenModal((prev) => ({ ...prev, delete: true }));
           setProjectDeleteConfirmed((prev) => ({ ...prev, projectId, projectName }));
           setIsOpenDropdown(false);
         }
         return;
+      }
     }
   }
 
   useEffect(() => {
-    function handleDropdownOutsideClick(event) {
-      if (event.target !== dropdownRef.current) {
+    function handleDropdownOutsideClick(event: globalThis.MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpenDropdown(false);
       }
     }
 
-    window.addEventListener("click", handleDropdownOutsideClick);
-    return () => window.removeEventListener("click", handleDropdownOutsideClick);
+    window.addEventListener("mousedown", handleDropdownOutsideClick);
+    return () => {
+      window.removeEventListener("mousedown", handleDropdownOutsideClick);
+    };
   }, [setIsOpenDropdown]);
 
   return (
@@ -68,7 +106,6 @@ function ProjectDetailsDropdown({
     >
       <li>
         <div
-          type="button"
           className="m-1 flex items-center justify-between gap-2 rounded px-2 py-2 hover:bg-gray-200"
           onClick={(event) => handleViewInstallScriptClick(event, project.api_key)}
           onKeyDown={(event) => handleViewInstallScriptClick(event, project.api_key)}
@@ -79,7 +116,6 @@ function ProjectDetailsDropdown({
       </li>
       <li>
         <div
-          type="button"
           className="m-1 flex items-center justify-between gap-2 rounded px-2 py-2 hover:bg-gray-200"
           onClick={(event) => handleDeleteProjectClick(event, project.id, project.name)}
           onKeyDown={(event) => handleDeleteProjectClick(event, project.id, project.name)}
@@ -93,11 +129,3 @@ function ProjectDetailsDropdown({
 }
 
 export default ProjectDetailsDropdown;
-
-ProjectDetailsDropdown.propTypes = {
-  project: PropTypes.object.isRequired,
-  setApiKeyInstallModal: PropTypes.func.isRequired,
-  setProjectDeleteConfirmed: PropTypes.func.isRequired,
-  setIsOpenDropdown: PropTypes.func.isRequired,
-  setIsOpenModal: PropTypes.func.isRequired,
-};
