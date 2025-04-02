@@ -3,7 +3,7 @@ import { type Dispatch, type SetStateAction, useCallback, useEffect, useState } 
 import ProjectPreview from "@/features/ProjectPreview";
 import ToastCard from "@/features/ToastCard";
 import ToastEditorSample from "@/features/ToastEditorSample";
-import { DESC_REDIRECT_API_KEY_ACCESS, INITIAL_ERROR_MESSAGE_TOAST_INPUT } from "@/shared/constant";
+import { DESCRIPTIONS, INITIAL_ERROR_MESSAGE_TOAST_INPUT, INITIAL_TOAST } from "@/shared/constant";
 import { supabase } from "@/shared/supabase";
 import type {
   IndexToastForEdit,
@@ -34,7 +34,7 @@ function PageProjectSample({
   setSampleProject,
 }: PageProjectSampleProps): JSX.Element {
   const [isMatchedProject, setIsMatchedProject] = useState<IsMatchedProject>(true);
-  const [toastList, setToastList] = useState<Toast[]>([]);
+  const [toastList, setToastList] = useState<Toast[]>([INITIAL_TOAST]);
   const [indexToastForEdit, setIndexToastForEdit] = useState<IndexToastForEdit>(0);
   const [toastShown, setToastShown] = useState<ToastShown>({
     isToastSaved: false,
@@ -208,7 +208,9 @@ function PageProjectSample({
           </>
         )}
       </section>
-      {!isMatchedProject && <RedirectModal text={DESC_REDIRECT_API_KEY_ACCESS} route={"/"} />}
+      {!isMatchedProject && (
+        <RedirectModal text={DESCRIPTIONS.REDIRECT_API_KEY_ACCESS} route={"/"} />
+      )}
       <ToastSaveSuccess
         isToastSaved={toastShown.isToastSaved}
         toastMessage={{

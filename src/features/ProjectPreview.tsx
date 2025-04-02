@@ -1,6 +1,3 @@
-import Loading from "@/shared/Loading";
-import type { Project } from "@/types/project";
-import type { FirstToast, SendToastInput } from "@/types/toast";
 import {
   type Dispatch,
   type ForwardedRef,
@@ -9,6 +6,10 @@ import {
   useEffect,
   useState,
 } from "react";
+
+import Loading from "@/shared/Loading";
+import type { Project } from "@/types/project";
+import type { FirstToast, SendToastInput } from "@/types/toast";
 
 interface ProjectPreviewProps {
   project: Project;

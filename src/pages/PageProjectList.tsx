@@ -3,12 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import ProjectCard from "@/features/ProjectCard";
 import Loading from "@/shared/Loading";
-import {
-  DESC_DELETE_PROJECT,
-  DESC_INSTALL_API_KEY,
-  INITIAL_MODAL,
-  INITIAL_PROJECTS,
-} from "@/shared/constant";
+import { DESCRIPTIONS, INITIAL_MODAL, INITIAL_PROJECTS } from "@/shared/constant";
 import { supabase } from "@/shared/supabase";
 import type { ApiKeyInstallModal, Modal, User } from "@/types";
 import type { Project, ProjectDeleteConfirmed, ProjectId } from "@/types/project";
@@ -108,7 +103,7 @@ function PageProjectList({ user }: { user: User }) {
       {isOpenModal.create && <CreateProjectModal setIsOpenModal={setIsOpenModal} />}
       {isOpenModal.install && (
         <GuideInstallProjectModal
-          text={DESC_INSTALL_API_KEY}
+          text={DESCRIPTIONS.INSTALL_API_KEY}
           apiKeyInstallModal={apiKeyInstallModal}
           setIsOpenModal={setIsOpenModal}
         />
@@ -116,7 +111,7 @@ function PageProjectList({ user }: { user: User }) {
       {isOpenModal.delete && (
         <ConfirmDeleteProjectModal
           action={"프로젝트 삭제"}
-          description={DESC_DELETE_PROJECT}
+          description={DESCRIPTIONS.DELETE_PROJECT}
           projectDeleteConfirmed={projectDeleteConfirmed}
           setIsOpenModal={setIsOpenModal}
         />

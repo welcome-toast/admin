@@ -4,9 +4,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Button from "@/shared/Button";
 import HomeIcon from "@/shared/Icon/HomeIcon";
 import OutLinkIcon from "@/shared/Icon/OutlinkIcon";
-import { CTA_SIGNIN, CTA_SIGNOUT, INITIAL_USER } from "@/shared/constant";
+import { CTAS, INITIAL_USER } from "@/shared/constant";
 import { signIn, signOut } from "@/shared/supabase";
-import type { Project, User } from "@/types";
+import type { User } from "@/types";
+import type { Project } from "@/types/project";
 
 interface HeaderProps {
   user: User;
@@ -87,7 +88,7 @@ function Header({ user, setUser, sampleProject }: HeaderProps) {
         </div>
         <div className="my-3 mr-4 md:mr-10">
           {user.id === "" ? (
-            <Button text={CTA_SIGNIN} onClick={handleSignInButtonClick} />
+            <Button text={CTAS.SIGNIN} onClick={handleSignInButtonClick} />
           ) : (
             <div className="flex gap-3">
               <button
@@ -98,7 +99,7 @@ function Header({ user, setUser, sampleProject }: HeaderProps) {
                 <OutLinkIcon />
                 <span className="text-sm">샘플 토스트 편집해보기</span>
               </button>
-              <Button text={CTA_SIGNOUT} onClick={handleSignOutButtonClick} />
+              <Button text={CTAS.SIGNOUT} onClick={handleSignOutButtonClick} />
             </div>
           )}
         </div>

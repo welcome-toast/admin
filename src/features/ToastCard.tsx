@@ -14,7 +14,7 @@ function ToastCard({
   indexToastForEdit,
   handleToastCardClick,
 }: ToastCardProps): JSX.Element {
-  const date = getDate(toastSaved.updated_at);
+  const date = getDate(toastSaved.updated_at ?? "");
 
   return (
     <button

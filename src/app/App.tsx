@@ -11,7 +11,8 @@ import Header from "@/widgets/Header";
 import "../index.css";
 import { INITIAL_PROJECTS, INITIAL_USER } from "@/shared/constant";
 import { getSessionSignIn } from "@/shared/supabase";
-import type { Project, User } from "@/types";
+import type { User } from "@/types";
+import type { Project } from "@/types/project";
 
 function App() {
   const [user, setUser] = useState<User>(INITIAL_USER);

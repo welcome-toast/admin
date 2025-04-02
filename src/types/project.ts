@@ -13,6 +13,7 @@ interface Project extends ProjectInput {
   is_installed: boolean;
   created_at: string;
   updated_at: string;
+  user_id?: string;
 }
 
 interface ProjectDeleteConfirmed {

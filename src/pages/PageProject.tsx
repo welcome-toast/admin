@@ -4,11 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ProjectPreview from "@/features/ProjectPreview";
 import ToastCard from "@/features/ToastCard";
 import ToastEditor from "@/features/ToastEditor";
-import {
-  DESC_REDIRECT_API_KEY_ACCESS,
-  INITIAL_ERROR_MESSAGE_TOAST_INPUT,
-  INITIAL_TOAST,
-} from "@/shared/constant";
+import { DESCRIPTIONS, INITIAL_ERROR_MESSAGE_TOAST_INPUT, INITIAL_TOAST } from "@/shared/constant";
 import { supabase } from "@/shared/supabase";
 import type { IndexToastForEdit, IsMatchedProject, PreviewNode } from "@/types/project";
 import type {
@@ -28,7 +24,7 @@ function PageProject(): JSX.Element {
   const navigate = useNavigate();
   const project = location.state?.project;
   const [isMatchedProject, setIsMatchedProject] = useState<IsMatchedProject>(true);
-  const [toastList, setToastList] = useState<Toast[]>([]);
+  const [toastList, setToastList] = useState<Toast[]>([INITIAL_TOAST]);
   const [indexToastForEdit, setIndexToastForEdit] = useState<IndexToastForEdit>(0);
   const [toastShown, setToastShown] = useState<ToastShown>({
     isToastSaved: false,
@@ -201,7 +197,7 @@ function PageProject(): JSX.Element {
         )}
       </section>
       {!isMatchedProject && (
-        <RedirectModal text={DESC_REDIRECT_API_KEY_ACCESS} route={"/project"} />
+        <RedirectModal text={DESCRIPTIONS.REDIRECT_API_KEY_ACCESS} route={"/project"} />
       )}
       <ToastSaveSuccess
         isToastSaved={toastShown.isToastSaved}
