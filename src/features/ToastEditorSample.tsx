@@ -168,7 +168,7 @@ function ToastEditorSample({
           </span>
         </label>
       </div>
-      <div className="my-8 flex flex-col">
+      <div id="toastTargetElementId" className="my-8 flex flex-col">
         <div className="flex justify-between">
           <span className="font-bold text-base md:text-lg">선택된 타겟 요소 ID*</span>
           <span className="font-semibold text-base">{toastInput.target_element_id}</span>
@@ -208,7 +208,9 @@ function ToastEditorSample({
       </div>
       <div className="mt-10 flex flex-col">
         <div className="flex justify-between">
-          <span className="font-bold text-base md:text-lg">배경 투명도</span>
+          <span id="toastBackgroundOpacity" className="font-bold text-base md:text-lg">
+            배경 투명도
+          </span>
           <input
             type="number"
             id="toastBackgroundOpacityNumber"
