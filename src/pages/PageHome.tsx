@@ -54,7 +54,9 @@ function PageHome({ user, setUser }: PageHomeProps) {
             <span className="relative inline-flex size-3 rounded-full bg-sky-500" />
           </span>
         </div>
-        <Button text={CTAS.SAMPLE} onClick={handleSampleButtonClick} />
+        <div id="home-sample-button">
+          <Button text={CTAS.SAMPLE} onClick={handleSampleButtonClick} />
+        </div>
       </div>
       <div className="flex justify-center">
         <img
