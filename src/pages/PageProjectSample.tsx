@@ -198,6 +198,7 @@ function PageProjectSample({
               setInputError={setInputError}
               sendToastInput={sendToastInput}
               setToastShown={setToastShown}
+              key={toastList[indexToastForEdit].id}
             />
           </>
         ) : (

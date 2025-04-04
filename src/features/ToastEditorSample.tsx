@@ -33,7 +33,7 @@ function ToastEditorSample({
   sendToastInput,
   setToastShown,
 }: ToastEditorSampleProps) {
-  const [toastInput, setToastInput] = useState(() => toast);
+  const [toastInput, setToastInput] = useState(toast);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   function handleToastInputChange({ toastType, input, debounce }: ToastInputParams) {
@@ -65,16 +65,14 @@ function ToastEditorSample({
   async function handleSaveToastButtonClick() {
     const toastToSave: ToastEditing = {};
     const inputErrors: ToastEditing = {};
-
     for (const [toastKey, toastValue] of Object.entries(toastInput)) {
-      if (toastKey === "user_id") {
+      if (toastKey === "user_id" || toastKey === "id" || toastKey === "type") {
         toastToSave[toastKey] = undefined;
         continue;
       }
 
       const input = toastValue.trim();
       const inputLength = input.length;
-
       if (inputLength === 0 && toastKey !== "image_url") {
         setToastShown((prev) => ({ ...prev, warningType: "blankInput" }));
         setTimeout(() => setToastShown((prev) => ({ ...prev, warningType: "" })), 2000);
@@ -85,7 +83,6 @@ function ToastEditorSample({
       if (errorMessage !== true) {
         inputErrors[toastKey] = errorMessage;
       }
-
       toastToSave[toastKey] = input;
     }
 
