@@ -1,13 +1,26 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import React from "react";
+import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import "./index.css";
-import App from "@/app/App.tsx";
 
-createRoot(document.getElementById("root") as HTMLDivElement).render(
-  <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </StrictMode>,
-);
+import App from "./app/App";
+import { initAmplitude } from "./shared/configs/amplitude";
+import { AmplitudeProvider } from "./widgets/AmplitudeTracker";
+import "./index.css";
+
+initAmplitude();
+
+const rootElement = document.getElementById("root");
+
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <BrowserRouter>
+        <AmplitudeProvider>
+          <App />
+        </AmplitudeProvider>
+      </BrowserRouter>
+    </React.StrictMode>,
+  );
+} else {
+  console.error("Failed to find the root element");
+}
