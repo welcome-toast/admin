@@ -11,6 +11,7 @@ interface AmplitudeEvent {
 
 interface AmplitudeContextType {
   trackPageView: (pathname: string) => Promise<void>;
+  trackEvent: (eventName: string, eventData: Record<string, unknown>) => Promise<void>;
 }
 
 interface AmplitudeOptions {
