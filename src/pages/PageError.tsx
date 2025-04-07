@@ -1,4 +1,4 @@
-import Button from "@/shared/Button";
+import Button from "@/shared/components/Button";
 import { useNavigate } from "react-router-dom";
 
 function PageError() {

@@ -9,8 +9,8 @@ import PageProjectSample from "@/pages/PageProjectSample";
 import Footer from "@/widgets/Footer";
 import Header from "@/widgets/Header";
 import "../index.css";
-import { INITIAL_PROJECTS, INITIAL_USER } from "@/shared/constant";
-import { getSessionSignIn } from "@/shared/supabase";
+import { getSessionSignIn } from "@/shared/configs/supabase";
+import { INITIAL_PROJECTS, INITIAL_USER } from "@/shared/constants";
 import type { User } from "@/types";
 import type { Project } from "@/types/project";
 

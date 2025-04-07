@@ -1,5 +1,5 @@
 import CheckIcon from "@/shared/Icon/CheckIcon";
-import { DESCRIPTIONS, INSTALL_GUIDE_STEPS, TITLES } from "@/shared/constant";
+import { DESCRIPTIONS, INSTALL_GUIDE_STEPS, TITLES } from "@/shared/constants";
 
 function InstallGuide(): JSX.Element {
   return (

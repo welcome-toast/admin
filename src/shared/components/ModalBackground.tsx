@@ -1,6 +1,6 @@
 import { type Dispatch, type SetStateAction, useEffect, useRef } from "react";
 
-import { INITIAL_MODAL } from "@/shared/constant";
+import { INITIAL_MODAL } from "@/shared/constants";
 import type { Modal } from "@/types";
 
 interface ModalBackgroundProps {

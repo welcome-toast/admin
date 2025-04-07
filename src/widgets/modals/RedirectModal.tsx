@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
-import Button from "@/shared/Button";
-import ModalBackground from "@/shared/ModalBackground";
-import ModalContainer from "@/shared/ModalContainer";
+import Button from "@/shared/components/Button";
+import ModalBackground from "@/shared/components/ModalBackground";
+import ModalContainer from "@/shared/components/ModalContainer";
 
 type Route = string;
 

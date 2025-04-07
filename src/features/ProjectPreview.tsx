@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 
-import Loading from "@/shared/Loading";
+import Loading from "@/shared/components/Loading";
 import type { Project } from "@/types/project";
 import type { FirstToast, SendToastInput } from "@/types/toast";
 

@@ -1,6 +1,6 @@
 import type { Dispatch, SetStateAction } from "react";
 
-import { INITIAL_MODAL } from "@/shared/constant";
+import { INITIAL_MODAL } from "@/shared/constants";
 import type { Modal } from "@/types";
 
 import CloseIcon from "@/shared/Icon/CloseIcon";

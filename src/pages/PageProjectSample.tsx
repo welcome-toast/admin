@@ -3,8 +3,8 @@ import { type Dispatch, type SetStateAction, useCallback, useEffect, useState } 
 import ProjectPreview from "@/features/ProjectPreview";
 import ToastCard from "@/features/ToastCard";
 import ToastEditorSample from "@/features/ToastEditorSample";
-import { DESCRIPTIONS, INITIAL_ERROR_MESSAGE_TOAST_INPUT, INITIAL_TOAST } from "@/shared/constant";
-import { supabase } from "@/shared/supabase";
+import { supabase } from "@/shared/configs/supabase";
+import { DESCRIPTIONS, INITIAL_ERROR_MESSAGE_TOAST_INPUT, INITIAL_TOAST } from "@/shared/constants";
 import type {
   IndexToastForEdit,
   IsMatchedProject,

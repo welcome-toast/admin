@@ -1,4 +1,4 @@
-import { MAX_INPUT_LENGTH } from "../constant";
+import { MAX_INPUT_LENGTH } from "@/shared/constants";
 
 type ToastSet = [string, string];
 type ToastKey = string;

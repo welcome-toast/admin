@@ -1,10 +1,10 @@
 import type { Dispatch, SetStateAction } from "react";
 
-import Button from "@/shared/Button";
-import ModalBackground from "@/shared/ModalBackground";
-import ModalContainer from "@/shared/ModalContainer";
-import { INITIAL_MODAL } from "@/shared/constant";
-import { deleteProject } from "@/shared/supabase";
+import Button from "@/shared/components/Button";
+import ModalBackground from "@/shared/components/ModalBackground";
+import ModalContainer from "@/shared/components/ModalContainer";
+import { deleteProject } from "@/shared/configs/supabase";
+import { INITIAL_MODAL } from "@/shared/constants";
 import type { Modal } from "@/types";
 import type { ProjectId } from "@/types/project";
 

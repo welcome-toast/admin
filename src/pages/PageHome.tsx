@@ -1,9 +1,9 @@
 import { type Dispatch, type SetStateAction, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Button from "@/shared/Button";
-import { CTAS, TITLES } from "@/shared/constant";
-import { signIn, supabase } from "@/shared/supabase";
+import Button from "@/shared/components/Button";
+import { signIn, supabase } from "@/shared/configs/supabase";
+import { CTAS, TITLES } from "@/shared/constants";
 import type { User } from "@/types";
 
 interface PageHomeProps {

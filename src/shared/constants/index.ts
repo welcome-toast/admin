@@ -1,6 +1,6 @@
-import type { Modal, User } from "../types";
-import type { Project } from "../types/project";
-import type { Toast, ToastInputError } from "../types/toast";
+import type { Modal, User } from "@/types";
+import type { Project } from "@/types/project";
+import type { Toast, ToastInputError } from "@/types/toast";
 
 export interface InstallGuideStep {
   index: number;

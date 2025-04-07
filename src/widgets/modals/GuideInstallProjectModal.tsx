@@ -1,8 +1,8 @@
 import type { Dispatch, SetStateAction } from "react";
 
-import CodeBlock from "@/shared/CodeBlock";
-import ModalBackground from "@/shared/ModalBackground";
-import ModalContainer from "@/shared/ModalContainer";
+import CodeBlock from "@/shared/components/CodeBlock";
+import ModalBackground from "@/shared/components/ModalBackground";
+import ModalContainer from "@/shared/components/ModalContainer";
 import { getInstallCode } from "@/shared/utils/getInstallCode";
 import type { Modal } from "@/types";
 

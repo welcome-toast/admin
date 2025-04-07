@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import ProjectCard from "@/features/ProjectCard";
-import Loading from "@/shared/Loading";
-import { DESCRIPTIONS, INITIAL_MODAL, INITIAL_PROJECTS } from "@/shared/constant";
-import { supabase } from "@/shared/supabase";
+import Loading from "@/shared/components/Loading";
+import { supabase } from "@/shared/configs/supabase";
+import { DESCRIPTIONS, INITIAL_MODAL, INITIAL_PROJECTS } from "@/shared/constants";
 import type { ApiKeyInstallModal, Modal, User } from "@/types";
 import type { Project, ProjectDeleteConfirmed, ProjectId } from "@/types/project";
 import InstallGuide from "@/widgets/InstallGuide";

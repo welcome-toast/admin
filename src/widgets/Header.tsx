@@ -1,11 +1,11 @@
 import type { Dispatch, SetStateAction } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import Button from "@/shared/Button";
 import HomeIcon from "@/shared/Icon/HomeIcon";
 import OutLinkIcon from "@/shared/Icon/OutlinkIcon";
-import { CTAS, INITIAL_USER } from "@/shared/constant";
-import { signIn, signOut } from "@/shared/supabase";
+import Button from "@/shared/components/Button";
+import { signIn, signOut } from "@/shared/configs/supabase";
+import { CTAS, INITIAL_USER } from "@/shared/constants";
 import type { User } from "@/types";
 import type { Project } from "@/types/project";
 

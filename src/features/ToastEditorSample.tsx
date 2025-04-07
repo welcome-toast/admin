@@ -1,8 +1,8 @@
 import { type Dispatch, type SetStateAction, useRef, useState } from "react";
 
-import Button from "@/shared/Button";
-import { INITIAL_ERROR_MESSAGE_TOAST_INPUT } from "@/shared/constant";
-import { supabase } from "@/shared/supabase";
+import Button from "@/shared/components/Button";
+import { supabase } from "@/shared/configs/supabase";
+import { INITIAL_ERROR_MESSAGE_TOAST_INPUT } from "@/shared/constants";
 import { validateInputLengthLimit } from "@/shared/utils/validateEditorInput";
 import type { SendToastInput, Toast, ToastInputError, ToastShown } from "@/types/toast";
 

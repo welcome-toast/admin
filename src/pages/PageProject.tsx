@@ -4,8 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ProjectPreview from "@/features/ProjectPreview";
 import ToastCard from "@/features/ToastCard";
 import ToastEditor from "@/features/ToastEditor";
-import { DESCRIPTIONS, INITIAL_ERROR_MESSAGE_TOAST_INPUT, INITIAL_TOAST } from "@/shared/constant";
-import { supabase } from "@/shared/supabase";
+import { supabase } from "@/shared/configs/supabase";
+import { DESCRIPTIONS, INITIAL_ERROR_MESSAGE_TOAST_INPUT, INITIAL_TOAST } from "@/shared/constants";
 import type { IndexToastForEdit, IsMatchedProject, PreviewNode } from "@/types/project";
 import type {
   FirstToast,
